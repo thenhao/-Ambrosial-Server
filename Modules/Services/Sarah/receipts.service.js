@@ -1,5 +1,5 @@
 //Import models for receipts and order
-const Receipts = require("../../ORM/receipts.model.js");
+const Receipt = require("../../ORM/receipt.model.js");
 const Order = require("../../ORM/order.model.js");
 
 module.exports = {
