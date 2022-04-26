@@ -1,25 +1,21 @@
 const { DataTypes, Model} = require("sequelize");
 const {sequelize} = require('../setup');
 
-const MenuItem = require("./menuitem.model");
+const Order = require("./order-model");
 
-class Order extends Model {}
+class Receipt extends Model {}
 
-Order.init(
+Receipt.init(
   {
-    orderID: {
+    receiptID: {
       type: DataTypes.INTEGER,
       primaryKey: true,
       autoIncrement: true,
       allowNull: false,
     },
-    menuItemID: {
-        type: DataTypes.INTEGER,
+    orderID: {
+      type: DataTypes.INTEGER,
       allowNull: false,
-    },
-    quantity: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
     },
     totalPrice: {
         type: DataTypes.INTEGER,
@@ -38,16 +34,16 @@ Order.init(
   },
   {
     sequelize,
-    modelName: "Order",
-    tableName: "Order",
+    modelName: "Receipt",
+    tableName: "Receipt",
   }
 );
 
-Order.belongsTo(
-    MenuItem,
+Receipt.belongsTo(
+    Order,
     {
-      foreignKey: 'menuItemID'
+      foreignKey: 'orderID'
     }
   );
 
-module.exports = Order;
+module.exports = Receipt;

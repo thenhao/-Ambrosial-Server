@@ -1,25 +1,23 @@
 const { DataTypes, Model} = require("sequelize");
 const {sequelize} = require('../setup');
 
-const Order = require("./order.model");
+class User extends Model {}
 
-class Receipt extends Model {}
-
-Receipt.init(
+User.init(
   {
-    receiptID: {
+    userID: {
       type: DataTypes.INTEGER,
       primaryKey: true,
       autoIncrement: true,
       allowNull: false,
     },
-    orderID: {
-      type: DataTypes.INTEGER,
+    username: {
+      type: DataTypes.STRING,
       allowNull: false,
     },
-    totalPrice: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
+    password: {
+      type: DataTypes.STRING,
+      allowNull: false,
     },
     createdAt: {
       type: DataTypes.DATE,
@@ -34,16 +32,9 @@ Receipt.init(
   },
   {
     sequelize,
-    modelName: "Receipt",
-    tableName: "Receipt",
+    modelName: "User",
+    tableName: "User",
   }
 );
 
-Receipt.belongsTo(
-    Order,
-    {
-      foreignKey: 'orderID'
-    }
-  );
-
-module.exports = Receipt;
+module.exports = User;

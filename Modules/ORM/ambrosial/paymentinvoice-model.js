@@ -1,7 +1,7 @@
 const { DataTypes, Model} = require("sequelize");
 const {sequelize} = require('../setup');
 
-const Receipt = require("./receipt.model");
+const Receipt = require("./receipt-model");
 
 class PaymentInvoice extends Model {}
 
@@ -16,10 +16,6 @@ PaymentInvoice.init(
     receiptID: {
       type: DataTypes.INTEGER,
       allowNull: false,
-    },
-    totalPrice: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
     },
     paymentType: {
         type: DataTypes.STRING,
