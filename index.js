@@ -11,11 +11,11 @@ const app = require("./Modules/Routes/index.js");
 // const FullMedicalRecord = require("./Modules/ORM/fullMedicalRecord.model");
 // const User = require("./Modules/ORM/user.model.js");
 
-const User = require("./Modules/ORM/ambrosial/user-model");
-const MenuItem = require("./Modules/ORM/ambrosial/menuitem-model");
-const Order = require("./Modules/ORM/ambrosial/order-model");
-const Receipt = require("./Modules/ORM/ambrosial/receipt-model");
-const PaymentInvoice = require("./Modules/ORM/ambrosial/paymentinvoice-model");
+const User = require("./Modules/ORM/ambrosial/user.model");
+const MenuItem = require("./Modules/ORM/ambrosial/menu-item.model");
+const Order = require("./Modules/ORM/ambrosial/order.model");
+const Receipt = require("./Modules/ORM/ambrosial/receipt.model");
+const PaymentInvoice = require("./Modules/ORM/ambrosial/payment-invoice.model");
 
 
 
