@@ -1,10 +1,10 @@
 //Import models for receipts and order
-const Receipt = require("../../ORM/receipt.model.js");
-const Order = require("../../ORM/order.model.js");
+const Receipt = require("../../ORM/ambrosial/receipts.model.js");
+const Order = require("../../ORM/ambrosial/order.model.js");
 
 module.exports = {
     // Method for finding one receipt
-    findOneReceipt: async(orderId) => {
+    findOneReceipt: async(orderNo) => {
         // Define the result object that will to be sent to the client
         let result = {
             message:null,
@@ -13,18 +13,18 @@ module.exports = {
         }
 
         // Find order by order ID        
-        const order = await Order.findByPk(orderId);
+        const order = await Order.findByPk(orderNo);
 
         // If order does not exist, send error message
         if(!order){
-            result.message = `Order ID ${orderId} is not found`;
+            result.message = `Order ID ${orderNo} is not found`;
             result.status = 404;
             return result;
         }
     },
 
     // Method for finding all receipts
-    findAll: async() => {
+    findAllReceipts: async() => {
         // Define the result object that will to be sent to the client
         let result = {
             message:null,
@@ -33,7 +33,7 @@ module.exports = {
         }
 
         // Find all receipts
-        const receipts = await Receipts.findAll();
+        const receipts = await Receipt.findAll();
 
         // If receipts do not exist, send error message
         if(!receipts){
