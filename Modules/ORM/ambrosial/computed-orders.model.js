@@ -1,11 +1,12 @@
 const { DataTypes, Model} = require("sequelize");
 const {sequelize} = require('../setup');
 
+const DistinctOrderList = require("./distinct-order-list.model");
 const MenuItem = require("./menu-item.model");
 
-class Order extends Model {}
+class ComputedOrders extends Model {}
 
-Order.init(
+ComputedOrders.init(
   {
     orderID: {
       type: DataTypes.INTEGER,
@@ -13,9 +14,13 @@ Order.init(
       autoIncrement: true,
       allowNull: false,
     },
+    orderNo: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+  },
     menuItemID: {
         type: DataTypes.INTEGER,
-      allowNull: false,
+        allowNull: false,
     },
     quantity: {
         type: DataTypes.INTEGER,
@@ -46,16 +51,20 @@ Order.init(
   },
   {
     sequelize,
-    modelName: "Order",
-    tableName: "Order",
+    modelName: "ComputedOrders",
+    tableName: "ComputedOrders",
   }
 );
 
-Order.belongsTo(
+ComputedOrders.belongsTo(
     MenuItem,
     {
       foreignKey: 'menuItemID'
-    }
+    },
+    DistinctOrderList,
+    {
+      foreignKey: 'orderNo'
+    },
   );
 
-module.exports = Order;
+module.exports = ComputedOrders;
