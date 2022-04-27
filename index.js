@@ -12,8 +12,9 @@ const app = require("./Modules/Routes/index.js");
 // const User = require("./Modules/ORM/user.model.js");
 
 const User = require("./Modules/ORM/ambrosial/user.model");
+const DistinctOrderList = require("./Modules/ORM/ambrosial/distinct-order-list.model");
 const MenuItem = require("./Modules/ORM/ambrosial/menu-item.model");
-const Order = require("./Modules/ORM/ambrosial/order.model");
+const ComputedOrders = require("./Modules/ORM/ambrosial/computed-orders.model");
 const Receipt = require("./Modules/ORM/ambrosial/receipt.model");
 const PaymentInvoice = require("./Modules/ORM/ambrosial/payment-invoice.model");
 
@@ -21,8 +22,9 @@ const PaymentInvoice = require("./Modules/ORM/ambrosial/payment-invoice.model");
 
 //Sync database
 User.sync();
+DistinctOrderList.sync();
 MenuItem.sync();
-Order.sync();
+ComputedOrders.sync();
 Receipt.sync();
 PaymentInvoice.sync();
 // Person.sync();

@@ -1,8 +1,7 @@
 const {Sequelize} = require('sequelize');
-//
-//const sequelize = new Sequelize('postgres://czrhtxaxrmwyxv:e70ab5cb4a4a63699238999e6fb3df947e920547b399c6163a911c95f90782a1@ec2-18-210-191-5.compute-1.amazonaws.com:5432/d84tq21cltsr8i', {
-//const sequelize = new Sequelize('postgres://kyvvadixaytlla:d80d2c4bd9f8ca772fb567ac59bb32efca47dd259d26b2b2143bb4f610e0917a@ec2-3-209-124-113.compute-1.amazonaws.com:5432/dfg7g3vq9nfrv7', {
-const sequelize = new Sequelize('postgres://truohgcylwgfpl:4cddbb80ec4847c4a2f3d9638cd6265c405489b50b6714f433efc5e084edb9ef@ec2-3-209-124-113.compute-1.amazonaws.com:5432/dmvhr99tv7e4t', {
+//for Regina, created for prisma
+//postgres://bjdhdvfkorbxgj:f21ee80e3cc9e58ae8febb7cf9c91961144d014892e5a475ea9c2f00f20128ea@ec2-3-223-213-207.compute-1.amazonaws.com:5432/da0394ou3o9iv1
+const sequelize = new Sequelize('postgres://oqazhoytgosxyf:cabd20776584b50ed0ae958c83596783a4defe788b07eb31360d3fd1ea4c74a1@ec2-3-209-124-113.compute-1.amazonaws.com:5432/da78k66u3kbdtu', {
   dialectOptions: {
     ssl: {
       require: true,

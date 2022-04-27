@@ -1,25 +1,16 @@
 const { DataTypes, Model} = require("sequelize");
 const {sequelize} = require('../setup');
 
-const DistinctOrderList = require("./distinct-order-list.model");
 
-class Receipt extends Model {}
+class DistinctOrderList extends Model {}
 
-Receipt.init(
+DistinctOrderList.init(
   {
-    receiptID: {
+    orderNo: {
       type: DataTypes.INTEGER,
       primaryKey: true,
       autoIncrement: true,
       allowNull: false,
-    },
-    orderNo: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-    },
-    totalPrice: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
     },
     createdAt: {
       type: DataTypes.DATE,
@@ -34,16 +25,10 @@ Receipt.init(
   },
   {
     sequelize,
-    modelName: "Receipt",
-    tableName: "Receipt",
+    modelName: "DistinctOrderList",
+    tableName: "DistinctOrderList",
   }
 );
 
-Receipt.belongsTo(
-  DistinctOrderList,
-    {
-      foreignKey: 'orderNo'
-    },
-  );
 
-module.exports = Receipt;
+module.exports = DistinctOrderList;
