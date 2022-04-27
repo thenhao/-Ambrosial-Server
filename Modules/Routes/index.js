@@ -12,11 +12,11 @@ app.use(login);
 //Jeffery
 //*******************routes import**********************
 //***place here****
-const medRecordRoute = require('../Routes/Jeffery/medRecord.route');
+const menuItemRoute = require('../Routes/Jeffery/menu-items.route');
 
 //*******************routes use**********************
 //***place here****
-app.use(medRecordRoute);
+app.use(menuItemRoute);
 
 
 //Regina
