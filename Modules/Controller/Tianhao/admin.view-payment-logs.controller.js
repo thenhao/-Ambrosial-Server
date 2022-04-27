@@ -4,7 +4,7 @@ const adminViewPaymentLogsService = require("../../Services/Tianhao/admin.view-p
 
 class AdminViewPaymentController{
     
-    async findSpecificOrder(req, res, next){
+    async findSpecificPayment(req, res, next){
         console.log(typeof req.params.invoiceID);
 
         const schema = Joi.object().keys({
@@ -12,7 +12,7 @@ class AdminViewPaymentController{
         });
 
         try{
-            schema.validate({ orderID:req.params.invoiceID });
+            schema.validate({ invoiceID:req.params.invoiceID });
         }catch(error){
             res.status(400);
             return res.json({message:"Incorrect request data"})
@@ -26,7 +26,7 @@ class AdminViewPaymentController{
         return res.json({data:result.data, status: result.status, message:result.message});
     }
 
-    async findAllOrders(req, res, next){
+    async findAllPayments(req, res, next){
         const result = await adminViewPaymentLogsService.findAllPayments();
         res.status(result.status);
         return res.json({data:result.data, status: result.status, message:result.message});
