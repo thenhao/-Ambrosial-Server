@@ -1,11 +1,7 @@
-const Order = require("../../ORM/ambrosial/computed-orders.model");
+const DistinctOrderList = require("../../ORM/ambrosial/distinct-order-list.model");
 const Receipt = require("../../ORM/ambrosial/receipt.model");
 const PaymentLogs = require("../../ORM/ambrosial/payment-invoice.model");
 
-/*checks:
--employee record find fin
--see if it equals person table fin (exists or not)
--findall where the fin exist in the MC */
 
 module.exports = {
     findSpecificPayment: async(invoiceID) =>{
@@ -17,7 +13,7 @@ module.exports = {
         }
 
         //What we want:
-        //1. check if order records exists
+        //1. check if orderNo exists in the order list
 
         const paymentLogs = await PaymentLogs.findByPk(invoiceID);
         
@@ -35,10 +31,10 @@ module.exports = {
             return result;
         }
 
-        const orderLogs = await Order.findByPk(receiptLogs.orderID);
+        const orderLogs = await DistinctOrderList.findByPk(receiptLogs.orderNo);
 
         if(!orderLogs){
-            result.message = `No such order with id ${receiptLogs.orderID} found`;
+            result.message = `No such order with id ${receiptLogs.orderNo} found`;
             result.status = 404;
             return result;
         }

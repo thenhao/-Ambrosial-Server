@@ -1,10 +1,11 @@
+const DistinctOrderList = require("../../ORM/ambrosial/distinct-order-list.model");
 const MenuItem = require("../../ORM/ambrosial/menu-item.model");
-const Order = require("../../ORM/ambrosial/computed-orders.model");
+const ComputedOrders = require("../../ORM/ambrosial/computed-orders.model");
 
 
 
 module.exports = {
-    findSpecificOrder: async(orderId) =>{
+    findSpecificOrder: async(orderNo) =>{
         //The result object is where we will put the result to be sent to the client
         let result = {
             message:null,
@@ -17,26 +18,37 @@ module.exports = {
         //2. check if menu item exists
         //3. if exists then return order results
 
-        const orderRecords = await Order.findByPk(orderId);
+        const orderList = await DistinctOrderList.findByPk(orderNo);
         
-        if(!orderRecords){
-            result.message = `Order ID ${orderId} is not found`;
+        if(!orderList){
+            result.message = `Order ID ${orderNo} is not found`;
             result.status = 404;
             return result;
         }
 
-        const menuRecords = await MenuItem.findByPk(orderRecords.menuItemID);
+        const computedOrderRecords = await ComputedOrders.findAll({where:{orderNo:orderList.orderNo}});
         
-        if(!menuRecords){
-            result.message = `menu item ${orderRecords.menuItemID} is not found`;
+        if(!computedOrderRecords){
+            result.message = `Order(s) with ${orderList.orderNo} is not found`;
             result.status = 404;
             return result;
         }
 
+        for(let i =0; i < computedOrderRecords.length; i ++){
+            
+            const menuItemRecord = await MenuItem.findByPk(computedOrderRecords[i].menuItemID);
+            
+            if(!menuItemRecord){
+                result.message = `Menu item with ${computedOrderRecords[i].menuItemID} is not found`;
+                result.status = 404;
+                return result;
+            }
+        }
 
-        result.data = orderRecords;
+
+        result.data = computedOrderRecords;
         result.status = 200;
-        result.message = `Data retrieval for orderRecords with ID:${orderId} successful `;
+        result.message = `Data retrieval for Order Records with Order ID:${orderNo} successful `;
         return result;
     },
 
@@ -47,7 +59,7 @@ module.exports = {
             data: null
         }
         
-        const orders = await Order.findAll({include: MenuItem});
+        const orders = await ComputedOrders.findAll({include: MenuItem});
 
         //What we want:
         //1. check all orders exists

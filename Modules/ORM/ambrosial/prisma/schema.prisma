@@ -1,0 +1,76 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider          = "postgresql"
+  url               = env("DATABASE_URL")
+  shadowDatabaseUrl = env("SHADOW_DATABASE_URL")
+}
+
+model User {
+  id              Int         @id @default(autoincrement())
+  username        String      @db.VarChar(50)
+  password        String      @db.VarChar(50)
+  createdAt       DateTime    @default(now())
+  updatedAt       DateTime    @updatedAt
+}
+
+model Menu_Item {
+  menuItemId            Int         @id @default(autoincrement())
+  src                   String      @db.VarChar(50)
+  alt                   String      @db.VarChar(50)
+  type                  String      @db.VarChar(50)
+  price                 Int         
+  createdAt             DateTime    @default(now())
+  updatedAt             DateTime    @updatedAt
+  computedOrders        Computed_Orders[]
+}
+
+model Computed_Orders {
+  orderId             Int                   @id @default(autoincrement())
+  orderNo             Int
+  menuItemId          Int
+  quantity            Int
+  totalItemPrice      Int
+  tableNo             Int
+  orderStatus         Int
+  createdAt           DateTime              @default(now())
+  updatedAt           DateTime              @updatedAt
+  menuItem            Menu_Item             @relation(fields: [menuItemId], references: [menuItemId])
+  distinctOrderList   Distinct_Order_List   @relation(fields: [orderNo], references: [orderNo])
+}
+
+
+model Distinct_Order_List {
+  orderNo             Int         @id @default(autoincrement())
+  createdAt           DateTime    @default(now())
+  updatedAt           DateTime    @updatedAt 
+  computedOrders      Computed_Orders[]
+  receipt             Receipt[]
+}
+
+
+model Receipt {
+  receiptId           Int                   @id @default(autoincrement())
+  orderNo             Int
+  totalItemPrice      Int    
+  createdAt           DateTime              @default(now())
+  updatedAt           DateTime              @updatedAt
+  distinctOrderList   Distinct_Order_List   @relation(fields: [orderNo], references: [orderNo])
+  paymentInvoiceId    Payment_Invoice[]
+}
+
+
+model Payment_Invoice {
+  paymentInvoiceId       Int         @id   @default(autoincrement())
+  receiptId              Int
+  paymentType            String      @db.VarChar(50)
+  paymentStatus          String      @db.VarChar(50)
+  createdAt              DateTime    @default(now())
+  updatedAt              DateTime    @updatedAt
+  receipt                Receipt     @relation(fields: [receiptId], references: [receiptId])
+}

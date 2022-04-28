@@ -5,21 +5,21 @@ const adminViewOrderItemsService = require("../../Services/Tianhao/admin.view-or
 class AdminViewOrderItemsController{
     
     async findSpecificOrder(req, res, next){
-        console.log(typeof req.params.orderID);
+        console.log(typeof req.params.orderNo);
 
         const schema = Joi.object().keys({
             orderID: Joi.number().required()
         });
 
         try{
-            schema.validate({ orderID:req.params.orderID });
+            schema.validate({ orderID:req.params.orderNo });
         }catch(error){
             res.status(400);
             return res.json({message:"Incorrect request data"})
         }
 
         //use the service layer
-        const result = await adminViewOrderItemsService.findSpecificOrder(req.params.orderID);
+        const result = await adminViewOrderItemsService.findSpecificOrder(req.params.orderNo);
         res.status(result.status);
 
         //return the result from the service
