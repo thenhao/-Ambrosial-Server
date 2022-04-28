@@ -24,9 +24,7 @@ module.exports = {
 
     if(verificationResult) { // set encoding data for JWT
       
-      let data = {
-        role: loginData.role
-      }
+      let data = {}
   
       let token = generateJWT(data);
       result.status = 200;
