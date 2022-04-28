@@ -1,7 +1,7 @@
 const Joi = require('joi');
 //import the service
 const adminViewOrderItemsService = require("../../Services/Tianhao/admin.view-order-items.service");
-
+//remove next from req, res
 class AdminViewOrderItemsController{
     
     async findSpecificOrder(req, res, next){
