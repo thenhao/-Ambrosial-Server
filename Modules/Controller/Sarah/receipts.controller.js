@@ -7,7 +7,7 @@ const receiptsService = require("../../Services/Sarah/receipts.service.js");
 // Create class for controller for receipts
 class ReceiptsController {
     // Function to find one receipt
-    async findOneReceipt(req, res){
+    async findOne(req, res){
         // Define validation for req.body
         const schema = Joi.object().keys({
             orderNo: Joi.number().required()
@@ -22,7 +22,7 @@ class ReceiptsController {
         }
 
         // Use receipts service layer
-        const result = await receiptsService.findOneReceipt(req.params.orderNo);
+        const result = await receiptsService.findOne(req.params.orderNo);
         res.status(result.status);
 
         // Return the result from the service
@@ -30,9 +30,9 @@ class ReceiptsController {
     }
 
     // Function to find all receipts
-    async findAllReceipts(req, res){
+    async findMany(req, res){
         // Use receipts service layer
-        const result = await receiptsService.findAll();
+        const result = await receiptsService.findMany();
         res.status(result.status);
         // Return the result from the service
         return res.json({data:result.data, status: result.status, message:result.message});

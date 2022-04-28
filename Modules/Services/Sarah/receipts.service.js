@@ -1,3 +1,23 @@
+const { PrismaClient } = require('@prisma/client')
+const prisma = new PrismaClient()
+
+async function main() {
+    const allReceipts = await prisma.user.findMany()
+    console.log(allReceipts)
+
+    const specificReceipt = await prisma.user.findOne({where: orderNo})
+    console.log(specificReceipt)
+  }
+  
+  main()
+    .catch((e) => {
+      throw e
+    })
+    .finally(async () => {
+      await prisma.$disconnect()
+    })
+
+/*
 //Import models for receipts and order
 const Receipt = require("../../ORM/ambrosial/receipts.model.js");
 const Order = require("../../ORM/ambrosial/order.model.js");
@@ -49,3 +69,4 @@ module.exports = {
         return result;
     }
 }
+*/

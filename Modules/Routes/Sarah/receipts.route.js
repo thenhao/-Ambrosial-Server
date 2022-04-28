@@ -11,7 +11,7 @@ const receiptsController = new ReceiptsController();
 
 // Use Read Method for finding all receipts
 // Use Read Method for finding one receipt
-router.get('/receipts', receiptsController.findAllReceipts);
-router.get("/receipts/:orderNo", receiptsController.findOneReceipt);
+router.get('/receipts', receiptsController.findMany);
+router.get("/receipts/:orderNo", receiptsController.findOne);
 
 module.exports = router;
