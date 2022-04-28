@@ -32,6 +32,14 @@ MenuItem.init(
       field: "created_at",
       defaultValue: new Date(),
     },
+    category: {
+      type: DataTypes.STRING,
+       allowNull: false,
+   },
+    chefRecommendation: {
+    type: DataTypes.BOOLEAN,
+     allowNull: false,
+    },
     updatedAt: {
       type: DataTypes.DATE,
       field: "updated_at",
