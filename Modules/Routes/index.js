@@ -25,11 +25,11 @@ const createCurrentVisit = require("../Routes/Regina/clinicCurrentVisit.route");
 //*******************routes use**********************
 app.use(createCurrentVisit);
 
-//Sarah
-//*******************routes import**********************
-const createMC = require("../Routes/Sarah/mc.route");
-//*******************routes use**********************
-app.use(createMC);
+// Sarah
+// Import route for receipts
+const receipts = require("../Routes/Sarah/receipts.route");
+// Use route for receipts
+app.use(receipts);
 
 //Shaun
 //*******************routes import**********************
