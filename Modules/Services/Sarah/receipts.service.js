@@ -17,7 +17,7 @@ module.exports = {
 
         // If order does not exist, send error message
         if(!order){
-            result.message = `Order No ${orderNo} is not found`;
+            result.message = `Order Number ${orderNo} is not found`;
             result.status = 404;
             return result;
         }
@@ -25,7 +25,7 @@ module.exports = {
         // If order exists, return receipt
         result.data = order;
         result.status = 200;
-        result.message = `Receipts retrieval specifuc order successful `;
+        result.message = `Receipts retrieval for specific order successful `;
         return result;
     },
 
@@ -42,7 +42,7 @@ module.exports = {
         }
 
         // Find all receipts
-        const allReceipts = await Receipt.findAll();
+        const allReceipts = await Receipt.findAll({include: DistinctOrderList});
 
         // If receipts do not exist, send error message
         if(!allReceipts){
@@ -117,21 +117,25 @@ module.exports = {
 
         // If order does not exist, send error message
         if(!receipt){
-            result.message = `Order No ${orderNo} is not found`;
+            result.message = `Order Number ${orderNo} is not found`;
             result.status = 404;
             return result;
         }
 
         // If order exist, update receipts
-        try{
+        try {
             //Update receipt object
             const receipt = await Receipt.update({ 
-                orderNo : orderNo, 
-                totalPrice : totalPrice
+                where: {
+                    orderNo : orderNo, 
+                },
+                data: {
+                totalPrice : totalPrice,
+                },
             });
     
             await receipt.save();
-            console.log('New receipt is saved to the database');
+            console.log('Updated receipt is saved to the database');
             result.data = receipt;
             result.status = 200;
             result.message = "Receipt update successful";
@@ -161,22 +165,22 @@ module.exports = {
 
         // If receipt does not exist, send error message
         if(!receipt){
-            result.message = `Order No ${orderNo} is not found`;
+            result.message = `Order Number ${orderNo} is not found`;
             result.status = 404;
             return result;
         }
 
         // If receipt exist, detele receipt
-        try{
+        try {
             //Create receipt object
             const receipt = await Receipt.delete({ 
-                orderNo : orderNo, 
-                totalPrice : totalPrice
+                where: {
+                    orderNo: orderNo,
+                },
             });
     
             await receipt.destroy();
             console.log('Receipt is deleted from the database');
-            result.data = receipt;
             result.status = 200;
             result.message = "Receipt deletion successful";
             return result;
