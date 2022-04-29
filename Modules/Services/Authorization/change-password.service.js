@@ -22,8 +22,8 @@ module.exports = {
     result.status = 200;
     result.message = `Password has been changed`;
   
-    let newHash = await generateHash(request.password);
-    changePasswordData.password = newHash;
+    let newHashedPwd = await generateHash(request.password);
+    changePasswordData.password = newHashedPwd;
     await changePasswordData.password.save();
     
     return result;
