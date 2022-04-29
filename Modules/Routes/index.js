@@ -3,11 +3,14 @@ const app = express();
 app.use(express.json());
 
 //Authorization
-const register = require('../Routes/Authorization/register.routes');
-app.use(register);
+// const register = require('../Routes/Authorization/register.routes');
+// app.use(register);
 
-const login = require('../Routes/Authorization/login.routes');
-app.use(login);
+// const login = require('../Routes/Authorization/login.routes');
+// app.use(login);
+
+// const changePassword = require('../Routes/Authorization/change-password.route');
+// app.use(changePassword);
 
 //Jeffery
 //*******************routes import**********************
