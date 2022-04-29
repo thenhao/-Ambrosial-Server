@@ -1,7 +1,6 @@
 const User = require('../../ORM/ambrosial/user.model');
 
-const {generateJWT} = require('../../Authorization/jwt');
-const {verifyHash} = require('../../Authorization/hash');
+const {generateHash} = require('../../Authorization/hash');
 
 module.exports = {
   
@@ -12,29 +11,19 @@ module.exports = {
       message: null
     }
 
-    const changePasswordData = await User.findOne({where: {password: request.password}});
+    const changePasswordData = await User.findOne({where: {username: request.username}});
 
     if(!changePasswordData) {
       result.status = 404;
-      result.message = `New password matches previous password, kindly use another.`;
+      result.message = `User does not exist. Kindly register`;
       return result;
     }
-  
-    let verificationResult = await verifyHash(request.password, changePasswordData.password);
 
-    if(verificationResult) { // set encoding data for JWT
-      
-      let data = {}
+    result.status = 200;
+    result.message = `Password has been changed`;
   
-      let token = generateJWT(data);
-      result.status = 200;
-      result.message = token;
-      return result;
-    }
-    else {
-      result.status = 401;
-      result.message = `Verification failed. Invalid entry.`;
-      return result;
-    }
+    let newHash = await generateHash(request.password);
+    
+    return result;
   }
 }
