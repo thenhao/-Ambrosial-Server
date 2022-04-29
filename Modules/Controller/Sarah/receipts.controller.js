@@ -15,13 +15,8 @@ class ReceiptsController {
 
         // Implement validation, else throw an error
         try {
-<<<<<<< HEAD
-            schema.validate({ orderNo: req.params.orderNo });
+            schema.validate({ orderNoId: req.params.orderNoId });
         } catch (error) {
-=======
-            schema.validate({ orderNoId : req.params.orderNoId });
-        } catch(error) {
->>>>>>> main
             res.status(400);
             return res.json({ message: "Incorrect request data" })
         }
