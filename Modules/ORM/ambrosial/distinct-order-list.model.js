@@ -6,11 +6,16 @@ class DistinctOrderList extends Model {}
 
 DistinctOrderList.init(
   {
-    orderNo: {
+    orderNoId: {
       type: DataTypes.INTEGER,
       primaryKey: true,
       autoIncrement: true,
       allowNull: false,
+    },
+    orderNo: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      unique: true
     },
     createdAt: {
       type: DataTypes.DATE,

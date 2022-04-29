@@ -7,9 +7,8 @@ const router = express.Router();
 //Instantiate a new instance of the class
 const adminViewOrderItemsController = new AdminViewOrderItemsController();
 
-//user story: As a Supervisor, I am able to view all historical MC of the person by using his employee ID
-
 router.get("/vieworderitems", adminViewOrderItemsController.findAllOrders);
 router.get("/vieworderitems/:orderNo", adminViewOrderItemsController.findSpecificOrder);
+
 
 module.exports = router;
