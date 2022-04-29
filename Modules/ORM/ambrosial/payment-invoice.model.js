@@ -1,7 +1,7 @@
 const { DataTypes, Model} = require("sequelize");
 const {sequelize} = require('../setup');
 
-const Receipt = require("./receipt.model");
+const Receipt = require("./receipts.model");
 
 class PaymentInvoice extends Model {}
 

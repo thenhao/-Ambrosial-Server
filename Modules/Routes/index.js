@@ -21,26 +21,26 @@ app.use(medRecordRoute);
 
 //Regina
 //*******************routes import**********************
-const createCurrentVisit = require("../Routes/Regina/clinicCurrentVisit.route");
+//const createCurrentVisit = require("../Routes/Regina/clinicCurrentVisit.route");
 //*******************routes use**********************
-app.use(createCurrentVisit);
+//app.use(createCurrentVisit);
 
 // Sarah
 // Import route for receipts
-const receipts = require("../Routes/Sarah/receipts.route");
+//const receipts = require("../Routes/Sarah/receipts.route");
 // Use route for receipts
-app.use(receipts);
+//app.use(receipts);
 
 //Shaun
 //*******************routes import**********************
-const employeeWorking = require("../Routes/Shaun/isEmployeeAtWork.route");
+//const employeeWorking = require("../Routes/Shaun/isEmployeeAtWork.route");
 //*******************routes use**********************
-app.use(employeeWorking);
+//app.use(employeeWorking);
 
 //Tianhao
 //*******************routes import**********************
-const supervisorViewMC = require("./Tianhao/supervisor.viewmc.routes");
+//const supervisorViewMC = require("./Tianhao/supervisor.viewmc.routes");
 //*******************routes use**********************
-app.use(supervisorViewMC);
+//app.use(supervisorViewMC);
 
 module.exports = app;
