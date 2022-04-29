@@ -10,23 +10,23 @@ class ReceiptsController {
     async findSpecificReceipt(req, res){
         // Define validation for req.body
         const schema = Joi.object().keys({
-            orderNo: Joi.number().required()
+            orderNoId: Joi.number().required()
         });
 
         // Implement validation, else throw an error
-        try{
-            schema.validate({ orderNo:req.params.orderNo });
-        }catch(error){
+        try {
+            schema.validate({ orderNoId : req.params.orderNo });
+        } catch(error) {
             res.status(400);
             return res.json({message:"Incorrect request data"})
         }
 
         // Use receipts service layer
-        const result = await receiptsService.findSpecificReceipt(req.params.orderNo);
+        const result = await receiptsService.findSpecificReceipt(req.params.orderNoId);
         res.status(result.status);
 
         // Return the result from the service
-        return res.json({data:result.data, status: result.status, message:result.message});
+        return res.json({data: result.data, status: result.status, message: result.message});
     }
 
 
@@ -38,7 +38,7 @@ class ReceiptsController {
         const result = await receiptsService.findAllReceipts();
         res.status(result.status);
         // Return the result from the service
-        return res.json({data:result.data, status: result.status, message:result.message});
+        return res.json({data: result.data, status: result.status, message: result.message});
     }
 
 
@@ -46,24 +46,19 @@ class ReceiptsController {
 
     // Function to create receipts
     async createReceipt(req, res){
+        const {orderNoId, totalPrice} = req.body;
+
         // Define validation for req.body
         const schema = Joi.object().keys({
-            orderNo: Joi.number().required(),
-            totalPrice: Joi.number().required()
+            orderNoId: Joi.number().required(),
+            totalPrice: Joi.number().precision(2).required()
         });
 
         // Implement validation, else throw an error
-        try{
-            schema.validate({ orderNo:req.params.orderNo });
-        }catch(error){
-            res.status(400);
-            return res.json({message:"Incorrect request data"})
-        }
-
         const validation = schema.validate(req.body);
         if (validation) {
-            const result = await receiptsService.createReceipt(orderNo, totalPrice);
-            res.json({data:result.data, status: result.status, message:result.message})
+            const result = await receiptsService.createReceipt(orderNoId, totalPrice);
+            res.json({data: result.data, status: result.status, message: result.message})
         } else if (!validation) {
             res.status(400).json({message: result.message})
         }
@@ -73,25 +68,19 @@ class ReceiptsController {
 
     // Function to update one receipt
     async updateReceipt(req, res){
+        const {orderNoId, totalPrice} = req.body;
+
         // Define validation for req.body
         const schema = Joi.object().keys({
-            orderNo: Joi.number().required(),
+            orderNoId: Joi.number().required(),
             totalPrice: Joi.number().required()
         });
-
-        // Implement validation, else throw an error
-        try{
-            schema.validate({ orderNo:req.params.orderNo });
-        }catch(error){
-            res.status(400);
-            return res.json({message:"Incorrect request data"})
-        }
 
         // Use receipts service layer
         const validation = schema.validate(req.body);
         if (validation) {
-            const result = await receiptsService.updateReceipt(orderNo, totalPrice);
-            res.json({data:result.data, status: result.status, message:result.message})
+            const result = await receiptsService.updateReceipt(orderNoId, totalPrice);
+            res.json({data: result.data, status: result.status, message: result.message})
         } else if (!validation) {
             res.status(400).json({message: result.message})
         }
@@ -104,23 +93,15 @@ class ReceiptsController {
     async deleteReceipt(req, res){
         // Define validation for req.body
         const schema = Joi.object().keys({
-            orderNo: Joi.number().required()
+            orderNoId: Joi.number().required()
         });
 
-        // Implement validation, else throw an error
-        try{
-            schema.validate({ orderNo:req.params.orderNo });
-        }catch(error){
-            res.status(400);
-            return res.json({message:"Incorrect request data"})
-        }
-
         // Use receipts service layer
-        const result = await receiptsService.deleteReceipt(req.params.orderNo);
+        const result = await receiptsService.deleteReceipt(req.params.orderNoId);
         res.status(result.status);
 
         // Return the result from the service
-        return res.json({data:result.data, status: result.status, message:result.message});
+        return res.json({data: result.data, status: result.status, message: result.message});
     }
 }
 

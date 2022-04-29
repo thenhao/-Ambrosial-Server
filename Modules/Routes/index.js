@@ -28,11 +28,11 @@ app.use(medRecordRoute);
 // //*******************routes use**********************
 // app.use(createCurrentVisit);
 
-// // Sarah
-// // Import route for receipts
-// const receipts = require("../Routes/Sarah/receipts.route");
-// // Use route for receipts
-// app.use(receipts);
+// Sarah
+// Import route for receipts
+const receipts = require("../Routes/Sarah/receipts.route");
+// Use route for receipts
+app.use(receipts);
 
 // //Shaun
 // //*******************routes import**********************
