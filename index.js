@@ -11,6 +11,9 @@ const app = require("./Modules/Routes/index.js");
 // const FullMedicalRecord = require("./Modules/ORM/fullMedicalRecord.model");
 // const User = require("./Modules/ORM/user.model.js");
 
+const { config } = require('dotenv');
+config({ path: '.env' })
+
 const User = require("./Modules/ORM/ambrosial/user.model");
 const DistinctOrderList = require("./Modules/ORM/ambrosial/distinct-order-list.model");
 const MenuItem = require("./Modules/ORM/ambrosial/menu-item.model");
