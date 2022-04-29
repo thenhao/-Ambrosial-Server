@@ -1,4 +1,9 @@
-const User = require('../../ORM/ambrosial/user.model');
+//Prisma
+import {PrismaClient} from '@prisma/client';
+const prisma = new PrismaClient();
+
+//ORM
+// const User = require('../../ORM/ambrosial/user.model');
 
 const {generateHash} = require('../../Authorization/hash');
 
@@ -10,7 +15,15 @@ module.exports = {
       message: null
     }
 
-    const registerData = await User.findOne({where: {username: request.username}}); // searches for the data
+    //ORM Query:
+    // const registerData = await User.findOne({where: {username: request.username}}); // searches for the data
+
+    //Prisma Query:
+    const registerData = await prisma.User.findUnique({
+      where: {
+        username: request.username
+      }
+    });
     
     if(registerData) {
       result.status = 409;
