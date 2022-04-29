@@ -17,6 +17,10 @@ module.exports = {
       message: null
     }
 
+    //ORM query
+    // const changePasswordData = await User.findOne({where: {username: request.username}});
+
+    //Prisma Query
     const changePasswordData = await prisma.User.findUnique({
       where: {
         username: request.username
