@@ -32,11 +32,11 @@ const menuItemsController = new MenuItemsController();
 */
 
 //1. Create New Menu Item  
-router.post("/newmenuitem", menuItemsController.createNewMenuItem);
+router.post("/new-mi", menuItemsController.createNewMenuItem);
 //2. Get All Menu Items
-router.get("/findallmenuitem", menuItemsController.findAllMenuItems);
+router.get("/findall-mi", menuItemsController.findAllMenuItems);
 //3. Update A Menu Item
-
+router.put("/update-mi/:menuItemID", menuItemsController.updateMenuItem);
 
 
 // router.get('/newrecord', async (req, res) => {

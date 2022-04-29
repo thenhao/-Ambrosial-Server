@@ -79,9 +79,39 @@ module.exports = {
         result.message = `All Menu Items retrieval for successfully `;
         return result;
 
-    }
+    },
 
     //3. Update A Menu Item
+
+    updateMenuItem: async (menuItemID, updateMenuItem) => {
+
+        let result = {
+            message: null,
+            status: null,
+            data: null
+        }
+
+        const selectMenuItem = await MenuItem.findByPk(menuItemID);
+
+        if (!selectMenuItem) {
+            result.message = `Menu Item not yet created.`;
+            result.status = 400;
+            return result;
+        }
+
+        selectMenuItem.menuItemID = updateMenuItem.menuItemID;
+        selectMenuItem.src = updateMenuItem.src;
+        selectMenuItem.alt = updateMenuItem.alt;
+        selectMenuItem.type = updateMenuItem.type;
+        selectMenuItem.price = updateMenuItem.price;
+        selectMenuItem.category = updateMenuItem.category;
+        selectMenuItem.chefRecommendation = updateMenuItem.chefRecommendation;
+        await selectMenuItem.save();
+        result.message = `Update menu item successfully.`;
+        result.status = 200;
+        result.data = selectMenuItem;
+        return result;
+    }
 
 
     //4. Delete Menu Item
