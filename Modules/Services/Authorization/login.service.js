@@ -2,7 +2,7 @@
 const {PrismaClient} = require('@prisma/client');
 const prisma = new PrismaClient();
 
-//ORM
+//Sequelize
 // const User = require('../../ORM/ambrosial/user.model');
 
 const {generateJWT} = require('../../Authorization/jwt');
@@ -17,11 +17,11 @@ module.exports = {
       message: null
     }
 
-    //ORM query
+    //Sequelize query
     // const loginData = await User.findOne({where: {username: request.username}});
 
     //Prisma Query
-    const loginData = await prisma.User.findUnique({
+    const loginData = await prisma.User.findFirst({
       where: {
         username: request.username
       }
@@ -37,11 +37,11 @@ module.exports = {
 
     if(verificationResult) { // set encoding data for JWT
       
-      let data = {}
+      let data = {} //leave empty if no reference
   
       let token = generateJWT(data);
       result.status = 200;
-      result.message = token;
+      result.message = `${request.username} has been logged in successfully.`;
       return result;
     }
     else {
