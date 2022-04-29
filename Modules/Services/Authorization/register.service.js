@@ -1,4 +1,4 @@
-const User = require('../../ORM/user.model');
+const User = require('../../ORM/ambrosial/user.model');
 
 const {generateHash} = require('../../Authorization/hash');
 
