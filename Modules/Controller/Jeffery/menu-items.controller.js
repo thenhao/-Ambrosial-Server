@@ -27,7 +27,7 @@ class MenuItemsController {
       src: Joi.string().required(),
       alt: Joi.string().required(),
       type: Joi.string().required(),
-      price: Joi.number().required(),
+      price: Joi.number().precision(2).required(),
       category: Joi.string().required(),
       chefRecommendation: Joi.boolean().required(),
     });
