@@ -13,14 +13,14 @@ class MenuCategoryController{
         });
 
         try{
-            schema.validate({ menuItemID:req.params.type });
+            schema.validate({ menuItemID:req.params.category });
         }catch(error){
             res.status(400);
             return res.json({message:"Item not found"})
         }
 
         
-        const result = await ViewMenuCategoryService.findSpecificMenuCategory(req.params.type);
+        const result = await ViewMenuCategoryService.findSpecificMenuCategory(req.params.category);
         res.status(result.status);
 
        
