@@ -62,12 +62,21 @@ module.exports = {
 
 
     // Method for create receipt
-    createReceipt: async(orderNo) => {
+    createReceipt: async(orderNo, totalPrice) => {
+
         // Define the result object that will to be sent to the client
         let result = {
             message:null,
             status: null,
             data: null
+        }
+
+        const order = await DistinctOrderList.findByPk(orderNo);
+        
+        if(!order){
+            result.message = `Order with order number of ${orderNo} was not found.`;
+            result.status = 404;
+            return result;
         }
 
         try{

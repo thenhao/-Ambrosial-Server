@@ -46,6 +46,8 @@ class ReceiptsController {
 
     // Function to create receipts
     async createReceipt(req, res){
+        const {orderNo, totalPrice} = req.body;
+
         // Define validation for req.body
         const schema = Joi.object().keys({
             orderNo: Joi.number().required(),
@@ -53,17 +55,10 @@ class ReceiptsController {
         });
 
         // Implement validation, else throw an error
-        try{
-            schema.validate({ orderNo:req.params.orderNo });
-        }catch(error){
-            res.status(400);
-            return res.json({message:"Incorrect request data"})
-        }
-
         const validation = schema.validate(req.body);
         if (validation) {
             const result = await receiptsService.createReceipt(orderNo, totalPrice);
-            res.json({data:result.data, status: result.status, message:result.message})
+            res.json({data: result.data, status: result.status, message: result.message})
         } else if (!validation) {
             res.status(400).json({message: result.message})
         }
