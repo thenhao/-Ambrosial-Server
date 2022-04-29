@@ -14,7 +14,7 @@ ComputedOrders.init(
       autoIncrement: true,
       allowNull: false,
     },
-    orderNo: {
+    orderNoId: {
       type: DataTypes.INTEGER,
       allowNull: false,
   },
@@ -63,7 +63,7 @@ ComputedOrders.belongsTo(
     },
     DistinctOrderList,
     {
-      foreignKey: 'orderNo'
+      foreignKey: 'orderNoId'
     },
   );
 
