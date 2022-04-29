@@ -51,6 +51,7 @@ module.exports = {
             return result;
 
         } catch (error) {
+            console.log(error)
             result.message = `Error in creating Menu Item. Data not saved`;
             result.status = 500;
             return result;

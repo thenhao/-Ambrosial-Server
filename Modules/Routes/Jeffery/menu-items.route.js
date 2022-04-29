@@ -6,7 +6,7 @@ const MenuItemsController = require('../../Controller/Jeffery/menu-items.control
 // const {authClinic} = require('../../Authorization/auth'); // this is for JWT role auth, please do not remove this!
 
 //Instantiate a new instance of the class
-const menuItemController = new MenuItemsController();
+const menuItemsController = new MenuItemsController();
 
 // POST /createnewrecord
 /*
@@ -32,9 +32,9 @@ const menuItemController = new MenuItemsController();
 */
 
 //1. Create New Menu Item  
-router.post("/newmenuitem", menuItemController.createNewMenuItem);
+router.post("/newmenuitem", menuItemsController.createNewMenuItem);
 //2. Get All Menu Items
-router.get("/findallmenuitem", menuItemController.findAllMenuItems);
+router.get("/findallmenuitem", menuItemsController.findAllMenuItems);
 //3. Update A Menu Item
 
 
