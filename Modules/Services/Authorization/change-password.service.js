@@ -1,5 +1,11 @@
-const User = require('../../ORM/ambrosial/user.model');
+//Prisma
+import {PrismaClient} from '@prisma/client';
+const prisma = new PrismaClient();
 
+//ORM
+// const User = require('../../ORM/ambrosial/user.model');
+
+//Hashing
 const {generateHash} = require('../../Authorization/hash');
 
 module.exports = {
@@ -11,7 +17,11 @@ module.exports = {
       message: null
     }
 
-    const changePasswordData = await User.findOne({where: {username: request.username}});
+    const changePasswordData = await prisma.User.findUnique({
+      where: {
+        username: request.username
+      }
+    });
 
     if(!changePasswordData) {
       result.status = 404;
