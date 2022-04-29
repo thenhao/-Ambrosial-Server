@@ -24,12 +24,12 @@ module.exports = {
         //2. Check if menu item exists
         //3. If exists, return menu results
 
-        const findMenuItem = await MenuItem.findByPk();
-        if (!findMenuItem) {
-            result.message = `Menu Item ${menuItemID} is not found in the database.`;
-            result.status = 404;
-            return result;
-        }
+        // const findMenuItem = await MenuItem.findByPk();
+        // if (!findMenuItem) {
+        //     result.message = `Menu Item ${menuItemID} is not found in the database.`;
+        //     result.status = 404;
+        //     return result;
+        // }
 
         try {
             const addMenuItem = await MenuItem.create({
