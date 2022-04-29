@@ -1,6 +1,7 @@
 //Import models for receipts and order
 const Receipt = require("../../ORM/ambrosial/receipts.model.js");
 const DistinctOrderList = require("../../ORM/ambrosial/distinct-order-list.model");
+const req = require("express/lib/request");
 
 module.exports = {
     // Method for finding one receipt
@@ -63,7 +64,6 @@ module.exports = {
 
     // Method for create receipt
     createReceipt: async(orderNoId, totalPrice) => {
-
         // Define the result object that will to be sent to the client
         let result = {
             message:null,
@@ -105,7 +105,8 @@ module.exports = {
 
 
     // Method for update receipt
-    updateReceipt: async(orderNoId, totalPrice) => {
+    updateReceipt: async(receiptID, totalPrice) => {
+        
         // Define the result object that will to be sent to the client
         let result = {
             message:null,
@@ -113,31 +114,31 @@ module.exports = {
             data: null
         }
 
-        // Find order by order No        
-        const receipt = await DistinctOrderList.findByPk(orderNoId);
+        // // Find receipt by receipt ID        
+        // const receipt = await Receipt.findOne({
+        //     where: {
+        //         receiptID: receiptID
+        //     }
+        //   });
 
-        // If order does not exist, send error message
-        if(!receipt){
-            result.message = `Order Number ${orderNoId} is not found`;
-            result.status = 404;
-            return result;
-        }
+        // //If receipt does not exist, send error message
+        // if(!receipt){
+        //     result.message = `Receipt Number ${receiptID} is not found`;
+        //     result.status = 404;
+        //     return result;
+        // }
 
-        // If order exist, update receipts
+        // If order exist, update receipt
         try {
             //Update receipt object
-            const receipt = await Receipt.update({ 
-                where: {
-                    orderNoId : orderNoId, 
-                },
-                data: {
-                totalPrice : totalPrice,
-                },
-            });
+            const newReceipt = await Receipt.update(
+                {totalPrice: req.body.totalPrice},
+                {where: {receiptID: req.params.receiptID}}
+            );
     
-            await receipt.save();
+            await newReceipt.save();
             console.log('Updated receipt is saved to the database');
-            result.data = receipt;
+            result.data = newReceipt;
             result.status = 200;
             result.message = "Receipt update successful";
             return result;
@@ -145,6 +146,7 @@ module.exports = {
         } catch(error) {
             result.message = `Receipt update unsuccessful`;
             result.status = 500;
+            console.log(error)
             return result;
         }
     },
@@ -153,7 +155,7 @@ module.exports = {
 
 
     // Method for delete receipt
-    deleteReceipt: async(orderNoId) => {
+    deleteReceipt: async(receiptID) => {
         // Define the result object that will to be sent to the client
         let result = {
             message:null,
@@ -161,22 +163,22 @@ module.exports = {
             data: null
         }
 
-        // Find receipt by order No        
-        const receipt = await DistinctOrderList.findByPk(orderNoId);
+        // Find receipt by receipt ID        
+        const receipt = await Receipt.findByPk(receiptID);
 
         // If receipt does not exist, send error message
         if(!receipt){
-            result.message = `Order Number ${orderNoId} is not found`;
+            result.message = `Receipt ID ${receiptID} is not found`;
             result.status = 404;
             return result;
         }
 
-        // If receipt exist, detele receipt
+        // If receipt exist, delete receipt
         try {
             //Create receipt object
-            const receipt = await Receipt.delete({ 
+            const receipt = await Receipt.destroy({ 
                 where: {
-                    orderNoId: orderNoId,
+                    receiptID : req.params.receiptID
                 },
             });
     
@@ -189,6 +191,7 @@ module.exports = {
         } catch(error) {
             result.message = `Receipt deletion unsuccessful`;
             result.status = 500;
+            console.log(error)
             return result;
         }
     }

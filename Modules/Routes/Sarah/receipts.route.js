@@ -13,7 +13,7 @@ const receiptsController = new ReceiptsController();
 router.get('/receipts', receiptsController.findAllReceipts);
 router.get("/receipts/:orderNoId", receiptsController.findSpecificReceipt);
 router.post('/createreceipt', receiptsController.createReceipt);
-router.put('/updatereceipt/:orderNoId', receiptsController.updateReceipt);
-router.delete('/deletereceipt/:orderNoId', receiptsController.deleteReceipt);
+router.put('/updatereceipt/:receiptID', receiptsController.updateReceipt);
+router.delete('/deletereceipt/:receiptID', receiptsController.deleteReceipt);
 
 module.exports = router;
