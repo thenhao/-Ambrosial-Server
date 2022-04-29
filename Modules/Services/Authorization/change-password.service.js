@@ -23,6 +23,8 @@ module.exports = {
     result.message = `Password has been changed`;
   
     let newHash = await generateHash(request.password);
+    changePasswordData.password = newHash;
+    await changePasswordData.password.save();
     
     return result;
   }
