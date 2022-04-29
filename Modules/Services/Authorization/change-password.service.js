@@ -24,7 +24,7 @@ module.exports = {
   
     let newHashedPwd = await generateHash(request.password);
     changePasswordData.password = newHashedPwd;
-    await changePasswordData.password.save();
+    await changePasswordData.save();
     
     return result;
   }
