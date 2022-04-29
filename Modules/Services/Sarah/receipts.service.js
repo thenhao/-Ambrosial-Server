@@ -118,7 +118,7 @@ module.exports = {
 
         // If order does not exist, send error message
         if(!receipt){
-            result.message = `Order Number ${orderNo} is not found`;
+            result.message = `Order Number ${orderNoId} is not found`;
             result.status = 404;
             return result;
         }
