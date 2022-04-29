@@ -17,29 +17,30 @@ const menuItemsService = require("../../Services/Jeffery/menu-items.service");
 //Using Class
 class MenuItemsController {
 
-  async createNewMenuItem(req, res) {
+  //1. Create New Menu Item
+  async createNewMenuItem(req, res, next) {
 
-    const { menuItemID, src, alt, type, price } = req.body;
+    const { menuItemID, src, alt, type, price, category, chefRecommendation } = req.body;
 
     const schema = Joi.object().keys({
       menuItemID: Joi.number().required(),
-      src: Joi.string().trim().required(),
+      src: Joi.string().required(),
       alt: Joi.string().required(),
       type: Joi.string().required(),
       price: Joi.number().required(),
+      category: Joi.string().required(),
+      chefRecommendation: Joi.boolean().required(),
     });
 
     const validation = schema.validate(req.body);
     if (validation) {
-      const result = await menuItemsService.createNewMenuItem(menuItemID, src, alt, type, price);
+      const result = await menuItemsService.createNewMenuItem(menuItemID, src, alt, type, price, category, chefRecommendation);
       res.json({ data: result.data, status: result.status, message: result.message })
     } else if (!validation) {
       res.status(400).json({ message: "Incorrect request data" })
     }
 
 
-
-    // console.log(typeof req.params.FIN);
 
     // const schema = Joi.object().keys({
     //     FIN: Joi.number().required()
@@ -59,10 +60,23 @@ class MenuItemsController {
     // //return the result from the service
     // return res.json({data:result.data, status: result.status, message:result.message});
   }
-  async findAll(req, res) {
-    const result = await menuItemsService.findAll();
+
+  //2. Get All Menu Items
+
+  async findAllMenuItems(req, res, next) {
+    const result = await menuItemsService.findAllMenuItems();
     res.status(result.status);
     return res.json({ data: result.data, status: result.status, message: result.message });
   }
+
+  //3. Update Menu Item
+
+  //4. Delete Menu Item
+  async deleteMenuItems(req, res, next) {
+    const result = await menuItemsService.findAllMenuItems(menuItemID);
+    res.status(result.status);
+    return res.json({ data: result.data, status: result.status, message: result.message });
+  }
+
 }
 module.exports = MenuItemsController;

@@ -1,7 +1,7 @@
-const { DataTypes, Model} = require("sequelize");
-const {sequelize} = require('../setup');
+const { DataTypes, Model } = require("sequelize");
+const { sequelize } = require('../setup');
 
-class MenuItem extends Model {}
+class MenuItem extends Model { }
 
 MenuItem.init(
   {
@@ -20,25 +20,25 @@ MenuItem.init(
       allowNull: false,
     },
     type: {
-       type: DataTypes.STRING,
-        allowNull: false,
+      type: DataTypes.STRING,
+      allowNull: false,
     },
     price: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
+    category: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    chefRecommendation: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
     },
     createdAt: {
       type: DataTypes.DATE,
       field: "created_at",
       defaultValue: new Date(),
-    },
-    category: {
-      type: DataTypes.STRING,
-       allowNull: false,
-   },
-    chefRecommendation: {
-    type: DataTypes.BOOLEAN,
-     allowNull: false,
     },
     updatedAt: {
       type: DataTypes.DATE,
