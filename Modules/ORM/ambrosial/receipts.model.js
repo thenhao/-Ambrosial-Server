@@ -18,7 +18,7 @@ Receipt.init(
       allowNull: false,
     },
     totalPrice: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.DECIMAL(10, 2),
         allowNull: false,
     },
     createdAt: {
