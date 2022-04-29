@@ -15,7 +15,7 @@ class ReceiptsController {
 
         // Implement validation, else throw an error
         try {
-            schema.validate({ orderNoId : req.params.orderNo });
+            schema.validate({ orderNoId : req.params.orderNoId });
         } catch(error) {
             res.status(400);
             return res.json({message:"Incorrect request data"})
@@ -59,6 +59,7 @@ class ReceiptsController {
         if (validation) {
             const result = await receiptsService.createReceipt(orderNoId, totalPrice);
             res.json({data: result.data, status: result.status, message: result.message})
+            console.log(result.data)
         } else if (!validation) {
             res.status(400).json({message: result.message})
         }
