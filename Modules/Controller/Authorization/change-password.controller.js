@@ -6,7 +6,7 @@ class ChangePasswordController {
   async changePassword(req, res){
 
     const schema = Joi.object().keys({
-      username: Joi..string().trim().required(),
+      username: Joi.string().trim().required(),
       password: Joi.string().trim().required()
     })  
 
