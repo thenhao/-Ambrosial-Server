@@ -4,10 +4,10 @@ const DistinctOrderList = require("../../ORM/ambrosial/distinct-order-list.model
 
 module.exports = {
     // Method for finding one receipt
-    findSpecificReceipt: async(orderNo) => {
+    findSpecificReceipt: async (orderNo) => {
         // Define the result object that will to be sent to the client
         let result = {
-            message:null,
+            message: null,
             status: null,
             data: null
         }
@@ -16,7 +16,7 @@ module.exports = {
         const order = await DistinctOrderList.findByPk(orderNo);
 
         // If order does not exist, send error message
-        if(!order){
+        if (!order) {
             result.message = `Order No ${orderNo} is not found`;
             result.status = 404;
             return result;
@@ -33,10 +33,10 @@ module.exports = {
 
 
     // Method for finding all receipts
-    findAllReceipts: async() => {
+    findAllReceipts: async () => {
         // Define the result object that will to be sent to the client
         let result = {
-            message:null,
+            message: null,
             status: null,
             data: null
         }
@@ -45,7 +45,7 @@ module.exports = {
         const allReceipts = await Receipt.findAll();
 
         // If receipts do not exist, send error message
-        if(!allReceipts){
+        if (!allReceipts) {
             result.message = `No receipts found`;
             result.status = 404;
             return result;
@@ -62,21 +62,21 @@ module.exports = {
 
 
     // Method for create receipt
-    createReceipt: async(orderNo) => {
+    createReceipt: async (orderNo) => {
         // Define the result object that will to be sent to the client
         let result = {
-            message:null,
+            message: null,
             status: null,
             data: null
         }
 
-        try{
+        try {
             //Create receipt object
-            const receipt = await Receipt.create({ 
-                orderNo : orderNo, 
-                totalPrice : totalPrice
+            const receipt = await Receipt.create({
+                orderNo: orderNo,
+                totalPrice: totalPrice
             });
-    
+
             await receipt.save();
             console.log('Receipt is saved to the database');
             result.data = receipt;
@@ -84,7 +84,7 @@ module.exports = {
             result.message = "Receipt creation successful";
             return result;
 
-        } catch(error) {
+        } catch (error) {
             result.message = `Receipt creation unsuccessful`;
             result.status = 500;
             return result;
@@ -95,10 +95,10 @@ module.exports = {
 
 
     // Method for update receipt
-    updateReceipt: async(orderNo, totalPrice) => {
+    updateReceipt: async (orderNo, totalPrice) => {
         // Define the result object that will to be sent to the client
         let result = {
-            message:null,
+            message: null,
             status: null,
             data: null
         }
@@ -107,20 +107,20 @@ module.exports = {
         const receipt = await DistinctOrderList.findByPk(orderNo);
 
         // If order does not exist, send error message
-        if(!receipt){
+        if (!receipt) {
             result.message = `Order No ${orderNo} is not found`;
             result.status = 404;
             return result;
         }
 
         // If order exist, update receipts
-        try{
+        try {
             //Update receipt object
-            const receipt = await Receipt.update({ 
-                orderNo : orderNo, 
-                totalPrice : totalPrice
+            const receipt = await Receipt.update({
+                orderNo: orderNo,
+                totalPrice: totalPrice
             });
-    
+
             await receipt.save();
             console.log('New receipt is saved to the database');
             result.data = receipt;
@@ -128,7 +128,7 @@ module.exports = {
             result.message = "Receipt update successful";
             return result;
 
-        } catch(error) {
+        } catch (error) {
             result.message = `Receipt update unsuccessful`;
             result.status = 500;
             return result;
@@ -139,10 +139,10 @@ module.exports = {
 
 
     // Method for delete receipt
-    deleteReceipt: async(orderNo) => {
+    deleteReceipt: async (orderNo) => {
         // Define the result object that will to be sent to the client
         let result = {
-            message:null,
+            message: null,
             status: null,
             data: null
         }
@@ -151,20 +151,20 @@ module.exports = {
         const receipt = await DistinctOrderList.findByPk(orderNo);
 
         // If receipt does not exist, send error message
-        if(!receipt){
+        if (!receipt) {
             result.message = `Order No ${orderNo} is not found`;
             result.status = 404;
             return result;
         }
 
         // If receipt exist, detele receipt
-        try{
+        try {
             //Create receipt object
-            const receipt = await Receipt.delete({ 
-                orderNo : orderNo, 
-                totalPrice : totalPrice
+            const receipt = await Receipt.delete({
+                orderNo: orderNo,
+                totalPrice: totalPrice
             });
-    
+
             await receipt.destroy();
             console.log('Receipt is deleted from the database');
             result.data = receipt;
@@ -172,7 +172,7 @@ module.exports = {
             result.message = "Receipt deletion successful";
             return result;
 
-        } catch(error) {
+        } catch (error) {
             result.message = `Receipt deletion unsuccessful`;
             result.status = 500;
             return result;

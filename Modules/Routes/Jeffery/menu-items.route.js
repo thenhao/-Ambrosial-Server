@@ -37,7 +37,8 @@ router.post("/new-mi", menuItemsController.createNewMenuItem);
 router.get("/findall-mi", menuItemsController.findAllMenuItems);
 //3. Update A Menu Item
 router.put("/update-mi/:menuItemID", menuItemsController.updateMenuItem);
-
+//4. Delete A Menu Item
+router.delete("/delete-mi/:menuItemID", menuItemsController.deleteMenuItem);
 
 // router.get('/newrecord', async (req, res) => {
 //     const list = await medicalRecordModel.findAll();

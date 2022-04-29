@@ -111,8 +111,32 @@ module.exports = {
         result.status = 200;
         result.data = selectMenuItem;
         return result;
-    }
+    },
 
 
     //4. Delete Menu Item
+    deleteMenuItem: async (menuItemID) => {
+
+        let result = {
+            message: null,
+            status: null,
+            data: null
+        }
+
+        const removeMenuItem = await MenuItem.findByPk(menuItemID);
+
+        if (!removeMenuItem) {
+            result.message = `Menu Item ${menuItemID} is not valid. Please check database.`;
+            result.status = 400;
+            return result;
+        }
+
+        await removeMenuItem.destroy();
+        result.message = `Menu Item ${menuItemID} was deleted successfully.`;
+        result.status = 200;
+        result.data = removeMenuItem;
+        return result;
+    },
+
+
 }

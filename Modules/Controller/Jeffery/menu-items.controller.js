@@ -113,5 +113,19 @@ class MenuItemsController {
   //   return res.json({ data: result.data, status: result.status, message: result.message });
   // }
 
+  async deleteMenuItem(req, res, next) {
+
+    console.log(`Request to delete recipe id ${req.params.menuItemID}`);
+
+    const result = await menuItemsService.deleteMenuItem(req.params.menuItemID);
+
+    res.status(result.status);
+
+    return res.json({ data: result.data, message: result.message });
+  }
+
+
+
+
 }
 module.exports = MenuItemsController;
