@@ -15,7 +15,7 @@ const User = require("./Modules/ORM/ambrosial/user.model");
 const DistinctOrderList = require("./Modules/ORM/ambrosial/distinct-order-list.model");
 const MenuItem = require("./Modules/ORM/ambrosial/menu-item.model");
 const ComputedOrders = require("./Modules/ORM/ambrosial/computed-orders.model");
-const Receipt = require("./Modules/ORM/ambrosial/receipt.model");
+const Receipt = require("./Modules/ORM/ambrosial/receipts.model");
 const PaymentInvoice = require("./Modules/ORM/ambrosial/payment-invoice.model");
 
 
