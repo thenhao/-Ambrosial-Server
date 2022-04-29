@@ -42,8 +42,11 @@ app.use(medRecordRoute);
 
 // //Tianhao
 // //*******************routes import**********************
-// const supervisorViewMC = require("./Tianhao/supervisor.viewmc.routes");
+ const orderCrud = require("./Tianhao/admin.order-crud.routes");
 // //*******************routes use**********************
-// app.use(supervisorViewMC);
+ app.use(orderCrud);
+
+const distinctOrderCrud = require("./Tianhao/admin.distinct-order-list-crud.routes");
+app.use(distinctOrderCrud);
 
 module.exports = app;

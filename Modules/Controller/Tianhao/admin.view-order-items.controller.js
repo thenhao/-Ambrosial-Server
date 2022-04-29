@@ -7,19 +7,21 @@ class AdminViewOrderItemsController{
     async findSpecificOrder(req, res, next){
         console.log(typeof req.params.orderNo);
 
+        const convertedOrderNo = parseInt(req.params.orderNo);
+
         const schema = Joi.object().keys({
-            orderID: Joi.number().required()
+            orderNo: Joi.number().required()
         });
 
         try{
-            schema.validate({ orderID:req.params.orderNo });
+            schema.validate({ orderNo:convertedOrderNo });
         }catch(error){
             res.status(400);
             return res.json({message:"Incorrect request data"})
         }
 
         //use the service layer
-        const result = await adminViewOrderItemsService.findSpecificOrder(req.params.orderNo);
+        const result = await adminViewOrderItemsService.findSpecificOrder(convertedOrderNo);
         res.status(result.status);
 
         //return the result from the service
