@@ -27,7 +27,7 @@ ComputedOrders.init(
         allowNull: false,
     },
     totalItemPrice: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.DECIMAL(10, 2),
         allowNull: false,
     },
     tableNo: {
