@@ -3,10 +3,10 @@ const app = express();
 app.use(express.json());
 
 //Authorization
-const register = require('../Routes/Authorization/register');
+const register = require('../Routes/Authorization/register.routes');
 app.use(register);
 
-const login = require('../Routes/Authorization/login');
+const login = require('../Routes/Authorization/login.routes');
 app.use(login);
 
 //Jeffery
