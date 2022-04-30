@@ -80,7 +80,7 @@ class ReceiptsController {
         // Use receipts service layer
         const validation = schema.validate(req.body);
         if (validation) {
-            const result = await receiptsService.updateReceipt(orderNoId, totalPrice);
+            const result = await receiptsService.updateReceipt(req.params.receiptID, req.body);
             res.json({ data: result.data, status: result.status, message: result.message })
         } else if (!validation) {
             res.status(400).json({ message: result.message })
@@ -94,11 +94,11 @@ class ReceiptsController {
     async deleteReceipt(req, res) {
         // Define validation for req.body
         const schema = Joi.object().keys({
-            orderNoId: Joi.number().required()
+            receiptID: Joi.number().required()
         });
 
         // Use receipts service layer
-        const result = await receiptsService.deleteReceipt(req.params.orderNoId);
+        const result = await receiptsService.deleteReceipt(req.params.receiptID);
         res.status(result.status);
 
         // Return the result from the service
