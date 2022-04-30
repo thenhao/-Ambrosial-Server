@@ -48,10 +48,13 @@ app.use(chefRecommendation);
 // //Tianhao
 // //*******************routes import**********************
 const orderCrud = require("./Tianhao/admin.order-crud.routes");
+const distinctOrderCrud = require("./Tianhao/admin.distinct-order-list-crud.routes");
+const paymentCrud = require("./Tianhao/admin.payment-crud.routes");
 // //*******************routes use**********************
 app.use(orderCrud);
-
-const distinctOrderCrud = require("./Tianhao/admin.distinct-order-list-crud.routes");
 app.use(distinctOrderCrud);
+app.use(paymentCrud);
+
+
 
 module.exports = app;

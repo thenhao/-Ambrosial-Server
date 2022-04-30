@@ -16,6 +16,7 @@ PaymentInvoice.init(
     receiptID: {
       type: DataTypes.INTEGER,
       allowNull: false,
+      unique: true
     },
     paymentType: {
         type: DataTypes.STRING,

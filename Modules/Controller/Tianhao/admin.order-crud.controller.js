@@ -1,6 +1,6 @@
 const Joi = require('joi');
 //import the service
-const OrderCrudService = require("../../Services/Tianhao/order-crud.service");
+const OrderCrudService = require("../../Services/Tianhao/admin.order-crud.service");
 //remove next from req, res
 class OrderCrudController{
     
@@ -80,6 +80,36 @@ class OrderCrudController{
         res.status(result.status);
 
         //return the result from the service
+        return res.json({data:result.data, status: result.status, message:result.message});
+    }
+
+    async findSpecificOrder(req, res, next){
+        console.log(typeof req.params.orderNo);
+
+        const convertedOrderNo = parseInt(req.params.orderNo);
+
+        const schema = Joi.object().keys({
+            orderNo: Joi.number().required()
+        });
+
+        try{
+            schema.validate({ orderNo:convertedOrderNo });
+        }catch(error){
+            res.status(400);
+            return res.json({message:"Incorrect request data"})
+        }
+
+        //use the service layer
+        const result = await OrderCrudService.findSpecificOrder(convertedOrderNo);
+        res.status(result.status);
+
+        //return the result from the service
+        return res.json({data:result.data, status: result.status, message:result.message});
+    }
+
+    async findAllOrders(req, res, next){
+        const result = await OrderCrudService.findAllOrders();
+        res.status(result.status);
         return res.json({data:result.data, status: result.status, message:result.message});
     }
 
