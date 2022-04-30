@@ -1,11 +1,11 @@
-const menuCategoryItem = require("../../ORM/menu-item.model.js");
-const category = require("../../ORM/menu-item.model.js");
+
 const MenuItem = require("../../ORM/ambrosial/menu-item.model.js");
 
 
 
 module.exports = {
     findSpecificMenuCategory: async(category) =>{
+        console.log (category);
         
         let result = {
             message:null,
@@ -14,7 +14,12 @@ module.exports = {
         }
 
        
-        const menuItem = await MenuItem.findByFk(menuItem);
+        const menuItem = await MenuItem.findAll({
+            where:{
+                category:category
+            }
+    
+});
         
         
 
@@ -25,13 +30,12 @@ module.exports = {
             return result;
         }
 
-        const category = await type.findByFk(menuCategoryItem.FIN);
+        result.data = menuItem;
+        result.status = 200;
+        result.message = `All menu items are shown `;
+        return result
 
-        if(!type){
-            result.message = `Category  ${menuCategoryItem.FIN} not found`;
-            result.status = 404;
-            return result;
-        }
+       
 
     },
 
@@ -42,7 +46,7 @@ module.exports = {
             data: null
         }
         
-       const foodCategory = await foodCategory.findAll({include: category});
+       const foodCategory = await MenuItem.findAll({include: category});
 
       if(!foodCategory){
             result.message = `No such categories found`;
@@ -54,7 +58,6 @@ module.exports = {
         result.status = 200;
         result.message = `All food items are as found `;
 
-       ;
         return result;
     }
 }

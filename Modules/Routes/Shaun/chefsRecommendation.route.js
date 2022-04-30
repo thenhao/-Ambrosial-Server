@@ -6,7 +6,7 @@ const router = express.Router();
 
 //user story: as an admin, I will be able to link certain menu items as the chefs recommendations
 
-router.put("/ChefsRecommendations", chefsRecommendationController.ChefsRecommendationController);
-router.put("/ChefsRecommendations/MenuFoodItem", ChefsRecommendationController.MenuFoodItem);
+router.get("/ChefsRecommendations", chefsRecommendationController.ChefsRecommendedItems);
+//router.get("/ChefsRecommendations/MenuFoodItem", ChefsRecommendationController.MenuFoodItem);
 
 module.exports = router;

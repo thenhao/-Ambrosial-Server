@@ -1,5 +1,4 @@
-const RecommendedItem = require("../../ORM/menu-item.model.js");
-const MenuFoodItem = require("../../ORM/menu-item.model.js");
+const MenuFoodItem = require("../../ORM/ambrosial/menu-item.model");
 
 module.exports = {
 

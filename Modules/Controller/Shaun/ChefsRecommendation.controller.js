@@ -11,4 +11,7 @@ class ChefsRecommendationController{
 const result = await ViewChefsRecommendation.findChefsRecommendation();
  res.status(result.status);
         return res.json({data:result.data, status: result.status, message:result.message});
-      }}
+      }
+    }
+
+      module.exports = ChefsRecommendationController;
