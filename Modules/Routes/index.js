@@ -15,11 +15,11 @@ app.use(changePassword);
 //Jeffery
 //*******************routes import**********************
 //***place here****
-// const medRecordRoute = require('../Routes/Jeffery/medRecord.route');
+const menuItemRoute = require('../Routes/Jeffery/menu-items.route');
 
-// //*******************routes use**********************
-// //***place here****
-// app.use(medRecordRoute);
+//*******************routes use**********************
+//***place here****
+app.use(menuItemRoute);
 
 
 // //Regina
@@ -42,9 +42,9 @@ app.use(receipts);
 
 // //Tianhao
 // //*******************routes import**********************
- const orderCrud = require("./Tianhao/admin.order-crud.routes");
+const orderCrud = require("./Tianhao/admin.order-crud.routes");
 // //*******************routes use**********************
- app.use(orderCrud);
+app.use(orderCrud);
 
 const distinctOrderCrud = require("./Tianhao/admin.distinct-order-list-crud.routes");
 app.use(distinctOrderCrud);
