@@ -56,7 +56,7 @@ module.exports = {
 
 
 
-        if(!orderList){
+        if(!orderList || (orderList.length < 1)){
             result.message = `Order ID ${order.orderNoOld} is not found`;
             result.status = 404;
             return result;
@@ -114,4 +114,70 @@ module.exports = {
         result.message = `Deletion of order record of orderID ${orderNo} successful `;
         return result;
     },
+
+    findSpecificOrder: async(distinctOrderNo) =>{
+        //The result object is where we will put the result to be sent to the client
+        let result = {
+            message:null,
+            status: null,
+            data: null
+        }
+
+        //What we want:
+        //1. check if order records exists
+        //2. check if menu item exists
+        //3. if exists then return order results
+        const distinctOrderRecord = await DistinctOrderList.findAll({
+            where:{
+                orderNo:distinctOrderNo
+            }
+        });
+        
+        if(!distinctOrderRecord || (distinctOrderRecord.length < 1)){
+            result.message = `Order with ${distinctOrderNo} is not found`;
+            result.status = 404;
+            return result;
+        }
+
+        const distinctOrderList = await DistinctOrderList.findByPk(distinctOrderRecord[0].orderNoId);
+        
+        if(!distinctOrderList){
+            result.message = `Order ID ${distinctOrderNo} is not found`;
+            result.status = 404;
+            return result;
+        }
+
+
+        result.data = distinctOrderList;
+        result.status = 200;
+        result.message = `Data retrieval for Distinct Order Record with Order ID:${distinctOrderRecord[0].orderNoId} successful `;
+        return result;
+    },
+
+    findAllOrders: async()=>{
+        let result = {
+            message:null,
+            status: null,
+            data: null
+        }
+        
+        const disitnctOrders = await DistinctOrderList.findAll();
+
+        //What we want:
+        //1. check all orders exists
+        //2. Include the menu item data inside the check
+        //3. If no, return error message.
+        
+        //check if order exists
+        if(!disitnctOrders){
+            result.message = `No distinct order records found`;
+            result.status = 404;
+            return result;
+        }
+
+        result.data = disitnctOrders;
+        result.status = 200;
+        result.message = `Data retrieval for all distinct orders successful `;
+        return result;
+    }
 }

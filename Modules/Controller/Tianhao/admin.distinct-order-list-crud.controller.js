@@ -73,6 +73,36 @@ class DistinctOrderCrudController{
         return res.json({data:result.data, status: result.status, message:result.message});
     }
 
+    async findSpecificOrder(req, res, next){
+        console.log(typeof req.params.distinctOrderNo);
+
+        const convertedDistinctOrderNo = parseInt(req.params.distinctOrderNo);
+
+        const schema = Joi.object().keys({
+            orderNo: Joi.number().required()
+        });
+
+        try{
+            schema.validate({ distinctOrderNo:convertedDistinctOrderNo });
+        }catch(error){
+            res.status(400);
+            return res.json({message:"Incorrect request data"})
+        }
+
+        //use the service layer
+        const result = await DistinctOrderCrudService.findSpecificOrder(convertedDistinctOrderNo);
+        res.status(result.status);
+
+        //return the result from the service
+        return res.json({data:result.data, status: result.status, message:result.message});
+    }
+
+    async findAllOrders(req, res, next){
+        const result = await DistinctOrderCrudService.findAllOrders();
+        res.status(result.status);
+        return res.json({data:result.data, status: result.status, message:result.message});
+    }
+
 
 }
 

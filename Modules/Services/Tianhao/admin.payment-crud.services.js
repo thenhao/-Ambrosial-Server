@@ -71,7 +71,7 @@ module.exports = {
 
 
 
-        if(!receiptList){
+        if(!receiptList || (receiptList.length < 1)){
             result.message = `receipt ID ${payment.receiptId} is not found`;
             result.status = 404;
             return result;
@@ -92,6 +92,12 @@ module.exports = {
                 receiptID:payment.receiptId
             }
         });
+
+        if(!PaymentRecord || (PaymentRecord.length < 1)){
+            result.message = `Payment Record with ${PaymentRecord[0].receiptID} is not found`;
+            result.status = 404;
+            return result;
+        }
 
         const specificPaymentRecord = await PaymentInvoice.findByPk(PaymentRecord[0].receiptID);
 
@@ -172,7 +178,7 @@ module.exports = {
             }
         });
         
-        if(!orderLogRecords){
+        if(!orderLogRecords || (orderLogRecords.length < 1)){
             result.message = `No such order with orderNoId: ${receiptLog.orderNoId} found`;
             result.status = 404;
             return result;

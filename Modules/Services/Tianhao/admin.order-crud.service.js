@@ -155,7 +155,7 @@ module.exports = {
             }
         });
         
-        if(!distinctOrderRecord){
+        if(!distinctOrderRecord || (distinctOrderRecord.length < 1)){
             result.message = `Order with ${orderNo} is not found`;
             result.status = 404;
             return result;
@@ -169,9 +169,13 @@ module.exports = {
             return result;
         }
 
-        const computedOrderRecords = await ComputedOrders.findAll({where:{orderNoId:orderList.orderNoId}});
+        const computedOrderRecords = await ComputedOrders.findAll({
+            where:{
+                orderNoId:orderList.orderNoId
+            }
+        });
         
-        if(!computedOrderRecords){
+        if(!computedOrderRecords || (computedOrderRecords.length < 1)){
             result.message = `Order(s) with ${orderList.orderNo} is not found`;
             result.status = 404;
             return result;
