@@ -6,7 +6,7 @@ class RegisterController {
   async register(req, res){
 
     const schema = Joi.object().keys({
-      role: Joi.string().trim().required(),
+      // role: Joi.string().trim().required(),
       username: Joi.string().trim().required(),
       password: Joi.string().trim().required()
     })

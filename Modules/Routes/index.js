@@ -3,23 +3,23 @@ const app = express();
 app.use(express.json());
 
 //Authorization
-// const register = require('../Routes/Authorization/register.route');
-// app.use(register);
+const register = require('../Routes/Authorization/register.route');
+app.use(register);
 
-// const login = require('../Routes/Authorization/login.route');
-// app.use(login);
+const login = require('../Routes/Authorization/login.route');
+app.use(login);
 
-// const changePassword = require('../Routes/Authorization/change-password.route');
-// app.use(changePassword);
+const changePassword = require('../Routes/Authorization/change-password.route');
+app.use(changePassword);
 
 //Jeffery
 //*******************routes import**********************
 //***place here****
-const medRecordRoute = require('../Routes/Jeffery/medRecord.route');
+// const medRecordRoute = require('../Routes/Jeffery/medRecord.route');
 
-//*******************routes use**********************
-//***place here****
-app.use(medRecordRoute);
+// //*******************routes use**********************
+// //***place here****
+// app.use(medRecordRoute);
 
 
 // //Regina
@@ -28,11 +28,11 @@ app.use(medRecordRoute);
 // //*******************routes use**********************
 // app.use(createCurrentVisit);
 
-// // Sarah
-// // Import route for receipts
-// const receipts = require("../Routes/Sarah/receipts.route");
-// // Use route for receipts
-// app.use(receipts);
+// Sarah
+// Import route for receipts
+const receipts = require("../Routes/Sarah/receipts.route");
+// Use route for receipts
+app.use(receipts);
 
 // //Shaun
 // //*******************routes import**********************
