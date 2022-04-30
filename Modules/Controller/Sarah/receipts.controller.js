@@ -74,7 +74,7 @@ class ReceiptsController {
         // Define validation for req.body
         const schema = Joi.object().keys({
             orderNoId: Joi.number().required(),
-            totalPrice: Joi.number().required()
+            totalPrice: Joi.number().precision(2).required()
         });
 
         // Use receipts service layer
