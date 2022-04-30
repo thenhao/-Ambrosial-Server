@@ -48,37 +48,41 @@ module.exports = {
         //3. if exists then find order record
         //4. if order record found then update
 
-        const orderList = await DistinctOrderList.findOne({
+        const orderList = await DistinctOrderList.findAll({
             where: {
               orderNo: order.orderNoOld
             }
           });
-        
+
+
+
         if(!orderList){
             result.message = `Order ID ${order.orderNoOld} is not found`;
             result.status = 404;
             return result;
         }
 
-        // const orderListbyPk = await DistinctOrderList.findByPk(orderList.orderNo);
+        const orderListbyPk = await DistinctOrderList.findByPk(orderList[0].orderNoId);
+        
+        console.log(orderListbyPk);
 
-        // if(!orderListbyPk){
-        //     result.message = `Order ID ${order.orderNo} is not found`;
-        //     result.status = 404;
-        //     return result;
-        // }
+        if(!orderListbyPk){
+            result.message = `Order ID ${order.orderNo} is not found`;
+            result.status = 404;
+            return result;
+        }
 
-        // const updatedDistinctOrderRecord = await orderListbyPk.update({
-        //     orderNo: order.orderNoNew
-        //   });
+        const updatedDistinctOrderRecord = await orderListbyPk.update({
+            orderNo: order.orderNoNew
+          });
         
 
         await updatedDistinctOrderRecord.save();
         
-        result.data = updatedDistinctOrderRecord;
-        result.status = 200;
-        result.message = `Data update for Distinct Order Record with Order ID:${order.orderNoOld} successful `;
-        return result;
+         result.data = updatedDistinctOrderRecord;
+         result.status = 200;
+         result.message = `Data update for Distinct Order Record with Order ID:${order.orderNoOld} successful `;
+         return result;
     },
 
     deleteDistinctOrder: async(orderNo) =>{
