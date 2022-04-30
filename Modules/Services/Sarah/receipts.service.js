@@ -107,7 +107,7 @@ module.exports = {
 
 
     // Method for update receipt
-    updateReceipt: async(receiptID) => {
+    updateReceipt: async(receiptID, newReceipt) => {
 
         // Define the result object that will to be sent to the client
         let result = {
@@ -129,17 +129,12 @@ module.exports = {
         // If order exist, update receipt
         try {
             //Update receipt object
-            const receipt = await Receipt.update({
-                where: {
-                    orderNoId: orderNoId,
-                },
-                data: {
-                    totalPrice: totalPrice,
-                },
-            });
+
+                specificReceipt.orderNoId = newReceipt.orderNoId,
+                specificReceipt.totalPrice = newReceipt.totalPrice,
 
 
-            await newReceipt.save();
+            await specificReceipt.save();
 
             console.log('Updated receipt is saved to the database');
             result.data = newReceipt;
