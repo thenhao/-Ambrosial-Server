@@ -3,33 +3,37 @@ const app = express();
 app.use(express.json());
 
 //Authorization
-const register = require('../Routes/Authorization/register.routes');
+const register = require('../Routes/Authorization/register.route');
 app.use(register);
 
-const login = require('../Routes/Authorization/login.routes');
+const login = require('../Routes/Authorization/login.route');
 app.use(login);
+
+const changePassword = require('../Routes/Authorization/change-password.route');
+app.use(changePassword);
 
 //Jeffery
 //*******************routes import**********************
 //***place here****
-const medRecordRoute = require('../Routes/Jeffery/medRecord.route');
+const menuItemRoute = require('../Routes/Jeffery/menu-items.route');
 
 //*******************routes use**********************
 //***place here****
-app.use(medRecordRoute);
+app.use(menuItemRoute);
 
 
-//Regina
-//*******************routes import**********************
-const createCurrentVisit = require("../Routes/Regina/clinicCurrentVisit.route");
-//*******************routes use**********************
-app.use(createCurrentVisit);
+// //Regina
+// //*******************routes import**********************
+// const createCurrentVisit = require("../Routes/Regina/clinicCurrentVisit.route");
+// //*******************routes use**********************
+// app.use(createCurrentVisit);
 
 // Sarah
 // Import route for receipts
 const receipts = require("../Routes/Sarah/receipts.route");
 // Use route for receipts
 app.use(receipts);
+
 
 //Shaun
 //*******************routes import**********************
@@ -40,10 +44,14 @@ const chefRecommendation = require("../Routes/Shaun/chefsRecommendation.route");
 app.use(menuCategory);
 app.use(chefRecommendation);
 
-//Tianhao
-//*******************routes import**********************
-const supervisorViewMC = require("./Tianhao/supervisor.viewmc.routes");
-//*******************routes use**********************
-app.use(supervisorViewMC);
+
+// //Tianhao
+// //*******************routes import**********************
+const orderCrud = require("./Tianhao/admin.order-crud.routes");
+// //*******************routes use**********************
+app.use(orderCrud);
+
+const distinctOrderCrud = require("./Tianhao/admin.distinct-order-list-crud.routes");
+app.use(distinctOrderCrud);
 
 module.exports = app;

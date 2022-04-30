@@ -9,9 +9,11 @@ const router = express.Router();
 const ReceiptsController = require('../../Controller/Sarah/receipts.controller.js');
 const receiptsController = new ReceiptsController();
 
-// Use Read Method for finding all receipts
-// Use Read Method for finding one receipt
-router.get('/receipts', receiptsController.findMany);
-router.get("/receipts/:orderNo", receiptsController.findOne);
+// Use CRUD Method for receipts
+router.get('/receipts', receiptsController.findAllReceipts);
+router.get("/receipts/:orderNoId", receiptsController.findSpecificReceipt);
+router.post('/createreceipt', receiptsController.createReceipt);
+router.put('/updatereceipt/:receiptID', receiptsController.updateReceipt);
+router.delete('/deletereceipt/:receiptID', receiptsController.deleteReceipt);
 
 module.exports = router;

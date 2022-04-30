@@ -1,7 +1,12 @@
-const User = require('../../ORM/ambrosial/user.model');
+//Prisma
+const {PrismaClient} = require('@prisma/client');
+const prisma = new PrismaClient();
 
-const {generateJWT} = require('../../Authorization/jwt');
-const {verifyHash} = require('../../Authorization/hash');
+//Sequelize
+// const User = require('../../ORM/ambrosial/user.model');
+
+//Hashing
+const {generateHash, verifyHash} = require('../../Authorization/hash');
 
 module.exports = {
   
@@ -12,28 +17,50 @@ module.exports = {
       message: null
     }
 
-    const changePasswordData = await User.findOne({where: {password: request.password}});
+    //Sequelize query
+    // const changePasswordData = await User.findFirst({where: {username: request.username}});
+
+    //Prisma Query
+    const changePasswordData = await prisma.User.findFirst({
+      where: {
+        username: request.username
+      }
+    });
 
     if(!changePasswordData) {
       result.status = 404;
-      result.message = `New password matches previous password, kindly use another.`;
+      result.message = `User does not exist. Kindly register`;
       return result;
     }
-  
-    let verificationResult = await verifyHash(request.password, changePasswordData.password);
 
-    if(verificationResult) { // set encoding data for JWT
-      
-      let data = {}
-  
-      let token = generateJWT(data);
+    let passwordVerification = await verifyHash(request.password, changePasswordData.password);
+
+    if(!passwordVerification) {
+
+      let newHashedPwd = await generateHash(request.password);
+
+      //Sequelize
+      // await changePasswordData.save();
+
+      //Prisma
+      await prisma.User.update({
+        where: {
+          username: request.username,
+        },
+        data: {
+          password: newHashedPwd,
+        },
+      })
+
       result.status = 200;
-      result.message = token;
+      result.message = `Password has been changed`;
+      
       return result;
     }
     else {
-      result.status = 401;
-      result.message = `Verification failed. Invalid entry.`;
+      result.status = 409;
+      result.message = `Updated password is the same as the previous password. Kindly use a different password.`
+
       return result;
     }
   }

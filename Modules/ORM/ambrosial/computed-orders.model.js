@@ -14,7 +14,7 @@ ComputedOrders.init(
       autoIncrement: true,
       allowNull: false,
     },
-    orderNo: {
+    orderNoId: {
       type: DataTypes.INTEGER,
       allowNull: false,
   },
@@ -27,7 +27,7 @@ ComputedOrders.init(
         allowNull: false,
     },
     totalItemPrice: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.DECIMAL(10, 2),
         allowNull: false,
     },
     tableNo: {
@@ -63,7 +63,7 @@ ComputedOrders.belongsTo(
     },
     DistinctOrderList,
     {
-      foreignKey: 'orderNo'
+      foreignKey: 'orderNoId'
     },
   );
 

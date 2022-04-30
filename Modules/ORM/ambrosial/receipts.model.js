@@ -13,12 +13,12 @@ Receipt.init(
       autoIncrement: true,
       allowNull: false,
     },
-    orderNo: {
+    orderNoId: {
       type: DataTypes.INTEGER,
       allowNull: false,
     },
     totalPrice: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.DECIMAL(10, 2),
         allowNull: false,
     },
     createdAt: {
@@ -42,7 +42,7 @@ Receipt.init(
 Receipt.belongsTo(
   DistinctOrderList,
     {
-      foreignKey: 'orderNo'
+      foreignKey: 'orderNoId'
     },
   );
 
