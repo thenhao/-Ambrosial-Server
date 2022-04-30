@@ -139,4 +139,83 @@ module.exports = {
         result.message = `Deletion of payment record of invoice ID ${invoiceID} successful `;
         return result;
     },
+
+    findSpecificPayment: async(invoiceID) =>{
+        //The result object is where we will put the result to be sent to the client
+        let result = {
+            message:null,
+            status: null,
+            data: null
+        }
+
+        //What we want:
+        //1. check if orderNo exists in the order list
+        const paymentLogs = await PaymentInvoice.findByPk(invoiceID);
+        
+        if(!paymentLogs){
+            result.message = `Invoice ID ${invoiceID} is not found`;
+            result.status = 404;
+            return result;
+        }
+
+        const receiptLog = await Receipt.findByPk(paymentLogs.receiptID);
+
+        if(!receiptLog){
+            result.message = `No such receipt ${paymentLogs.receiptID} found`;
+            result.status = 404;
+            return result;
+        }
+
+        const orderLogRecords = await DistinctOrderList.findAll({
+            where:{
+                orderNoId:receiptLog.orderNoId
+            }
+        });
+        
+        if(!orderLogRecords){
+            result.message = `No such order with orderNoId: ${receiptLog.orderNoId} found`;
+            result.status = 404;
+            return result;
+        }
+
+        const orderLog = await DistinctOrderList.findByPk(orderLogRecords[0].orderNoId);
+
+        if(!orderLog){
+            result.message = `No such order with orderNo: ${orderLogRecords[0].orderNoId} found`;
+            result.status = 404;
+            return result;
+        }
+
+        result.data = paymentLogs;
+        result.status = 200;
+        result.message = `Data retrieval for payment invoice with ID:${invoiceID} for order ${orderLog.orderNo} successful `;
+        return result;
+    },
+
+    findAllPayments: async()=>{
+        let result = {
+            message:null,
+            status: null,
+            data: null
+        }
+        
+        const paymentLogs = await PaymentInvoice.findAll({include: Receipt});
+
+        //What we want:
+        //1. check all orders exists
+        //2. Include the menu item data inside the check
+        //3. If no, return error message.
+        
+        //check if order exists
+        if(!paymentLogs){
+            result.message = `No payment records found`;
+            result.status = 404;
+            return result;
+        }
+
+        result.data = paymentLogs;
+        result.status = 200;
+        result.message = `Data retrieval for all payments successful `;
+        return result;
+    }
 }
