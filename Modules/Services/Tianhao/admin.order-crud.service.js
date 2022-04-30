@@ -168,7 +168,7 @@ module.exports = {
             result.status = 404;
             return result;
         }
-
+        
         const computedOrderRecords = await ComputedOrders.findAll({
             where:{
                 orderNoId:orderList.orderNoId
