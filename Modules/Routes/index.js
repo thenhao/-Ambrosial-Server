@@ -33,9 +33,12 @@ app.use(receipts);
 
 //Shaun
 //*******************routes import**********************
-const employeeWorking = require("../Routes/Shaun/isEmployeeAtWork.route");
+//const employeeWorking = require("../Routes/Shaun/isEmployeeAtWork.route");
+const menuCategory = require("../Routes/Shaun/MenuCategory.route");
+const chefRecommendation = require("../Routes/Shaun/chefsRecommendation.route");
 //*******************routes use**********************
-app.use(employeeWorking);
+app.use(menuCategory);
+app.use(chefRecommendation);
 
 //Tianhao
 //*******************routes import**********************
