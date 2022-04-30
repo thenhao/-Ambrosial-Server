@@ -1,7 +1,7 @@
 //Import models for receipts and order
 const Receipt = require("../../ORM/ambrosial/receipts.model.js");
 const DistinctOrderList = require("../../ORM/ambrosial/distinct-order-list.model");
-const req = require("express/lib/request");
+//const req = require("express/lib/request");
 
 module.exports = {
     // Method for finding one receipt
@@ -43,7 +43,8 @@ module.exports = {
         }
 
         // Find all receipts
-        const allReceipts = await Receipt.findAll({ include: DistinctOrderList });
+        const allReceipts = await Receipt.findAll();
+
 
         // If receipts do not exist, send error message
         if (!allReceipts) {
@@ -63,12 +64,8 @@ module.exports = {
 
 
     // Method for create receipt
-<<<<<<< HEAD
-    createReceipt: async (orderNoId, totalPrice) => {
-
-=======
     createReceipt: async(orderNoId, totalPrice) => {
->>>>>>> main
+
         // Define the result object that will to be sent to the client
         let result = {
             message: null,
@@ -110,12 +107,8 @@ module.exports = {
 
 
     // Method for update receipt
-<<<<<<< HEAD
-    updateReceipt: async (orderNoId, totalPrice) => {
-=======
-    updateReceipt: async(receipt) => {
-        
->>>>>>> main
+    updateReceipt: async(receiptID) => {
+
         // Define the result object that will to be sent to the client
         let result = {
             message: null,
@@ -124,17 +117,11 @@ module.exports = {
         }
 
         // Find receipt by receipt ID        
-        const receipt = await Receipt.findByPk(receipt.receiptID);
+        const specificReceipt = await Receipt.findByPk(receiptID);
 
-<<<<<<< HEAD
-        // If order does not exist, send error message
-        if (!receipt) {
-            result.message = `Order Number ${orderNoId} is not found`;
-=======
         //If receipt does not exist, send error message
-        if(!receipt){
-            result.message = `Receipt Number ${receipt.receiptID} is not found`;
->>>>>>> main
+        if(!specificReceipt){
+            result.message = `Receipt Number ${receiptID} is not found`;
             result.status = 404;
             return result;
         }
@@ -142,7 +129,6 @@ module.exports = {
         // If order exist, update receipt
         try {
             //Update receipt object
-<<<<<<< HEAD
             const receipt = await Receipt.update({
                 where: {
                     orderNoId: orderNoId,
@@ -152,15 +138,9 @@ module.exports = {
                 },
             });
 
-            await receipt.save();
-=======
-            const newReceipt = await Receipt.update({
-                orderNoId: receipt.orderNoId,
-                totalPrice: receipt.totalPrice
-            });
-    
+
             await newReceipt.save();
->>>>>>> main
+
             console.log('Updated receipt is saved to the database');
             result.data = newReceipt;
             result.status = 200;
@@ -179,11 +159,8 @@ module.exports = {
 
 
     // Method for delete receipt
-<<<<<<< HEAD
-    deleteReceipt: async (orderNoId) => {
-=======
+
     deleteReceipt: async(receiptID) => {
->>>>>>> main
         // Define the result object that will to be sent to the client
         let result = {
             message: null,
@@ -192,16 +169,12 @@ module.exports = {
         }
 
         // Find receipt by receipt ID        
-        const receipt = await Receipt.findByPk(receiptID);
+        const specificReceipt = await Receipt.findByPk(receiptID);
 
         // If receipt does not exist, send error message
-<<<<<<< HEAD
-        if (!receipt) {
-            result.message = `Order Number ${orderNoId} is not found`;
-=======
-        if(!receipt){
+
+        if(!specificReceipt){
             result.message = `Receipt ID ${receiptID} is not found`;
->>>>>>> main
             result.status = 404;
             return result;
         }
@@ -209,18 +182,12 @@ module.exports = {
         // If receipt exist, delete receipt
         try {
             //Create receipt object
-<<<<<<< HEAD
-            const receipt = await Receipt.delete({
-=======
-            const receipt = await Receipt.destroy({ 
->>>>>>> main
-                where: {
-                    receiptID : req.params.receiptID
-                },
-            });
+            await specificReceipt.destroy();
+    
+            const allReceipts = await Receipt.findAll();
 
-            await receipt.destroy();
             console.log('Receipt is deleted from the database');
+            result.data = allReceipts;
             result.status = 200;
             result.message = "Receipt deletion successful";
             return result;
