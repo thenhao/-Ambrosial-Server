@@ -105,7 +105,7 @@ module.exports = {
 
 
     // Method for update receipt
-    updateReceipt: async(receiptID, totalPrice) => {
+    updateReceipt: async(receipt) => {
         
         // Define the result object that will to be sent to the client
         let result = {
@@ -114,27 +114,23 @@ module.exports = {
             data: null
         }
 
-        // // Find receipt by receipt ID        
-        // const receipt = await Receipt.findOne({
-        //     where: {
-        //         receiptID: receiptID
-        //     }
-        //   });
+        // Find receipt by receipt ID        
+        const receipt = await Receipt.findByPk(receipt.receiptID);
 
-        // //If receipt does not exist, send error message
-        // if(!receipt){
-        //     result.message = `Receipt Number ${receiptID} is not found`;
-        //     result.status = 404;
-        //     return result;
-        // }
+        //If receipt does not exist, send error message
+        if(!receipt){
+            result.message = `Receipt Number ${receipt.receiptID} is not found`;
+            result.status = 404;
+            return result;
+        }
 
         // If order exist, update receipt
         try {
             //Update receipt object
-            const newReceipt = await Receipt.update(
-                {totalPrice: req.body.totalPrice},
-                {where: {receiptID: req.params.receiptID}}
-            );
+            const newReceipt = await Receipt.update({
+                orderNoId: receipt.orderNoId,
+                totalPrice: receipt.totalPrice
+            });
     
             await newReceipt.save();
             console.log('Updated receipt is saved to the database');
