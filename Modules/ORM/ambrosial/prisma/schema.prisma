@@ -39,7 +39,7 @@ model Computed_Orders {
   quantity            Int
   totalItemPrice      Decimal               @db.Decimal(10, 2)
   tableNo             Int
-  orderStatus         Int
+  orderStatus         String                @db.VarChar(50)
   createdAt           DateTime              @default(now())
   updatedAt           DateTime              @updatedAt
   menuItem            Menu_Item             @relation(fields: [menuItemId], references: [menuItemId])
