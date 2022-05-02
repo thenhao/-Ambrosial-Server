@@ -253,6 +253,12 @@ module.exports = {
             data: null
         }
         
+        //This must be commented for the other to work
+        //(prisma)
+        //const disitnctOrders = await prisma.Distinct_Order_List.findMany(); 
+
+        //This must be commented for the other to work
+        //(sequelize)
         const disitnctOrders = await DistinctOrderList.findAll();
 
         //What we want:
@@ -261,7 +267,7 @@ module.exports = {
         //3. If no, return error message.
         
         //check if order exists
-        if(!disitnctOrders){
+        if(!disitnctOrders || (disitnctOrders.length < 1)){
             result.message = `No distinct order records found`;
             result.status = 404;
             return result;
