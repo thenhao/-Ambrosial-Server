@@ -32,7 +32,7 @@ model Menu_Item {
 
 model Computed_Orders {
   orderId             Int                   @id @default(autoincrement())
-  orderNo             Int
+  orderNoId           Int
   menuItemId          Int
   quantity            Int
   totalItemPrice      Decimal               @db.Decimal(10, 2)
@@ -41,7 +41,7 @@ model Computed_Orders {
   createdAt           DateTime              @default(now())
   updatedAt           DateTime              @updatedAt
   menuItem            Menu_Item             @relation(fields: [menuItemId], references: [menuItemId])
-  distinctOrderList   Distinct_Order_List   @relation(fields: [orderNo], references: [orderNo])
+  distinctOrderList   Distinct_Order_List   @relation(fields: [orderNoId], references: [orderNoId])
 }
 
 
@@ -57,11 +57,11 @@ model Distinct_Order_List {
 
 model Receipt {
   receiptId           Int                   @id @default(autoincrement())
-  orderNo             Int                   @unique
+  orderNoId             Int                   @unique
   totalItemPrice      Decimal               @db.Decimal(10, 2)    
   createdAt           DateTime              @default(now())
   updatedAt           DateTime              @updatedAt
-  distinctOrderList   Distinct_Order_List   @relation(fields: [orderNo], references: [orderNo])
+  distinctOrderList   Distinct_Order_List   @relation(fields: [orderNoId], references: [orderNoId])
   paymentInvoiceId    Payment_Invoice[]
 }
 

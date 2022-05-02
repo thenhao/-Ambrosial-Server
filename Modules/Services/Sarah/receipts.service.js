@@ -1,7 +1,11 @@
-//Import models for receipts and order
+//prisma version:
+// const { PrismaClient } = require('@prisma/client');
+// const prisma = new PrismaClient();
+
+//sequelise version: Import models for receipts and order
 const Receipt = require("../../ORM/ambrosial/receipts.model.js");
 const DistinctOrderList = require("../../ORM/ambrosial/distinct-order-list.model");
-//const req = require("express/lib/request");
+
 
 module.exports = {
     // Method for finding one receipt
