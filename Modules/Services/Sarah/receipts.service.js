@@ -1,7 +1,7 @@
 //This must be commented for the other to work
 //prisma version:
- const { PrismaClient } = require('@prisma/client');
- const prisma = new PrismaClient();
+// const { PrismaClient } = require('@prisma/client');
+// const prisma = new PrismaClient();
 
  //This must be commented for the other to work
 //sequelise version: Import models for receipts and order
@@ -225,7 +225,8 @@ module.exports = {
             status: null,
             data: null
         }
-
+        //This must be commented for the other to work
+        // (sequelize)
         // Find receipt by receipt ID        
         const specificReceipt = await Receipt.findByPk(receiptID);
 
@@ -239,12 +240,33 @@ module.exports = {
 
         // If receipt exist, delete receipt
         try {
-            //Create receipt object
+            
+            //This must be commented for the other to work
+            // (prisma)
+            // const deleteReceipt = await prisma.Receipt.delete({
+            //     where: {
+            //         receiptId: receiptID,
+            //     },
+            //   })
+
+            // const allReceipts = await prisma.Receipt.findMany({
+            // // Returns all distinct order field
+            // include: {
+            //             distinctOrderList: true
+            //         }
+            //     }
+            // );  
+            
+            //This must be commented for the other to work
+            // (sequelize)
+            //Delete receipt object
             await specificReceipt.destroy();
-    
-            const allReceipts = await Receipt.findAll();
+
+            //Return all receipts from database    
+            const allReceipts = await Receipt.findAll({include:DistinctOrderList});
 
             console.log('Receipt is deleted from the database');
+            
             result.data = allReceipts;
             result.status = 200;
             result.message = "Receipt deletion successful";

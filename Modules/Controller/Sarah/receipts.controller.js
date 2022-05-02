@@ -95,13 +95,15 @@ class ReceiptsController {
 
     // Function to delete one receipt
     async deleteReceipt(req, res) {
-        // Define validation for req.body
+
+        const convertedReceiptIdToInt = parseInt(req.params.receiptID);
+        // Define validation for req.params
         const schema = Joi.object().keys({
             receiptID: Joi.number().required()
         });
 
         // Use receipts service layer
-        const result = await receiptsService.deleteReceipt(req.params.receiptID);
+        const result = await receiptsService.deleteReceipt(convertedReceiptIdToInt);
         res.status(result.status);
 
         // Return the result from the service
