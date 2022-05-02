@@ -50,23 +50,23 @@ class DistinctOrderCrudController{
     }
 
     async deleteDistinctOrder(req, res, next){
-        console.log(typeof req.params.orderNo);
+        console.log(typeof req.params.orderNoId);
 
-        const convertedOrderNo = parseInt(req.params.orderNo);
+        const convertedOrderNoId = parseInt(req.params.orderNoId);
 
         const schema = Joi.object().keys({
             orderNo:Joi.number().required(),
         });
 
         try{
-            schema.validate( convertedOrderNo );
+            schema.validate( convertedOrderNoId );
         }catch(error){
             res.status(400);
             return res.json({message:"Incorrect request data"})
         }
 
         //use the service layer
-        const result = await DistinctOrderCrudService.deleteDistinctOrder(convertedOrderNo);
+        const result = await DistinctOrderCrudService.deleteDistinctOrder(convertedOrderNoId);
         res.status(result.status);
 
         //return the result from the service

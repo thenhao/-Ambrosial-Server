@@ -82,10 +82,11 @@ class MenuItemsController {
       }))
     };
 
+    const convertedMenuItemID = parseInt(req.params.menuItemID);
 
     try {
       //If error, change the require body to the individual variable
-      let result = await menuItemsService.updateMenuItem(req.params.menuItemID, req.body);
+      let result = await menuItemsService.updateMenuItem(convertedMenuItemID, req.body);
 
       res.status(result.status);
 
@@ -117,7 +118,9 @@ class MenuItemsController {
 
     console.log(`Request to delete recipe id ${req.params.menuItemID}`);
 
-    const result = await menuItemsService.deleteMenuItem(req.params.menuItemID);
+    const convertedMenuItemID = parseInt(req.params.menuItemID);
+
+    const result = await menuItemsService.deleteMenuItem(convertedMenuItemID);
 
     res.status(result.status);
 

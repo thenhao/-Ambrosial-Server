@@ -6,9 +6,9 @@ class MenuCategoryController{
     
     async findSpecificMenuCategory(req, res, next){
         console.log(typeof req.params.category);
-
+        
         const schema = Joi.object().keys({
-            menuCategory: Joi.number().required()
+            menuCategory: Joi.string().required()
         });
 
         try{
@@ -26,7 +26,7 @@ class MenuCategoryController{
         return res.json({data:result.data, status: result.status, message:result.message});
     }
 
-    async findAll(res,){
+    async findAll(req, res, next){
         const result = await ViewMenuCategoryService.findAll();
         res.status(result.status);
         return res.json({data:result.data, status: result.status, message:result.message});

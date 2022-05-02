@@ -79,19 +79,21 @@ class PaymentCrudController{
     async findSpecificPayment(req, res, next){
         console.log(typeof req.params.invoiceID);
 
+        const convertedinvoiceId = parseInt(req.params.invoiceID);
+
         const schema = Joi.object().keys({
             invoiceID: Joi.number().required()
         });
 
         try{
-            schema.validate({ invoiceID:req.params.invoiceID });
+            schema.validate({ invoiceID:convertedinvoiceId });
         }catch(error){
             res.status(400);
             return res.json({message:"Incorrect request data"})
         }
 
         //use the service layer
-        const result = await PaymentCrudService.findSpecificPayment(req.params.invoiceID);
+        const result = await PaymentCrudService.findSpecificPayment(convertedinvoiceId);
         res.status(result.status);
 
         //return the result from the service

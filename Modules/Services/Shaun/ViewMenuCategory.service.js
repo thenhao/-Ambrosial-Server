@@ -1,4 +1,11 @@
+//This must be commented for the other to work
+//prisma version:
+const { PrismaClient } = require('@prisma/client');
+const prisma = new PrismaClient();
 
+
+//This must be commented for the other to work
+//sequelise version: Import models for receipts and order
 const MenuItem = require("../../ORM/ambrosial/menu-item.model.js");
 
 
@@ -13,13 +20,21 @@ module.exports = {
             data: null
         }
 
+        //This must be commented for the other to work
+        // (prisma)
+        // const menuItem = await prisma.Menu_Item.findMany({
+
+        //     where: {
+        //         category: category
+        //       }
+        //     }
+        //   );
        
         const menuItem = await MenuItem.findAll({
             where:{
                 category:category
             }
-    
-});
+        });
         
         
 
@@ -45,8 +60,12 @@ module.exports = {
             status: null,
             data: null
         }
-        
-       const foodCategory = await MenuItem.findAll({include: category});
+       
+       //This must be commented for the other to work
+        //(prisma)
+        // const foodCategory = await prisma.Menu_Item.findMany();
+
+       const foodCategory = await MenuItem.findAll();
 
       if(!foodCategory){
             result.message = `No such categories found`;
