@@ -219,6 +219,17 @@ module.exports = {
         //1. check if order records exists
         //2. check if menu item exists
         //3. if exists then return order results
+
+        //This must be commented for the other to work
+        //(prisma)
+        // const distinctOrderList = await prisma.Distinct_Order_List.findUnique({
+        //     where:{
+        //         orderNo:distinctOrderNo
+        //     }
+        // }); 
+
+        //This must be commented for the other to work
+        //(sequelize)
         const distinctOrderRecord = await DistinctOrderList.findAll({
             where:{
                 orderNo:distinctOrderNo
@@ -233,7 +244,7 @@ module.exports = {
 
         const distinctOrderList = await DistinctOrderList.findByPk(distinctOrderRecord[0].orderNoId);
         
-        if(!distinctOrderList){
+        if(!distinctOrderList || (distinctOrderList.length < 1)){
             result.message = `Order ID ${distinctOrderNo} is not found`;
             result.status = 404;
             return result;
@@ -242,7 +253,7 @@ module.exports = {
 
         result.data = distinctOrderList;
         result.status = 200;
-        result.message = `Data retrieval for Distinct Order Record with Order ID:${distinctOrderRecord[0].orderNoId} successful `;
+        result.message = `Data retrieval for Distinct Order Record with Order No:${distinctOrderNo} successful `;
         return result;
     },
 
