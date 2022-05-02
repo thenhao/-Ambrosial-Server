@@ -281,7 +281,17 @@ module.exports = {
 
         //What we want:
         //1. check if orderNo exists in the order list
-        const paymentLogs = await PaymentInvoice.findByPk(invoiceID);
+        //This must be commented for the other to work
+        // (prisma)  
+        const paymentLogs = await prisma.Payment_Invoice.findUnique({
+            where: {
+                paymentInvoiceId:invoiceID
+            }
+          });
+
+        //This must be commented for the other to work
+        // (sequelize)  
+        //const paymentLogs = await PaymentInvoice.findByPk(invoiceID);
         
         if(!paymentLogs){
             result.message = `Invoice ID ${invoiceID} is not found`;
@@ -289,19 +299,41 @@ module.exports = {
             return result;
         }
 
-        const receiptLog = await Receipt.findByPk(paymentLogs.receiptID);
+        //This must be commented for the other to work
+        // (prisma)  
+        const receiptLog = await prisma.Receipt.findUnique({
+            where: {
+                receiptId:paymentLogs.receiptId
+            }
+          });
+
+        //This must be commented for the other to work
+        // (sequelize) 
+        //const receiptLog = await Receipt.findByPk(paymentLogs.receiptID);
 
         if(!receiptLog){
-            result.message = `No such receipt ${paymentLogs.receiptID} found`;
+            result.message = `No such receipt ${paymentLogs.receiptId} found`;
+            //result.message = `No such receipt ${paymentLogs.receiptID} found`;
             result.status = 404;
             return result;
         }
 
-        const orderLogRecords = await DistinctOrderList.findAll({
-            where:{
-                orderNoId:receiptLog.orderNoId
+        //This must be commented for the other to work
+        // (prisma)
+        const orderLogRecords = await prisma.Distinct_Order_List.findMany({
+            where: {
+                orderNoId: receiptLog.orderNoId
+              }
             }
-        });
+        );
+        
+        //This must be commented for the other to work
+        //  (sequelize)
+        // const orderLogRecords = await DistinctOrderList.findAll({
+        //     where:{
+        //         orderNoId:receiptLog.orderNoId
+        //     }
+        // });
         
         if(!orderLogRecords || (orderLogRecords.length < 1)){
             result.message = `No such order with orderNoId: ${receiptLog.orderNoId} found`;
@@ -309,7 +341,17 @@ module.exports = {
             return result;
         }
 
-        const orderLog = await DistinctOrderList.findByPk(orderLogRecords[0].orderNoId);
+        //This must be commented for the other to work
+        // (prisma)  
+        const orderLog = await prisma.Distinct_Order_List.findUnique({
+            where: {
+                orderNoId:orderLogRecords[0].orderNoId
+            }
+          });
+
+        //This must be commented for the other to work
+        // (sequelize) 
+        //const orderLog = await DistinctOrderList.findByPk(orderLogRecords[0].orderNoId);
 
         if(!orderLog){
             result.message = `No such order with orderNo: ${orderLogRecords[0].orderNoId} found`;
@@ -332,17 +374,17 @@ module.exports = {
         
         //This must be commented for the other to work
         // (prisma)
-        const paymentLogs = await prisma.Payment_Invoice.findMany({
-            // Returns all receipt field
-            include: {
-                receipt: true
-              }
-            }
-        );
+        // const paymentLogs = await prisma.Payment_Invoice.findMany({
+        //     // Returns all receipt field
+        //     include: {
+        //         receipt: true
+        //       }
+        //     }
+        // );
         
         //This must be commented for the other to work
         //  (sequelize)
-        //const paymentLogs = await PaymentInvoice.findAll({include: Receipt});
+        const paymentLogs = await PaymentInvoice.findAll({include: Receipt});
 
         //What we want:
         //1. check all orders exists
