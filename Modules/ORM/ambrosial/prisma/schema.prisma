@@ -21,10 +21,10 @@ model User {
 
 model Menu_Item {
   menuItemId            Int         @id @default(autoincrement())
-  src                   String      @db.VarChar(50)
+  src                   String      @db.VarChar()
   alt                   String      @db.VarChar(50)
   type                  String      @db.VarChar(50)
-  price                 Int         
+  price                 Decimal     @db.Decimal(10, 2)         
   createdAt             DateTime    @default(now())
   updatedAt             DateTime    @updatedAt
   computedOrders        Computed_Orders[]
@@ -35,7 +35,7 @@ model Computed_Orders {
   orderNo             Int
   menuItemId          Int
   quantity            Int
-  totalItemPrice      Int
+  totalItemPrice      Decimal               @db.Decimal(10, 2)
   tableNo             Int
   orderStatus         Int
   createdAt           DateTime              @default(now())
@@ -46,7 +46,8 @@ model Computed_Orders {
 
 
 model Distinct_Order_List {
-  orderNo             Int         @id @default(autoincrement())
+  orderNoId             Int         @id @default(autoincrement())
+  orderNo               Int         @unique
   createdAt           DateTime    @default(now())
   updatedAt           DateTime    @updatedAt 
   computedOrders      Computed_Orders[]
@@ -56,8 +57,8 @@ model Distinct_Order_List {
 
 model Receipt {
   receiptId           Int                   @id @default(autoincrement())
-  orderNo             Int
-  totalItemPrice      Int    
+  orderNo             Int                   @unique
+  totalItemPrice      Decimal               @db.Decimal(10, 2)    
   createdAt           DateTime              @default(now())
   updatedAt           DateTime              @updatedAt
   distinctOrderList   Distinct_Order_List   @relation(fields: [orderNo], references: [orderNo])
@@ -67,7 +68,7 @@ model Receipt {
 
 model Payment_Invoice {
   paymentInvoiceId       Int         @id   @default(autoincrement())
-  receiptId              Int
+  receiptId              Int         @unique
   paymentType            String      @db.VarChar(50)
   paymentStatus          String      @db.VarChar(50)
   createdAt              DateTime    @default(now())

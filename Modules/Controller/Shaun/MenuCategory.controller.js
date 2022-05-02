@@ -1,26 +1,25 @@
 const Joi = require('joi');
 const ViewMenuCategoryService = require('../../Services/Shaun/ViewMenuCategory.service.js');
 //import the service
-const supervisorService = require("../../Services/Shaun/ViewMenuCategory.service.js");
 
 class MenuCategoryController{
     
     async findSpecificMenuCategory(req, res, next){
-        console.log(typeof req.params.type);
+        console.log(typeof req.params.category);
 
         const schema = Joi.object().keys({
-            menuItemID: Joi.number().required()
+            menuCategory: Joi.number().required()
         });
 
         try{
-            schema.validate({ menuItemID:req.params.type });
+            schema.validate({ menuCategory:req.params.category });
         }catch(error){
             res.status(400);
             return res.json({message:"Item not found"})
         }
 
         
-        const result = await ViewMenuCategoryService.findSpecificMenuCategory(req.params.type);
+        const result = await ViewMenuCategoryService.findSpecificMenuCategory(req.params.category);
         res.status(result.status);
 
        
