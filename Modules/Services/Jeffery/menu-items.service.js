@@ -1,3 +1,10 @@
+//This must be commented for the other to work
+//prisma version:
+const { PrismaClient } = require('@prisma/client');
+const prisma = new PrismaClient();
+
+//This must be commented for the other to work
+//sequelize version:
 const MenuItem = require("../../ORM/ambrosial/menu-item.model.js");
 
 
@@ -32,20 +39,41 @@ module.exports = {
         // }
 
         try {
-            const addMenuItem = await MenuItem.create({
-                menuItemID: menuItemID,
-                src: src,
-                alt: alt,
-                type: type,
-                price: price,
-                category: category,
-                chefRecommendation: chefRecommendation,
+            //This must be commented for the other to work
+            //Create receipt object (sequelize)
+            // const addMenuItem = await MenuItem.create({
+            //     menuItemID: menuItemID,
+            //     src: src,
+            //     alt: alt,
+            //     type: type,
+            //     price: price,
+            //     category: category,
+            //     chefRecommendation: chefRecommendation,
 
+            // });
+
+            //await addMenuItem.save();
+
+            //This must be commented for the other to work
+            //Create receipt object (prisma)
+            const receipt = await prisma.Menu_Item.create({
+                data: {
+                    src: src,
+                    alt: alt,
+                    type: type,
+                    price: price,
+                    category: category,
+                    chefRecommendation: chefRecommendation,
+            }
             });
 
-            await addMenuItem.save();
             console.log('New Menu Item is saved to the database');
-            result.data = addMenuItem;
+            //This must be commented for the other to work
+            //Create receipt object (prisma)
+            result.data = receipt;
+            //This must be commented for the other to work
+            //Create receipt object (sequelize)
+            //result.data = addMenuItem;
             result.status = 200;
             result.message = "New Menu Item creation successful";
             return result;

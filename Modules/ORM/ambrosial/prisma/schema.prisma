@@ -24,7 +24,9 @@ model Menu_Item {
   src                   String      @db.VarChar()
   alt                   String      @db.VarChar(50)
   type                  String      @db.VarChar(50)
-  price                 Decimal     @db.Decimal(10, 2)         
+  price                 Decimal     @db.Decimal(10, 2)
+  category              String      @db.VarChar(50)
+  chefRecommendation    Boolean     @default(false)
   createdAt             DateTime    @default(now())
   updatedAt             DateTime    @updatedAt
   computedOrders        Computed_Orders[]
