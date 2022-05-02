@@ -1,3 +1,10 @@
+//This must be commented for the other to work
+//prisma version:
+// const { PrismaClient } = require('@prisma/client');
+// const prisma = new PrismaClient();
+
+//This must be commented for the other to work
+//sequelize version:
 const DistinctOrderList = require("../../ORM/ambrosial/distinct-order-list.model");
 
 
@@ -16,14 +23,39 @@ module.exports = {
         //2. check if menu item exists
         //3. if exists then create order record
 
-        const orderList = await DistinctOrderList.findByPk(order.orderNo);
+        //This must be commented for the other to work
+        //(prisma)
+        // const orderList = await prisma.Distinct_Order_List.findUnique({
+        //     where: {
+        //         orderNo: order.orderNo
+        //     }
+        // });
+
+        //This must be commented for the other to work
+        //(sequelize)
         
-        if(orderList){
+        const orderList = await DistinctOrderList.findAll({
+            where: {
+                    orderNo: order.orderNo
+            }
+        });
+        
+        if(orderList || orderList.length > 0){
             result.message = `Order No ${order.orderNo} has been created`;
             result.status = 404;
             return result;
         }
 
+        //This must be commented for the other to work
+        //(prisma)
+        // const distinctOrderRecord = await prisma.Distinct_Order_List.create({
+        //     data: {
+        //     orderNo: order.orderNo,
+        // }
+        // });
+
+        //This must be commented for the other to work
+        //(sequelize)
         const distinctOrderRecord = await DistinctOrderList.create({
             orderNo:order.orderNo,
         });
