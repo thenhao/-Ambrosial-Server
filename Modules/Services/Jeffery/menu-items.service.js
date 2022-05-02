@@ -183,6 +183,20 @@ module.exports = {
             data: null
         }
 
+        
+
+        //This must be commented for the other to work
+        // (prisma)
+        // const deleteMenuItem = await prisma.Menu_Item.delete({
+        //     where: {
+        //         menuItemId: menuItemID,
+        //     },
+        //     })
+
+        // const allMenuItems = await prisma.Menu_Item.findMany(); 
+
+        //This must be commented for the other to work
+        // (sequelize)
         const removeMenuItem = await MenuItem.findByPk(menuItemID);
 
         if (!removeMenuItem) {
@@ -192,8 +206,15 @@ module.exports = {
         }
 
         await removeMenuItem.destroy();
+
         result.message = `Menu Item ${menuItemID} was deleted successfully.`;
         result.status = 200;
+        //This must be commented for the other to work
+        //(prisma)
+        //result.data = allMenuItems;
+
+        //This must be commented for the other to work
+        //(sequelize)
         result.data = removeMenuItem;
         return result;
     },
