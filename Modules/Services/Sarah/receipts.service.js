@@ -1,10 +1,12 @@
+//This must be commented for the other to work
 //prisma version:
-// const { PrismaClient } = require('@prisma/client');
-// const prisma = new PrismaClient();
+ const { PrismaClient } = require('@prisma/client');
+ const prisma = new PrismaClient();
 
+ //This must be commented for the other to work
 //sequelise version: Import models for receipts and order
-const Receipt = require("../../ORM/ambrosial/receipts.model.js");
-const DistinctOrderList = require("../../ORM/ambrosial/distinct-order-list.model");
+//const Receipt = require("../../ORM/ambrosial/receipts.model.js");
+//const DistinctOrderList = require("../../ORM/ambrosial/distinct-order-list.model");
 
 
 module.exports = {
@@ -17,8 +19,17 @@ module.exports = {
             data: null
         }
 
-        // Find order by order ID        
-        const order = await DistinctOrderList.findByPk(orderNoId);
+        //This must be commented for the other to work
+        // Find order by order ID (prisma)
+        const order = await prisma.Distinct_Order_List.findUnique({
+            where: {
+                orderNoId: orderNoId
+            }
+          });
+        
+        //This must be commented for the other to work
+        // Find order by order ID (sequelize)        
+        //const order = await DistinctOrderList.findByPk(orderNoId);
 
         // If order does not exist, send error message
         if (!order) {

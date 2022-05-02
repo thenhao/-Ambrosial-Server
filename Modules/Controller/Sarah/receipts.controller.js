@@ -13,16 +13,18 @@ class ReceiptsController {
             orderNoId: Joi.number().required()
         });
 
+        const convertedOrderNoIdToInt = parseInt(req.params.orderNoId);
+
         // Implement validation, else throw an error
         try {
-            schema.validate({ orderNoId: req.params.orderNoId });
+            schema.validate({ orderNoId: convertedOrderNoIdToInt });
         } catch (error) {
             res.status(400);
             return res.json({ message: "Incorrect request data" })
         }
 
         // Use receipts service layer
-        const result = await receiptsService.findSpecificReceipt(req.params.orderNoId);
+        const result = await receiptsService.findSpecificReceipt(convertedOrderNoIdToInt);
         res.status(result.status);
 
         // Return the result from the service
