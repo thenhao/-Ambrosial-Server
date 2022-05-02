@@ -41,39 +41,39 @@ module.exports = {
         try {
             //This must be commented for the other to work
             //Create receipt object (sequelize)
-            // const addMenuItem = await MenuItem.create({
-            //     menuItemID: menuItemID,
-            //     src: src,
-            //     alt: alt,
-            //     type: type,
-            //     price: price,
-            //     category: category,
-            //     chefRecommendation: chefRecommendation,
+            const addMenuItem = await MenuItem.create({
+                //menuItemID: menuItemID,
+                src: src,
+                alt: alt,
+                type: type,
+                price: price,
+                category: category,
+                chefRecommendation: chefRecommendation,
 
-            // });
+            });
 
-            //await addMenuItem.save();
+            await addMenuItem.save();
 
             //This must be commented for the other to work
             //Create receipt object (prisma)
-            const receipt = await prisma.Menu_Item.create({
-                data: {
-                    src: src,
-                    alt: alt,
-                    type: type,
-                    price: price,
-                    category: category,
-                    chefRecommendation: chefRecommendation,
-            }
-            });
+            // const receipt = await prisma.Menu_Item.create({
+            //     data: {
+            //         src: src,
+            //         alt: alt,
+            //         type: type,
+            //         price: price,
+            //         category: category,
+            //         chefRecommendation: chefRecommendation,
+            // }
+            // });
 
             console.log('New Menu Item is saved to the database');
             //This must be commented for the other to work
             //Create receipt object (prisma)
-            result.data = receipt;
+            //result.data = receipt;
             //This must be commented for the other to work
             //Create receipt object (sequelize)
-            //result.data = addMenuItem;
+            result.data = addMenuItem;
             result.status = 200;
             result.message = "New Menu Item creation successful";
             return result;
@@ -94,6 +94,12 @@ module.exports = {
             data: null
         }
 
+        //This must be commented for the other to work
+        //(prisma)
+        // const allMenuItems = await prisma.Menu_Item.findMany();
+
+        //This must be commented for the other to work
+        // (sequelize)
         const allMenuItems = await MenuItem.findAll();
 
         if (!allMenuItems) {
@@ -101,6 +107,7 @@ module.exports = {
             result.status = 404;
             return result;
         }
+
 
         result.data = allMenuItems;
         result.status = 200;
