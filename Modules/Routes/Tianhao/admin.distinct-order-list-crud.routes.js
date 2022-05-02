@@ -9,7 +9,7 @@ const distinctOrderCrudController = new DistinctOrderCrudController();
 
 router.post("/createdistinctorder", distinctOrderCrudController.createDistinctOrder);
 router.put("/updatedistinctorder", distinctOrderCrudController.updateDistinctOrder);
-router.delete("/deletedistinctOrder/:orderNo", distinctOrderCrudController.deleteDistinctOrder);
+router.delete("/deletedistinctOrder/:orderNoId", distinctOrderCrudController.deleteDistinctOrder);
 router.get("/viewdistinctorder", distinctOrderCrudController.findAllOrders);
 router.get("/viewspecificdistinctorder/:distinctOrderNo", distinctOrderCrudController.findSpecificOrder);
 
