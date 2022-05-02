@@ -5,8 +5,8 @@
 
  //This must be commented for the other to work
 //sequelise version: Import models for receipts and order
-//const Receipt = require("../../ORM/ambrosial/receipts.model.js");
-//const DistinctOrderList = require("../../ORM/ambrosial/distinct-order-list.model");
+const Receipt = require("../../ORM/ambrosial/receipts.model.js");
+const DistinctOrderList = require("../../ORM/ambrosial/distinct-order-list.model");
 
 
 module.exports = {
@@ -21,15 +21,15 @@ module.exports = {
 
         //This must be commented for the other to work
         // Find order by order ID (prisma)
-        const order = await prisma.Distinct_Order_List.findUnique({
-            where: {
-                orderNoId: orderNoId
-            }
-          });
+        // const order = await prisma.Distinct_Order_List.findUnique({
+        //     where: {
+        //         orderNoId: orderNoId
+        //     }
+        //   });
         
         //This must be commented for the other to work
         // Find order by order ID (sequelize)        
-        //const order = await DistinctOrderList.findByPk(orderNoId);
+        const order = await DistinctOrderList.findByPk(orderNoId);
 
         // If order does not exist, send error message
         if (!order) {
@@ -59,17 +59,17 @@ module.exports = {
 
         //This must be commented for the other to work
         // Find order by order ID (prisma)
-        const allReceipts = await prisma.Receipt.findMany({
-            // Returns all distinct order field
-            include: {
-                distinctOrderList: true
-              }
-            }
-          );
+        // const allReceipts = await prisma.Receipt.findMany({
+        //     // Returns all distinct order field
+        //     include: {
+        //         distinctOrderList: true
+        //       }
+        //     }
+        //   );
 
         //This must be commented for the other to work
         // Find all receipts (sequelize)  
-        //const allReceipts = await Receipt.findAll({include:DistinctOrderList});
+        const allReceipts = await Receipt.findAll({include:DistinctOrderList});
 
 
         // If receipts do not exist, send error message
@@ -111,23 +111,23 @@ module.exports = {
 
             //This must be commented for the other to work
             //Create receipt object (prisma)
-            const receipt = await prisma.Receipt.create({
-                data: {
-                orderNoId: orderNoId,
-                totalItemPrice: totalPrice
-            }
-            });
+            // const receipt = await prisma.Receipt.create({
+            //     data: {
+            //     orderNoId: orderNoId,
+            //     totalItemPrice: totalPrice
+            // }
+            // });
 
             
 
             //This must be commented for the other to work
             //Create receipt object (sequelize)
-            // const receipt = await Receipt.create({
-            //     orderNoId: orderNoId,
-            //     totalPrice: totalPrice
-            // });
+            const receipt = await Receipt.create({
+                orderNoId: orderNoId,
+                totalPrice: totalPrice
+            });
 
-            // await receipt.save();
+            await receipt.save();
 
             console.log('Receipt is saved to the database');
             result.data = receipt;
@@ -156,7 +156,10 @@ module.exports = {
             data: null
         }
 
-        // Find receipt by receipt ID        
+        
+        
+        //This must be commented for the other to work
+        // Find receipt by receipt ID (sequelize)     
         const specificReceipt = await Receipt.findByPk(receiptID);
 
         //If receipt does not exist, send error message
@@ -168,16 +171,36 @@ module.exports = {
 
         // If order exist, update receipt
         try {
-            //Update receipt object
+            //This must be commented for the other to work  
+            //Update receipt object (sequelize) 
 
-                specificReceipt.orderNoId = newReceipt.orderNoId,
-                specificReceipt.totalPrice = newReceipt.totalPrice,
+             specificReceipt.orderNoId = newReceipt.orderNoId,
+             specificReceipt.totalPrice = newReceipt.totalPrice,
 
 
-            await specificReceipt.save();
+             await specificReceipt.save();
+
+            //This must be commented for the other to work
+            //update receipt (prisma)
+            // const updatedReceipt = await prisma.Receipt.update({
+            //     where: {
+            //         receiptId: receiptID,
+            //     },
+            //     data: {
+            //         orderNoId: newReceipt.orderNoId,
+            //         totalItemPrice: newReceipt.totalPrice
+            //     },
+            //   });
 
             console.log('Updated receipt is saved to the database');
+            //This must be commented for the other to work
+            // (prisma)
+            //result.data = updatedReceipt;
+            
+            //This must be commented for the other to work
+            // (sequelize)
             result.data = newReceipt;
+            
             result.status = 200;
             result.message = "Receipt update successful";
             return result;

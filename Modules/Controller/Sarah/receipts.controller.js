@@ -71,7 +71,8 @@ class ReceiptsController {
 
     // Function to update one receipt
     async updateReceipt(req, res) {
-        const { orderNoId, totalPrice } = req.body;
+
+        const convertedReceiptIdToInt = parseInt(req.params.receiptID);
 
         // Define validation for req.body
         const schema = Joi.object().keys({
@@ -81,8 +82,8 @@ class ReceiptsController {
 
         // Use receipts service layer
         const validation = schema.validate(req.body);
-        if (validation) {
-            const result = await receiptsService.updateReceipt(req.params.receiptID, req.body);
+        if (validation) {//
+            const result = await receiptsService.updateReceipt(convertedReceiptIdToInt, req.body);
             res.json({ data: result.data, status: result.status, message: result.message })
         } else if (!validation) {
             res.status(400).json({ message: result.message })
