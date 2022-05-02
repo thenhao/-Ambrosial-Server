@@ -263,6 +263,19 @@ module.exports = {
         //1. check if order records exists
         //2. check if menu item exists
         //3. if exists then return order results
+        
+        //This must be commented for the other to work
+        // (prisma)
+        // const distinctOrderRecord = await prisma.Distinct_Order_List.findMany({
+        //     // Returns all distinct order field
+        //     where: {
+        //         orderNo: orderNo
+        //             }
+        //         }
+        //     );  
+                
+        //This must be commented for the other to work
+        // (sequelize)    
         const distinctOrderRecord = await DistinctOrderList.findAll({
             where:{
                 orderNo:orderNo
@@ -275,32 +288,83 @@ module.exports = {
             return result;
         }
 
+        //This must be commented for the other to work
+        // (prisma)  
+        // const orderList = await prisma.Distinct_Order_List.findUnique({
+        //     where: {
+        //         orderNoId:distinctOrderRecord[0].orderNoId
+        //     }
+        //   });
+
+        //This must be commented for the other to work
+        // (sequelize)  
         const orderList = await DistinctOrderList.findByPk(distinctOrderRecord[0].orderNoId);
         
         if(!orderList){
-            result.message = `Order ID ${orderNo} is not found`;
+            result.message = `Order ID for ${orderNo} is not found`;
             result.status = 404;
             return result;
         }
+
+        //This must be commented for the other to work
+        // (prisma)
+        // const computedOrderRecords = await prisma.Computed_Orders.findMany({
+        //     // Returns all distinct order field
+        //     where: {
+        //         orderNoId: orderList.orderNoId
+        //             },
+        //     include:{
+        //         menuItem:true,
+        //         distinctOrderList:true
+        //     }        
+        //         }
+        //     );  
         
+        //This must be commented for the other to work
+        // (sequelize)  
         const computedOrderRecords = await ComputedOrders.findAll({
             where:{
-                orderNoId:orderList.orderNoId
+                orderNoId:orderList.orderNoId,
+            },
+            include:
+            [
+                {
+                    model: MenuItem,
+                    required: true
+                },
+                {
+                    model: DistinctOrderList,
+                    required: true
+                },  
+            ]
+            
             }
-        });
+            
+            
+        );
         
         if(!computedOrderRecords || (computedOrderRecords.length < 1)){
-            result.message = `Order(s) with ${orderList.orderNo} is not found`;
+            result.message = `Order(s) with ${orderList.orderNoId} is not found`;
             result.status = 404;
             return result;
         }
 
         for(let i =0; i < computedOrderRecords.length; i ++){
-            
+            //This must be commented for the other to work
+            // (prisma)  
+            // const menuItemRecord = await prisma.Menu_Item.findUnique({
+            //     where: {
+            //         menuItemId:computedOrderRecords[i].menuItemId
+            //     }
+            //   });
+
+            //This must be commented for the other to work
+            // (sequelize)  
             const menuItemRecord = await MenuItem.findByPk(computedOrderRecords[i].menuItemID);
             
             if(!menuItemRecord){
-                result.message = `Menu item with ${computedOrderRecords[i].menuItemID} is not found`;
+                result.message = `Menu item with ${computedOrderRecords[i].menuItemId} is not found`;
+                //result.message = `Menu item with ${computedOrderRecords[i].menuItemID} is not found`;
                 result.status = 404;
                 return result;
             }
@@ -322,17 +386,17 @@ module.exports = {
 
         //This must be commented for the other to work
         // (prisma)
-        const orders = await prisma.Computed_Orders.findMany({
-            // Returns all menuitem field
-            include: {
-                menuItem: true
-              }
-            }
-        );
+        // const orders = await prisma.Computed_Orders.findMany({
+        //     // Returns all menuitem field
+        //     include: {
+        //         menuItem: true
+        //       }
+        //     }
+        // );
         
         //This must be commented for the other to work
         //  (sequelize)
-        //const orders = await ComputedOrders.findAll({include: MenuItem});
+        const orders = await ComputedOrders.findAll({include: MenuItem});
 
         //What we want:
         //1. check all orders exists
