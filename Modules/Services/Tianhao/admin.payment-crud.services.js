@@ -100,6 +100,16 @@ module.exports = {
         //3. if exists then find order record
         //4. if order record found then update
 
+        //This must be commented for the other to work
+        //(prisma)
+        // const receiptList = await prisma.Receipt.findMany({
+        //     where: {
+        //         receiptId: payment.receiptId
+        //     }
+        // });
+
+        //This must be commented for the other to work
+        //(sequelize)
         const receiptList = await Receipt.findAll({
             where: {
                 receiptID: payment.receiptId
@@ -114,6 +124,16 @@ module.exports = {
             return result;
         }
 
+        //This must be commented for the other to work
+        //(prisma)
+        // const orderList = await prisma.Distinct_Order_List.findUnique({
+        //     where: {
+        //         orderNoId: receiptList[0].orderNoId
+        //     }
+        // });
+
+        //This must be commented for the other to work
+        //(sequelize)
         const orderList = await DistinctOrderList.findByPk(receiptList[0].orderNoId);
         
         //console.log(orderList);
@@ -124,6 +144,16 @@ module.exports = {
             return result;
         }
 
+        //This must be commented for the other to work
+        // (prisma)
+        // const PaymentRecord = await prisma.Payment_Invoice.findMany({
+        //     where:{
+        //         receiptId:payment.receiptId
+        //     }
+        // }); 
+
+        //This must be commented for the other to work
+        // (sequelize)
         const PaymentRecord = await PaymentInvoice.findAll({
             where:{
                 receiptID:payment.receiptId
@@ -136,8 +166,39 @@ module.exports = {
             return result;
         }
 
-        const specificPaymentRecord = await PaymentInvoice.findByPk(PaymentRecord[0].receiptID);
+        //This must be commented for the other to work
+        //(prisma)
+        // const specificPaymentRecord = await prisma.Payment_Invoice.findUnique({
+        //     where: {
+        //         paymentInvoiceId: PaymentRecord[0].paymentInvoiceId
+        //     }
+        // });
 
+        //This must be commented for the other to work
+        //(sequelize)
+        const specificPaymentRecord = await PaymentInvoice.findByPk(PaymentRecord[0].paymentInvoiceId);
+        
+        if(!specificPaymentRecord || (specificPaymentRecord.length < 1)){
+            result.message = `Payment Record with ${PaymentRecord[0].paymentInvoiceId} is not found`;
+            result.status = 404;
+            return result;
+        }
+
+        //This must be commented for the other to work
+        //(prisma)
+        // const updatedPaymentRecord = await prisma.Payment_Invoice.update({
+        //     where: {
+        //         paymentInvoiceId: PaymentRecord[0].paymentInvoiceId,
+        //     },
+        //     data: {
+        //             receiptId:payment.receiptId,
+        //             paymentType:payment.paymentType,
+        //             paymentStatus:payment.paymentStatus,
+        //     },
+        // });
+
+        //This must be commented for the other to work
+        //(sequelize)
         const updatedPaymentRecord = await specificPaymentRecord.update({
             receiptID:payment.receiptId,
             paymentType:payment.paymentType,
@@ -165,6 +226,17 @@ module.exports = {
         //1. if exists then find order record
         //2. if order record found then delete
 
+        //This must be commented for the other to work
+        // (prisma)
+        // const specificPaymentRecord = await prisma.Payment_Invoice.findUnique({
+        //     where: {
+        //         paymentInvoiceId: invoiceID
+        //     }
+        // });
+        
+
+        //This must be commented for the other to work
+        // (sequelize)
         const specificPaymentRecord = await PaymentInvoice.findByPk(invoiceID);
         
         if(!specificPaymentRecord){
@@ -173,8 +245,24 @@ module.exports = {
             return result;
         }
 
+        //This must be commented for the other to work
+        // (prisma)
+        // const deleteOrderRecord = await prisma.Payment_Invoice.delete({
+        //     where: {
+        //         paymentInvoiceId: invoiceID,
+        //     },
+        // })
+
+        //This must be commented for the other to work
+        // (sequelize)
         await specificPaymentRecord.destroy();
 
+        //This must be commented for the other to work
+        // (prisma)
+        //const updatedPaymentRecord = await prisma.Payment_Invoice.findMany(); 
+
+        //This must be commented for the other to work
+        // (sequelize)
         const updatedPaymentRecord = await PaymentInvoice.findAll();
 
         result.data = updatedPaymentRecord;
@@ -242,15 +330,27 @@ module.exports = {
             data: null
         }
         
-        const paymentLogs = await PaymentInvoice.findAll({include: Receipt});
+        //This must be commented for the other to work
+        // (prisma)
+        const paymentLogs = await prisma.Payment_Invoice.findMany({
+            // Returns all receipt field
+            include: {
+                receipt: true
+              }
+            }
+        );
+        
+        //This must be commented for the other to work
+        //  (sequelize)
+        //const paymentLogs = await PaymentInvoice.findAll({include: Receipt});
 
         //What we want:
         //1. check all orders exists
         //2. Include the menu item data inside the check
         //3. If no, return error message.
         
-        //check if order exists
-        if(!paymentLogs){
+        //check if payment exists
+        if(!paymentLogs|| (paymentLogs.length < 1)){
             result.message = `No payment records found`;
             result.status = 404;
             return result;
