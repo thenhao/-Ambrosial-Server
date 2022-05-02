@@ -126,6 +126,24 @@ module.exports = {
             data: null
         }
 
+        //This must be commented for the other to work
+        //(prisma)
+        // const updatedMenuItem = await prisma.Menu_Item.update({
+        //     where: {
+        //         menuItemId: menuItemID,
+        //     },
+        //     data: {
+        //         src: updateMenuItem.src,
+        //         alt: updateMenuItem.alt,
+        //         type: updateMenuItem.type,
+        //         price: updateMenuItem.price,
+        //         category: updateMenuItem.category,
+        //         chefRecommendation: updateMenuItem.chefRecommendation,
+        //     },
+        //     });    
+
+        //This must be commented for the other to work
+        //(sequelize)
         const selectMenuItem = await MenuItem.findByPk(menuItemID);
 
         if (!selectMenuItem) {
@@ -134,7 +152,7 @@ module.exports = {
             return result;
         }
 
-        selectMenuItem.menuItemID = updateMenuItem.menuItemID;
+        //selectMenuItem.menuItemID = updateMenuItem.menuItemID;
         selectMenuItem.src = updateMenuItem.src;
         selectMenuItem.alt = updateMenuItem.alt;
         selectMenuItem.type = updateMenuItem.type;
@@ -142,8 +160,15 @@ module.exports = {
         selectMenuItem.category = updateMenuItem.category;
         selectMenuItem.chefRecommendation = updateMenuItem.chefRecommendation;
         await selectMenuItem.save();
+
         result.message = `Update menu item successfully.`;
         result.status = 200;
+        //This must be commented for the other to work
+        //(prisma)
+        //result.data = updatedMenuItem;
+
+        //This must be commented for the other to work
+        //(sequelize)
         result.data = selectMenuItem;
         return result;
     },
