@@ -1,3 +1,10 @@
+//This must be commented for the other to work
+//prisma version:
+const { PrismaClient } = require('@prisma/client');
+const prisma = new PrismaClient();
+
+//This must be commented for the other to work
+//sequelise version: Import models for receipts and order
 const DistinctOrderList = require("../../ORM/ambrosial/distinct-order-list.model");
 const Receipt = require("../../ORM/ambrosial/receipts.model");
 const PaymentInvoice = require("../../ORM/ambrosial/payment-invoice.model");
@@ -18,6 +25,16 @@ module.exports = {
         //2. check if menu item exists
         //3. if exists then create order record
 
+        //This must be commented for the other to work
+        //(prisma)
+        // const receiptRecord = await prisma.Receipt.findUnique({
+        //     where: {
+        //         receiptId: payment.receiptId
+        //     }
+        // });
+
+        //This must be commented for the other to work
+        //(sequelize)
         const receiptRecord = await Receipt.findByPk(payment.receiptId);
         
         if(!receiptRecord){
@@ -26,7 +43,16 @@ module.exports = {
             return result;
         }
 
+        //This must be commented for the other to work
+        //(prisma)
+        // const distinctOrderListRecord = await prisma.Distinct_Order_List.findUnique({
+        //     where: {
+        //         orderNoId: receiptRecord.orderNoId
+        //     }
+        // });
 
+        //This must be commented for the other to work
+        //(sequelize)
         const distinctOrderListRecord = await DistinctOrderList.findByPk(receiptRecord.orderNoId);
         
         if(!distinctOrderListRecord){
@@ -35,7 +61,18 @@ module.exports = {
             return result;
         }
 
+        //This must be commented for the other to work
+        //(prisma)
+        // const paymentRecords = await prisma.Payment_Invoice.create({
+        //     data: {
+        //         receiptId:payment.receiptId,
+        //         paymentType:payment.paymentType,
+        //         paymentStatus:payment.paymentStatus,
+        //     }
+        // });
 
+        //This must be commented for the other to work
+        //(sequelize)
         const paymentRecords = await PaymentInvoice.create({
 
             receiptID:payment.receiptId,
@@ -43,7 +80,7 @@ module.exports = {
             paymentStatus:payment.paymentStatus,
         });
         
-        //result.data = paymentRecords;
+        result.data = paymentRecords;
         result.status = 200;
         result.message = `Data creation for Payment with Order ID:${receiptRecord.orderNoId} successful `;
         return result;
