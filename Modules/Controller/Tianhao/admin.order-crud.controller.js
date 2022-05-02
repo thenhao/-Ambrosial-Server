@@ -36,7 +36,7 @@ class OrderCrudController{
 
         const schema = Joi.object().keys({
             orderID:Joi.number().required(),
-            orderNo:Joi.number().required(),
+            orderNoId:Joi.number().required(),
             menuItemID:Joi.number().required(),
             quantity:Joi.number().required(),
             totalItemPrice:Joi.number().required(),

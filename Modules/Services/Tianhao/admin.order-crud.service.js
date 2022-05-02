@@ -105,15 +105,34 @@ module.exports = {
         //3. if exists then find order record
         //4. if order record found then update
 
-        const orderList = await DistinctOrderList.findByPk(order.orderNo);
+        //This must be commented for the other to work
+        //(prisma)
+        // const orderList = await prisma.Distinct_Order_List.findUnique({
+        //     where: {
+        //         orderNoId: order.orderNoId
+        //     }
+        // });
+
+        //This must be commented for the other to work
+        //(sequelize)
+        const orderList = await DistinctOrderList.findByPk(order.orderNoId);
         
         if(!orderList){
-            result.message = `Order ID ${orderNo} is not found`;
+            result.message = `Order ID ${order.orderNoId} is not found`;
             result.status = 404;
             return result;
         }
 
+        //This must be commented for the other to work
+        //(prisma)
+        // const menuItemList = await prisma.Menu_Item.findUnique({
+        //     where: {
+        //         menuItemId: order.menuItemID
+        //     }
+        // });
 
+        //This must be commented for the other to work
+        //(sequelize)
         const menuItemList = await MenuItem.findByPk(order.menuItemID);
         
         if(!menuItemList){
@@ -122,16 +141,44 @@ module.exports = {
             return result;
         }
 
+        //This must be commented for the other to work
+        //(prisma)
+        // const specificOrderRecord = await prisma.Computed_Orders.findUnique({
+        //     where: {
+        //         orderId: order.orderID
+        //     }
+        // });
+
+        //This must be commented for the other to work
+        //(sequelize)
         const specificOrderRecord = await ComputedOrders.findByPk(order.orderID);
         
         if(!specificOrderRecord){
-            result.message = `menu ${order.orderNo} is not present in the order records`;
+            result.message = `menu ${order.orderNoId} is not present in the order records`;
             result.status = 404;
             return result;
         }
 
+        //This must be commented for the other to work
+        //(prisma)
+        // const updatedOrderRecord = await prisma.Computed_Orders.update({
+        //     where: {
+        //         orderId: order.orderID,
+        //     },
+        //     data: {
+        //         orderNoId:order.orderNoId,
+        //         menuItemId:order.menuItemID,
+        //         quantity:order.quantity,
+        //         totalItemPrice:order.totalItemPrice,
+        //         tableNo:order.tableNo,
+        //         orderStatus:order.orderStatus,
+        //     },
+        // });
+
+        //This must be commented for the other to work
+        //(sequelize)
         const updatedOrderRecord = await specificOrderRecord.update({ 
-            orderNo:order.orderNo,
+            orderNoId:order.orderNoId,
             menuItemID:order.menuItemID,
             quantity:order.quantity,
             totalItemPrice:order.totalItemPrice,
@@ -143,7 +190,7 @@ module.exports = {
         
         result.data = updatedOrderRecord;
         result.status = 200;
-        result.message = `Data creation for Computed Order Record with Order ID:${order.orderNo} successful `;
+        result.message = `Data creation for Computed Order Record with Order ID:${order.orderNoId} successful `;
         return result;
     },
 
