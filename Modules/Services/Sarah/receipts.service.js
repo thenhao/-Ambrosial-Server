@@ -57,8 +57,19 @@ module.exports = {
             data: null
         }
 
-        // Find all receipts
-        const allReceipts = await Receipt.findAll();
+        //This must be commented for the other to work
+        // Find order by order ID (prisma)
+        const allReceipts = await prisma.Receipt.findMany({
+            // Returns all distinct order field
+            include: {
+                distinctOrderList: true
+              }
+            }
+          );
+
+        //This must be commented for the other to work
+        // Find all receipts (sequelize)  
+        //const allReceipts = await Receipt.findAll({include:DistinctOrderList});
 
 
         // If receipts do not exist, send error message
@@ -97,13 +108,27 @@ module.exports = {
         // }
 
         try {
-            //Create receipt object
-            const receipt = await Receipt.create({
+
+            //This must be commented for the other to work
+            //Create receipt object (prisma)
+            const receipt = await prisma.Receipt.create({
+                data: {
                 orderNoId: orderNoId,
-                totalPrice: totalPrice
+                totalItemPrice: totalPrice
+            }
             });
 
-            await receipt.save();
+            
+
+            //This must be commented for the other to work
+            //Create receipt object (sequelize)
+            // const receipt = await Receipt.create({
+            //     orderNoId: orderNoId,
+            //     totalPrice: totalPrice
+            // });
+
+            // await receipt.save();
+
             console.log('Receipt is saved to the database');
             result.data = receipt;
             result.status = 200;
