@@ -206,6 +206,17 @@ module.exports = {
         //1. if exists then find order record
         //2. if order record found then delete
 
+        //This must be commented for the other to work
+        // (prisma)
+        // const specificOrderRecord = await prisma.Computed_Orders.findUnique({
+        //     where: {
+        //         orderId: orderID
+        //     }
+        // });
+        
+
+        //This must be commented for the other to work
+        // (sequelize)
         const specificOrderRecord = await ComputedOrders.findByPk(orderID);
         
         if(!specificOrderRecord){
@@ -214,8 +225,24 @@ module.exports = {
             return result;
         }
 
+        //This must be commented for the other to work
+        // (prisma)
+        // const deleteOrderRecord = await prisma.Computed_Orders.delete({
+        //     where: {
+        //         orderId: orderID,
+        //     },
+        // })
+
+        //This must be commented for the other to work
+        // (sequelize)
         await specificOrderRecord.destroy();
 
+        //This must be commented for the other to work
+        // (prisma)
+        //const updatedOrderRecord = await prisma.Computed_Orders.findMany(); 
+
+        //This must be commented for the other to work
+        // (sequelize)
         const updatedOrderRecord = await ComputedOrders.findAll();
 
         result.data = updatedOrderRecord;
