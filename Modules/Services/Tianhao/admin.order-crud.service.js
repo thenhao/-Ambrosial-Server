@@ -319,8 +319,20 @@ module.exports = {
             status: null,
             data: null
         }
+
+        //This must be commented for the other to work
+        // (prisma)
+        const orders = await prisma.Computed_Orders.findMany({
+            // Returns all menuitem field
+            include: {
+                menuItem: true
+              }
+            }
+        );
         
-        const orders = await ComputedOrders.findAll({include: MenuItem});
+        //This must be commented for the other to work
+        //  (sequelize)
+        //const orders = await ComputedOrders.findAll({include: MenuItem});
 
         //What we want:
         //1. check all orders exists
@@ -328,7 +340,7 @@ module.exports = {
         //3. If no, return error message.
         
         //check if order exists
-        if(!orders){
+        if(!orders || (orders.length < 1)){
             result.message = `No order records found`;
             result.status = 404;
             return result;

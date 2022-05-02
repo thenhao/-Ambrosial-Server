@@ -20,7 +20,7 @@ module.exports = {
         }
 
         //This must be commented for the other to work
-        // Find order by order ID (prisma)
+        //  (prisma)
         // const order = await prisma.Distinct_Order_List.findUnique({
         //     where: {
         //         orderNoId: orderNoId
@@ -58,7 +58,7 @@ module.exports = {
         }
 
         //This must be commented for the other to work
-        // Find order by order ID (prisma)
+        // (prisma)
         // const allReceipts = await prisma.Receipt.findMany({
         //     // Returns all distinct order field
         //     include: {
@@ -110,7 +110,7 @@ module.exports = {
         try {
 
             //This must be commented for the other to work
-            //Create receipt object (prisma)
+            // (prisma)
             // const receipt = await prisma.Receipt.create({
             //     data: {
             //     orderNoId: orderNoId,
@@ -156,7 +156,13 @@ module.exports = {
             data: null
         }
 
-        
+        //This must be commented for the other to work
+        // (prisma)  
+        // const specificReceipt = await prisma.Receipt.findUnique({
+        //     where: {
+        //         receiptId: receiptID
+        //     }
+        //   });
         
         //This must be commented for the other to work
         // Find receipt by receipt ID (sequelize)     
@@ -225,6 +231,15 @@ module.exports = {
             status: null,
             data: null
         }
+
+        //This must be commented for the other to work
+        // (prisma)  
+        // const specificReceipt = await prisma.Receipt.findUnique({
+        //     where: {
+        //         receiptId: receiptID
+        //     }
+        //   });
+
         //This must be commented for the other to work
         // (sequelize)
         // Find receipt by receipt ID        
