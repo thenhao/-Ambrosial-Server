@@ -34,7 +34,7 @@ class OrderCrudController{
     async updateOrder(req, res, next){
         console.log(typeof req.body);
 
-        const convertedOrderId = req.params.orderId;
+        const convertedOrderId = parseInt(req.params.orderId);
 
         const schemaBody = Joi.object().keys({
             //orderID:Joi.number().required(),

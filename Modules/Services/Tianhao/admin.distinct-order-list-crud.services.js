@@ -106,7 +106,7 @@ module.exports = {
             return result;
         }
 
-        if(orderList.orderNoId !== orderNoId){
+        if(orderList[0].orderNoId !== orderNoId){
             result.message = `Order ID ${orderList.orderNoId} found in database and passed Order ID ${orderNoId} do not match`;
             result.status = 404;
             return result;

@@ -30,15 +30,7 @@ MenuItem.sync();
 ComputedOrders.sync();
 Receipt.sync();
 PaymentInvoice.sync();
-// Person.sync();
-// Clinic.sync();
-// Company.sync();
-// EmployeeRecord.sync();
-// MC.sync();
-// CurrentVisit.sync();
-// NextOfKin.sync();
-// FullMedicalRecord.sync();
-// User.sync();
+
 
 app.get('/', (req, res) => {
     res.json("Test");
