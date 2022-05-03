@@ -1,3 +1,10 @@
+//This must be commented for the other to work
+//prisma version:
+const { PrismaClient } = require('@prisma/client');
+const prisma = new PrismaClient();
+
+//This must be commented for the other to work
+//sequelize version:
 const DistinctOrderList = require("../../ORM/ambrosial/distinct-order-list.model");
 
 
@@ -16,14 +23,39 @@ module.exports = {
         //2. check if menu item exists
         //3. if exists then create order record
 
-        const orderList = await DistinctOrderList.findByPk(order.orderNo);
+        //This must be commented for the other to work
+        //(prisma)
+        // const orderList = await prisma.Distinct_Order_List.findUnique({
+        //     where: {
+        //         orderNo: order.orderNo
+        //     }
+        // });
+
+        //This must be commented for the other to work
+        //(sequelize)
         
-        if(orderList){
+        const orderList = await DistinctOrderList.findAll({
+            where: {
+                    orderNo: order.orderNo
+            }
+        });
+        
+        if(orderList || orderList.length > 0){
             result.message = `Order No ${order.orderNo} has been created`;
             result.status = 404;
             return result;
         }
 
+        //This must be commented for the other to work
+        //(prisma)
+        // const distinctOrderRecord = await prisma.Distinct_Order_List.create({
+        //     data: {
+        //     orderNo: order.orderNo,
+        // }
+        // });
+
+        //This must be commented for the other to work
+        //(sequelize)
         const distinctOrderRecord = await DistinctOrderList.create({
             orderNo:order.orderNo,
         });
@@ -48,6 +80,18 @@ module.exports = {
         //3. if exists then find order record
         //4. if order record found then update
 
+        //This must be commented for the other to work
+        // (prisma)
+        // const orderList = await prisma.Distinct_Order_List.findMany({
+        //     where: {
+        //         orderNo: order.orderNoOld
+        //       }
+        //     }
+        //   );
+
+        //This must be commented for the other to work
+        //(sequelize)
+
         const orderList = await DistinctOrderList.findAll({
             where: {
               orderNo: order.orderNoOld
@@ -62,22 +106,46 @@ module.exports = {
             return result;
         }
 
+        //This must be commented for the other to work
+        // (prisma)
+        // const orderListbyPk = await prisma.Distinct_Order_List.findUnique({
+        //     where: {
+        //         orderNoId: orderList[0].orderNoId
+        //     }
+        //   });
+        
+        //This must be commented for the other to work
+        //(sequelize)
         const orderListbyPk = await DistinctOrderList.findByPk(orderList[0].orderNoId);
         
-        console.log(orderListbyPk);
+        //console.log(orderListbyPk);
 
         if(!orderListbyPk){
-            result.message = `Order ID ${order.orderNo} is not found`;
+            result.message = `Order ID ${orderList[0].orderNoId} is not found`;
             result.status = 404;
             return result;
         }
 
+        //This must be commented for the other to work
+        // (prisma)
+        // const updatedDistinctOrderRecord = await prisma.Distinct_Order_List.update({
+        //     where: {
+        //         orderNoId: orderListbyPk.orderNoId,
+        //     },
+        //     data: {
+        //         orderNo: order.orderNoNew
+        //     },
+        //   });
+
+        //This must be commented for the other to work
+        //(sequelize)
         const updatedDistinctOrderRecord = await orderListbyPk.update({
             orderNo: order.orderNoNew
           });
         
 
         await updatedDistinctOrderRecord.save();
+
         
          result.data = updatedDistinctOrderRecord;
          result.status = 200;
@@ -85,7 +153,7 @@ module.exports = {
          return result;
     },
 
-    deleteDistinctOrder: async(orderNo) =>{
+    deleteDistinctOrder: async(orderNoId) =>{
         //The result object is where we will put the result to be sent to the client
         let result = {
             message:null,
@@ -96,22 +164,46 @@ module.exports = {
         //What we want:
         //1. if exists then find order record
         //2. if order record found then delete
+        
+        //This must be commented for the other to work
+        // (prisma)
+        // const specificDistinctOrderRecord = await prisma.Distinct_Order_List.findUnique({
+        //     where: {
+        //         orderNoId: orderNoId
+        //     }
+        // });
 
-        const specificDistinctOrderRecord = await DistinctOrderList.findByPk(orderNo);
+        //This must be commented for the other to work
+        //(sequelize)
+        const specificDistinctOrderRecord = await DistinctOrderList.findByPk(orderNoId);
         
         if(!specificDistinctOrderRecord){
-            result.message = `orderID ${orderNo} is not present in the order records`;
+            result.message = `orderNoID ${orderNoId} is not present in the distinct order records`;
             result.status = 404;
             return result;
         }
 
+        //This must be commented for the other to work
+        // (prisma)
+        // const deleteDistinctOrderList = await prisma.Distinct_Order_List.delete({
+        //     where: {
+        //         orderNoId: orderNoId
+        //     },
+        // })
+
+        // const updatedDistinctOrderRecords = await prisma.Distinct_Order_List.findMany(); 
+
+        //This must be commented for the other to work
+        //(sequelize)
         await specificDistinctOrderRecord.destroy();
 
-        const updatedDistinctOrderRecord = await DistinctOrderList.findAll();
+        //This must be commented for the other to work
+        //(sequelize)
+        const updatedDistinctOrderRecords = await DistinctOrderList.findAll();
 
-        result.data = updatedDistinctOrderRecord;
+        result.data = updatedDistinctOrderRecords;
         result.status = 200;
-        result.message = `Deletion of order record of orderID ${orderNo} successful `;
+        result.message = `Deletion of order record of orderNoID ${orderNoId} successful `;
         return result;
     },
 
@@ -127,6 +219,17 @@ module.exports = {
         //1. check if order records exists
         //2. check if menu item exists
         //3. if exists then return order results
+
+        //This must be commented for the other to work
+        //(prisma)
+        // const distinctOrderList = await prisma.Distinct_Order_List.findUnique({
+        //     where:{
+        //         orderNo:distinctOrderNo
+        //     }
+        // }); 
+
+        //This must be commented for the other to work
+        //(sequelize)
         const distinctOrderRecord = await DistinctOrderList.findAll({
             where:{
                 orderNo:distinctOrderNo
@@ -141,7 +244,7 @@ module.exports = {
 
         const distinctOrderList = await DistinctOrderList.findByPk(distinctOrderRecord[0].orderNoId);
         
-        if(!distinctOrderList){
+        if(!distinctOrderList || (distinctOrderList.length < 1)){
             result.message = `Order ID ${distinctOrderNo} is not found`;
             result.status = 404;
             return result;
@@ -150,7 +253,7 @@ module.exports = {
 
         result.data = distinctOrderList;
         result.status = 200;
-        result.message = `Data retrieval for Distinct Order Record with Order ID:${distinctOrderRecord[0].orderNoId} successful `;
+        result.message = `Data retrieval for Distinct Order Record with Order No:${distinctOrderNo} successful `;
         return result;
     },
 
@@ -161,6 +264,12 @@ module.exports = {
             data: null
         }
         
+        //This must be commented for the other to work
+        //(prisma)
+        //const disitnctOrders = await prisma.Distinct_Order_List.findMany(); 
+
+        //This must be commented for the other to work
+        //(sequelize)
         const disitnctOrders = await DistinctOrderList.findAll();
 
         //What we want:
@@ -169,7 +278,7 @@ module.exports = {
         //3. If no, return error message.
         
         //check if order exists
-        if(!disitnctOrders){
+        if(!disitnctOrders || (disitnctOrders.length < 1)){
             result.message = `No distinct order records found`;
             result.status = 404;
             return result;
