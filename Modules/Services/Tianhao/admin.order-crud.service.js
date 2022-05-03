@@ -91,7 +91,7 @@ module.exports = {
         return result;
     },
 
-    updateOrder: async(order) =>{
+    updateOrder: async(orderId,order) =>{
         //The result object is where we will put the result to be sent to the client
         let result = {
             message:null,
@@ -145,16 +145,16 @@ module.exports = {
         //(prisma)
         // const specificOrderRecord = await prisma.Computed_Orders.findUnique({
         //     where: {
-        //         orderId: order.orderID
+        //         orderId: orderId
         //     }
         // });
 
         //This must be commented for the other to work
         //(sequelize)
-        const specificOrderRecord = await ComputedOrders.findByPk(order.orderID);
+        const specificOrderRecord = await ComputedOrders.findByPk(orderId);
         
         if(!specificOrderRecord){
-            result.message = `menu ${order.orderNoId} is not present in the order records`;
+            result.message = `Order Id ${orderId} is not present in the order records`;
             result.status = 404;
             return result;
         }
@@ -163,7 +163,7 @@ module.exports = {
         //(prisma)
         // const updatedOrderRecord = await prisma.Computed_Orders.update({
         //     where: {
-        //         orderId: order.orderID,
+        //         orderId: orderId,
         //     },
         //     data: {
         //         orderNoId:order.orderNoId,
@@ -194,7 +194,7 @@ module.exports = {
         return result;
     },
 
-    deleteOrder: async(orderID) =>{
+    deleteOrder: async(orderId) =>{
         //The result object is where we will put the result to be sent to the client
         let result = {
             message:null,
@@ -210,17 +210,17 @@ module.exports = {
         // (prisma)
         // const specificOrderRecord = await prisma.Computed_Orders.findUnique({
         //     where: {
-        //         orderId: orderID
+        //         orderId: orderId
         //     }
         // });
         
 
         //This must be commented for the other to work
         // (sequelize)
-        const specificOrderRecord = await ComputedOrders.findByPk(orderID);
+        const specificOrderRecord = await ComputedOrders.findByPk(orderId);
         
         if(!specificOrderRecord){
-            result.message = `orderID ${orderID} is not present in the order records`;
+            result.message = `orderID ${orderId} is not present in the order records`;
             result.status = 404;
             return result;
         }
@@ -229,7 +229,7 @@ module.exports = {
         // (prisma)
         // const deleteOrderRecord = await prisma.Computed_Orders.delete({
         //     where: {
-        //         orderId: orderID,
+        //         orderId: orderId,
         //     },
         // })
 
@@ -247,7 +247,7 @@ module.exports = {
 
         result.data = updatedOrderRecord;
         result.status = 200;
-        result.message = `Deletion of order record of orderID ${orderID} successful `;
+        result.message = `Deletion of order record of orderID ${orderId} successful `;
         return result;
     },
 

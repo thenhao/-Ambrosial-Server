@@ -8,8 +8,8 @@ const router = express.Router();
 const orderCrudController = new OrderCrudController();
 
 router.post("/createorder", orderCrudController.createOrder);
-router.put("/updateorder", orderCrudController.updateOrder);
-router.delete("/deleteOrder/:orderID", orderCrudController.deleteOrder);
+router.put("/updateorder/:orderId", orderCrudController.updateOrder);
+router.delete("/deleteorder/:orderId", orderCrudController.deleteOrder);
 router.get("/vieworderitems", orderCrudController.findAllOrders);
 router.get("/vieworderitems/:orderNo", orderCrudController.findSpecificOrder);
 

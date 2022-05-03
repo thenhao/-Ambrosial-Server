@@ -8,7 +8,7 @@ const router = express.Router();
 const paymentCrudController = new PaymentCrudController();
 
 router.post("/createpayment", paymentCrudController.createPayment);
-router.put("/updatepayment", paymentCrudController.updatePayment);
+router.put("/updatepayment/:invoiceID", paymentCrudController.updatePayment);
 router.delete("/deletepayment/:invoiceID", paymentCrudController.deletePayment);
 router.get("/viewpaymentlogs", paymentCrudController.findAllPayments);
 router.get("/viewpaymentlogs/:invoiceID", paymentCrudController.findSpecificPayment);
