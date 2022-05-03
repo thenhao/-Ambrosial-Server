@@ -86,7 +86,7 @@ module.exports = {
         return result;
     },
 
-    updatePayment: async(payment) =>{
+    updatePayment: async(invoiceID,payment) =>{
         //The result object is where we will put the result to be sent to the client
         let result = {
             message:null,
@@ -123,6 +123,7 @@ module.exports = {
             result.status = 404;
             return result;
         }
+
 
         //This must be commented for the other to work
         //(prisma)
@@ -162,6 +163,12 @@ module.exports = {
 
         if(!PaymentRecord || (PaymentRecord.length < 1)){
             result.message = `Payment Record with ${PaymentRecord[0].receiptID} is not found`;
+            result.status = 404;
+            return result;
+        }
+
+        if(PaymentRecord[0].paymentInvoiceId !== invoiceID){
+            result.message = `Invoice ID ${invoiceID} is not found`;
             result.status = 404;
             return result;
         }

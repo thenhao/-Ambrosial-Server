@@ -29,20 +29,27 @@ class DistinctOrderCrudController{
     async updateDistinctOrder(req, res, next){
         console.log(typeof req.body);
 
-        const schema = Joi.object().keys({
+        const convertedOrderNoId = parseInt(req.params.orderNoId);
+
+        const schemaBody = Joi.object().keys({
             orderNoOld:Joi.number().required(),
             orderNoNew:Joi.number().required(),
         });
 
+        const schemaParams = Joi.object().keys({
+            convertedOrderNoId:Joi.number().required(),
+        });
+
         try{
-            schema.validate( req.body );
+            schemaBody.validate( req.body );
+            schemaParams.validate( convertedOrderNoId );
         }catch(error){
             res.status(400);
             return res.json({message:"Incorrect request data"})
         }
 
         //use the service layer
-        const result = await DistinctOrderCrudService.updateDistinctOrder(req.body);
+        const result = await DistinctOrderCrudService.updateDistinctOrder(convertedOrderNoId,req.body);
         res.status(result.status);
 
         //return the result from the service
@@ -74,23 +81,23 @@ class DistinctOrderCrudController{
     }
 
     async findSpecificOrder(req, res, next){
-        console.log(typeof req.params.distinctOrderNo);
+        console.log(typeof req.params.distinctOrderNoId);
 
-        const convertedDistinctOrderNo = parseInt(req.params.distinctOrderNo);
+        const convertedDistinctOrderNoId = parseInt(req.params.distinctOrderNoId);
 
         const schema = Joi.object().keys({
-            orderNo: Joi.number().required()
+            orderNoId: Joi.number().required()
         });
 
         try{
-            schema.validate({ distinctOrderNo:convertedDistinctOrderNo });
+            schema.validate({ orderNoId:convertedDistinctOrderNoId });
         }catch(error){
             res.status(400);
             return res.json({message:"Incorrect request data"})
         }
 
         //use the service layer
-        const result = await DistinctOrderCrudService.findSpecificOrder(convertedDistinctOrderNo);
+        const result = await DistinctOrderCrudService.findSpecificOrder(convertedDistinctOrderNoId);
         res.status(result.status);
 
         //return the result from the service
