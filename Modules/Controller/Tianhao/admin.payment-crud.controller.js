@@ -31,7 +31,7 @@ class PaymentCrudController{
     async updatePayment(req, res, next){
         console.log(typeof req.body);
 
-        const convertedinvoiceId = req.params.invoiceID;
+        const convertedinvoiceId = parseInt(req.params.invoiceID);
 
         const schemaBody = Joi.object().keys({
             receiptId:Joi.number().required(),
@@ -45,7 +45,7 @@ class PaymentCrudController{
 
         try{
             schemaBody.validate( req.body );
-            schemaBody.validate( {invoiceID:convertedinvoiceId} );
+            schemaParam.validate( {invoiceID:convertedinvoiceId} );
         }catch(error){
             res.status(400);
             return res.json({message:"Incorrect request data"})

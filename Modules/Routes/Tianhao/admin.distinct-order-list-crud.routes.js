@@ -11,6 +11,6 @@ router.post("/createdistinctorder", distinctOrderCrudController.createDistinctOr
 router.put("/updatedistinctorder/:orderNoId", distinctOrderCrudController.updateDistinctOrder);
 router.delete("/deletedistinctOrder/:orderNoId", distinctOrderCrudController.deleteDistinctOrder);
 router.get("/viewdistinctorder", distinctOrderCrudController.findAllOrders);
-router.get("/viewspecificdistinctorder/:distinctOrderNoId", distinctOrderCrudController.findSpecificOrder);
+router.get("/viewdistinctorder/:distinctOrderNoId", distinctOrderCrudController.findSpecificOrder);
 
 module.exports = router;
