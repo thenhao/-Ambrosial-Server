@@ -13,16 +13,18 @@ class ReceiptsController {
             orderNoId: Joi.number().required()
         });
 
+        const convertedOrderNoIdToInt = parseInt(req.params.orderNoId);
+
         // Implement validation, else throw an error
         try {
-            schema.validate({ orderNoId: req.params.orderNoId });
+            schema.validate({ orderNoId: convertedOrderNoIdToInt });
         } catch (error) {
             res.status(400);
             return res.json({ message: "Incorrect request data" })
         }
 
         // Use receipts service layer
-        const result = await receiptsService.findSpecificReceipt(req.params.orderNoId);
+        const result = await receiptsService.findSpecificReceipt(convertedOrderNoIdToInt);
         res.status(result.status);
 
         // Return the result from the service
@@ -69,7 +71,8 @@ class ReceiptsController {
 
     // Function to update one receipt
     async updateReceipt(req, res) {
-        const { orderNoId, totalPrice } = req.body;
+
+        const convertedReceiptIdToInt = parseInt(req.params.receiptID);
 
         // Define validation for req.body
         const schema = Joi.object().keys({
@@ -79,8 +82,8 @@ class ReceiptsController {
 
         // Use receipts service layer
         const validation = schema.validate(req.body);
-        if (validation) {
-            const result = await receiptsService.updateReceipt(req.params.receiptID, req.body);
+        if (validation) {//
+            const result = await receiptsService.updateReceipt(convertedReceiptIdToInt, req.body);
             res.json({ data: result.data, status: result.status, message: result.message })
         } else if (!validation) {
             res.status(400).json({ message: result.message })
@@ -92,13 +95,15 @@ class ReceiptsController {
 
     // Function to delete one receipt
     async deleteReceipt(req, res) {
-        // Define validation for req.body
+
+        const convertedReceiptIdToInt = parseInt(req.params.receiptID);
+        // Define validation for req.params
         const schema = Joi.object().keys({
             receiptID: Joi.number().required()
         });
 
         // Use receipts service layer
-        const result = await receiptsService.deleteReceipt(req.params.receiptID);
+        const result = await receiptsService.deleteReceipt(convertedReceiptIdToInt);
         res.status(result.status);
 
         // Return the result from the service

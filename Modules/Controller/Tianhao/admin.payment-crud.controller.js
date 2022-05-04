@@ -1,14 +1,16 @@
 const Joi = require('joi');
 //import the service
-const DistinctOrderCrudService = require("../../Services/Tianhao/admin.distinct-order-list-crud.services");
+const PaymentCrudService = require("../../Services/Tianhao/admin.payment-crud.services");
 //remove next from req, res
-class DistinctOrderCrudController{
+class PaymentCrudController{
     
-    async createDistinctOrder(req, res, next){
+    async createPayment(req, res, next){
         console.log(typeof req.body);
 
         const schema = Joi.object().keys({
-            orderNo:Joi.number().required(),
+            receiptId:Joi.number().required(),
+            paymentType:Joi.string().required(),
+            paymentStatus:Joi.string().required(),
         });
 
         try{
@@ -19,93 +21,94 @@ class DistinctOrderCrudController{
         }
 
         //use the service layer
-        const result = await DistinctOrderCrudService.createDistinctOrder(req.body);
+        const result = await PaymentCrudService.createPayment(req.body);
         res.status(result.status);
 
         //return the result from the service
         return res.json({data:result.data, status: result.status, message:result.message});
     }
 
-    async updateDistinctOrder(req, res, next){
+    async updatePayment(req, res, next){
         console.log(typeof req.body);
 
-        const convertedOrderNoId = parseInt(req.params.orderNoId);
+        const convertedinvoiceId = parseInt(req.params.invoiceID);
 
         const schemaBody = Joi.object().keys({
-            orderNoOld:Joi.number().required(),
-            orderNoNew:Joi.number().required(),
+            receiptId:Joi.number().required(),
+            paymentType:Joi.string().required(),
+            paymentStatus:Joi.string().required(),
         });
 
-        const schemaParams = Joi.object().keys({
-            convertedOrderNoId:Joi.number().required(),
+        const schemaParam = Joi.object().keys({
+            invoiceID:Joi.number().required(),
         });
 
         try{
             schemaBody.validate( req.body );
-            schemaParams.validate( convertedOrderNoId );
+            schemaParam.validate( {invoiceID:convertedinvoiceId} );
         }catch(error){
             res.status(400);
             return res.json({message:"Incorrect request data"})
         }
 
         //use the service layer
-        const result = await DistinctOrderCrudService.updateDistinctOrder(convertedOrderNoId,req.body);
+        const result = await PaymentCrudService.updatePayment(convertedinvoiceId,req.body);
         res.status(result.status);
 
         //return the result from the service
         return res.json({data:result.data, status: result.status, message:result.message});
     }
 
-    async deleteDistinctOrder(req, res, next){
-        console.log(typeof req.params.orderNoId);
+    async deletePayment(req, res, next){
+        console.log(typeof req.params.invoiceID);
 
-        const convertedOrderNoId = parseInt(req.params.orderNoId);
+        const convertedinvoiceId = parseInt(req.params.invoiceID);
 
         const schema = Joi.object().keys({
-            orderNo:Joi.number().required(),
+            orderID:Joi.number().required(),
         });
 
         try{
-            schema.validate( convertedOrderNoId );
+            schema.validate( convertedinvoiceId );
         }catch(error){
             res.status(400);
             return res.json({message:"Incorrect request data"})
         }
 
         //use the service layer
-        const result = await DistinctOrderCrudService.deleteDistinctOrder(convertedOrderNoId);
+        const result = await PaymentCrudService.deletePayment(convertedinvoiceId);
         res.status(result.status);
 
         //return the result from the service
         return res.json({data:result.data, status: result.status, message:result.message});
     }
 
-    async findSpecificOrder(req, res, next){
-        console.log(typeof req.params.distinctOrderNoId);
+    async findSpecificPayment(req, res, next){
+        console.log(typeof req.params.invoiceID);
 
-        const convertedDistinctOrderNoId = parseInt(req.params.distinctOrderNoId);
+        const convertedinvoiceId = parseInt(req.params.invoiceID);
 
         const schema = Joi.object().keys({
-            orderNoId: Joi.number().required()
+            invoiceID: Joi.number().required()
         });
 
         try{
-            schema.validate({ orderNoId:convertedDistinctOrderNoId });
+            schema.validate({ invoiceID:convertedinvoiceId });
         }catch(error){
             res.status(400);
             return res.json({message:"Incorrect request data"})
         }
 
         //use the service layer
-        const result = await DistinctOrderCrudService.findSpecificOrder(convertedDistinctOrderNoId);
+        const result = await PaymentCrudService.findSpecificPayment(convertedinvoiceId);
         res.status(result.status);
 
         //return the result from the service
         return res.json({data:result.data, status: result.status, message:result.message});
     }
 
-    async findAllOrders(req, res, next){
-        const result = await DistinctOrderCrudService.findAllOrders();
+    async findAllPayments(req, res, next){
+        const result = await PaymentCrudService.findAllPayments();
         res.status(result.status);
         return res.json({data:result.data, status: result.status, message:result.message});
     }
@@ -113,4 +116,4 @@ class DistinctOrderCrudController{
 
 }
 
-module.exports = DistinctOrderCrudController;
+module.exports = PaymentCrudController;

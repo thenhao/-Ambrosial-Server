@@ -16,6 +16,7 @@ Receipt.init(
     orderNoId: {
       type: DataTypes.INTEGER,
       allowNull: false,
+      unique: true
     },
     totalPrice: {
         type: DataTypes.DECIMAL(10, 2),

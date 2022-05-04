@@ -57,14 +57,21 @@ ComputedOrders.init(
 );
 
 ComputedOrders.belongsTo(
-    MenuItem,
-    {
-      foreignKey: 'menuItemID'
-    },
+    
     DistinctOrderList,
     {
       foreignKey: 'orderNoId'
     },
+
+  );
+
+  ComputedOrders.belongsTo(
+
+    MenuItem,
+    {
+      foreignKey: 'menuItemID'
+    },
+    
   );
 
 module.exports = ComputedOrders;

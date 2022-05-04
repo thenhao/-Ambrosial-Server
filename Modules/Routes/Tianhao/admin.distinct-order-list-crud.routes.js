@@ -8,7 +8,9 @@ const router = express.Router();
 const distinctOrderCrudController = new DistinctOrderCrudController();
 
 router.post("/createdistinctorder", distinctOrderCrudController.createDistinctOrder);
-router.put("/updatedistinctorder", distinctOrderCrudController.updateDistinctOrder);
-router.delete("/deletedistinctOrder/:orderNo", distinctOrderCrudController.deleteDistinctOrder);
+router.put("/updatedistinctorder/:orderNoId", distinctOrderCrudController.updateDistinctOrder);
+router.delete("/deletedistinctOrder/:orderNoId", distinctOrderCrudController.deleteDistinctOrder);
+router.get("/viewdistinctorder", distinctOrderCrudController.findAllOrders);
+router.get("/viewdistinctorder/:distinctOrderNoId", distinctOrderCrudController.findSpecificOrder);
 
 module.exports = router;

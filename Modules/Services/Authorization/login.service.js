@@ -1,9 +1,9 @@
 //Prisma
-const {PrismaClient} = require('@prisma/client');
-const prisma = new PrismaClient();
+// const {PrismaClient} = require('@prisma/client');
+// const prisma = new PrismaClient();
 
 //Sequelize
-// const User = require('../../ORM/ambrosial/user.model');
+const User = require('../../ORM/ambrosial/user.model');
 
 const {generateJWT} = require('../../Authorization/jwt');
 const {verifyHash} = require('../../Authorization/hash');
@@ -18,14 +18,14 @@ module.exports = {
     }
 
     //Sequelize query
-    // const loginData = await User.findOne({where: {username: request.username}});
+    const loginData = await User.findOne({where: {username: request.username}});
 
     //Prisma Query
-    const loginData = await prisma.User.findFirst({
-      where: {
-        username: request.username
-      }
-    });
+    // const loginData = await prisma.User.findFirst({
+    //   where: {
+    //     username: request.username
+    //   }
+    // });
 
     if(!loginData) {
       result.status = 404;
