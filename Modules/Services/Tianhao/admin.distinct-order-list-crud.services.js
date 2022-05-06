@@ -39,8 +39,11 @@ module.exports = {
                     orderNo: order.orderNo
             }
         });
+
+        console.log(orderList);
         
-        if(orderList || orderList.length > 0){
+        if(orderList.length > 0){
+        //if(orderList || orderList.length > 0){
             result.message = `Order No ${order.orderNo} has been created`;
             result.status = 404;
             return result;
