@@ -42,7 +42,7 @@ module.exports = {
             //This must be commented for the other to work
             //Create receipt object (sequelize)
             const addMenuItem = await MenuItem.create({
-                //menuItemID: menuItemID,
+                // menuItemID: menuItemID, // comment out to exclude specify menuItemID creation with autoIncrement: true,
                 src: src,
                 alt: alt,
                 type: type,
@@ -183,7 +183,7 @@ module.exports = {
             data: null
         }
 
-        
+
 
         //This must be commented for the other to work
         // (prisma)
