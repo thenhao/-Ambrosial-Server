@@ -39,8 +39,11 @@ module.exports = {
                     orderNo: order.orderNo
             }
         });
+
+        console.log(orderList);
         
-        if(orderList || orderList.length > 0){
+        if(orderList.length > 0){
+        //if(orderList || orderList.length > 0){
             result.message = `Order No ${order.orderNo} has been created`;
             result.status = 404;
             return result;
@@ -66,7 +69,7 @@ module.exports = {
         return result;
     },
 
-    updateDistinctOrder: async(order) =>{
+    updateDistinctOrder: async(orderNoId, order) =>{
         //The result object is where we will put the result to be sent to the client
         let result = {
             message:null,
@@ -106,22 +109,28 @@ module.exports = {
             return result;
         }
 
+        if(orderList[0].orderNoId !== orderNoId){
+            result.message = `Order ID ${orderList.orderNoId} found in database and passed Order ID ${orderNoId} do not match`;
+            result.status = 404;
+            return result;
+        }
+
         //This must be commented for the other to work
         // (prisma)
         // const orderListbyPk = await prisma.Distinct_Order_List.findUnique({
         //     where: {
-        //         orderNoId: orderList[0].orderNoId
+        //         orderNoId: orderNoId
         //     }
         //   });
         
         //This must be commented for the other to work
         //(sequelize)
-        const orderListbyPk = await DistinctOrderList.findByPk(orderList[0].orderNoId);
+        const orderListbyPk = await DistinctOrderList.findByPk(orderNoId);
         
         //console.log(orderListbyPk);
 
         if(!orderListbyPk){
-            result.message = `Order ID ${orderList[0].orderNoId} is not found`;
+            result.message = `Order ID ${orderNoId} is not found`;
             result.status = 404;
             return result;
         }
@@ -207,7 +216,7 @@ module.exports = {
         return result;
     },
 
-    findSpecificOrder: async(distinctOrderNo) =>{
+    findSpecificOrder: async(distinctOrderNoId) =>{
         //The result object is where we will put the result to be sent to the client
         let result = {
             message:null,
@@ -224,28 +233,16 @@ module.exports = {
         //(prisma)
         // const distinctOrderList = await prisma.Distinct_Order_List.findUnique({
         //     where:{
-        //         orderNo:distinctOrderNo
+        //         orderNoId:distinctOrderNoId
         //     }
         // }); 
 
         //This must be commented for the other to work
         //(sequelize)
-        const distinctOrderRecord = await DistinctOrderList.findAll({
-            where:{
-                orderNo:distinctOrderNo
-            }
-        });
-        
-        if(!distinctOrderRecord || (distinctOrderRecord.length < 1)){
-            result.message = `Order with ${distinctOrderNo} is not found`;
-            result.status = 404;
-            return result;
-        }
-
-        const distinctOrderList = await DistinctOrderList.findByPk(distinctOrderRecord[0].orderNoId);
+        const distinctOrderList = await DistinctOrderList.findByPk(distinctOrderNoId);
         
         if(!distinctOrderList || (distinctOrderList.length < 1)){
-            result.message = `Order ID ${distinctOrderNo} is not found`;
+            result.message = `Order ID ${distinctOrderNoId} is not found`;
             result.status = 404;
             return result;
         }
@@ -253,7 +250,7 @@ module.exports = {
 
         result.data = distinctOrderList;
         result.status = 200;
-        result.message = `Data retrieval for Distinct Order Record with Order No:${distinctOrderNo} successful `;
+        result.message = `Data retrieval for Distinct Order Record with Order No:${distinctOrderNoId} successful `;
         return result;
     },
 

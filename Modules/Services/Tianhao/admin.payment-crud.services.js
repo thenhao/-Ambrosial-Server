@@ -86,7 +86,7 @@ module.exports = {
         return result;
     },
 
-    updatePayment: async(payment) =>{
+    updatePayment: async(invoiceID,payment) =>{
         //The result object is where we will put the result to be sent to the client
         let result = {
             message:null,
@@ -123,6 +123,7 @@ module.exports = {
             result.status = 404;
             return result;
         }
+
 
         //This must be commented for the other to work
         //(prisma)
@@ -161,11 +162,24 @@ module.exports = {
         });
 
         if(!PaymentRecord || (PaymentRecord.length < 1)){
-            result.message = `Payment Record with ${PaymentRecord[0].receiptID} is not found`;
+            result.message = `Payment Record with ${payment.receiptId} is not found`;
             result.status = 404;
             return result;
         }
 
+        //console.log(PaymentRecord[0]);
+        console.log(typeof PaymentRecord[0].paymentInvoiceID);
+        console.log(typeof invoiceID);
+        //prisma
+        // if(PaymentRecord[0].paymentInvoiceId !== invoiceID){
+        
+        //sequelize
+        if(PaymentRecord[0].paymentInvoiceID !== invoiceID){    
+            result.message = `Invoice ID ${invoiceID} is not found`;
+            result.status = 404;
+            return result;
+        }
+        
         //This must be commented for the other to work
         //(prisma)
         // const specificPaymentRecord = await prisma.Payment_Invoice.findUnique({
@@ -176,10 +190,10 @@ module.exports = {
 
         //This must be commented for the other to work
         //(sequelize)
-        const specificPaymentRecord = await PaymentInvoice.findByPk(PaymentRecord[0].paymentInvoiceId);
+        const specificPaymentRecord = await PaymentInvoice.findByPk(invoiceID);
         
         if(!specificPaymentRecord || (specificPaymentRecord.length < 1)){
-            result.message = `Payment Record with ${PaymentRecord[0].paymentInvoiceId} is not found`;
+            result.message = `Payment Record with ${invoiceID} is not found`;
             result.status = 404;
             return result;
         }

@@ -31,21 +31,28 @@ class PaymentCrudController{
     async updatePayment(req, res, next){
         console.log(typeof req.body);
 
-        const schema = Joi.object().keys({
+        const convertedinvoiceId = parseInt(req.params.invoiceID);
+
+        const schemaBody = Joi.object().keys({
             receiptId:Joi.number().required(),
             paymentType:Joi.string().required(),
             paymentStatus:Joi.string().required(),
         });
 
+        const schemaParam = Joi.object().keys({
+            invoiceID:Joi.number().required(),
+        });
+
         try{
-            schema.validate( req.body );
+            schemaBody.validate( req.body );
+            schemaParam.validate( {invoiceID:convertedinvoiceId} );
         }catch(error){
             res.status(400);
             return res.json({message:"Incorrect request data"})
         }
 
         //use the service layer
-        const result = await PaymentCrudService.updatePayment(req.body);
+        const result = await PaymentCrudService.updatePayment(convertedinvoiceId,req.body);
         res.status(result.status);
 
         //return the result from the service
