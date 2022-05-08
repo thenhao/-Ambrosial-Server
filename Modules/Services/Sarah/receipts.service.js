@@ -180,8 +180,13 @@ module.exports = {
             //This must be commented for the other to work  
             //Update receipt object (sequelize) 
 
+<<<<<<< HEAD
             specificReceipt.orderNoId = newReceipt.orderNoId,
                 specificReceipt.totalPrice = newReceipt.totalPrice,
+=======
+             specificReceipt.orderNoId = newReceipt.orderNoId,
+             specificReceipt.totalItemPrice = newReceipt.totalItemPrice,
+>>>>>>> main
 
 
                 await specificReceipt.save();

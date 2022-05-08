@@ -100,7 +100,12 @@ module.exports = {
 
         //This must be commented for the other to work
         // (sequelize)
-        const allMenuItems = await MenuItem.findAll();
+        const allMenuItems = await MenuItem.findAll({
+            order: [
+              // Will escape title and validate DESC against a list of valid direction parameters
+              ['menuItemID', 'ASC']
+            ]
+        });
 
         if (!allMenuItems) {
             result.message = `No Menu Item found`;
