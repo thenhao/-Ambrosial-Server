@@ -16,10 +16,10 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "postinstall":"npx prisma generate",
-    "build": "prisma generate",
+    "postinstall":"npx prisma generate --schema=./Modules/ORM/ambrosial/prisma/schema.prisma",
+    "build": "npx prisma generate --schema=./Modules/ORM/ambrosial/prisma/schema.prisma",
     "worker": "nodemon index.js",
-    "prepare": "npx prisma generate",
+    "prepare": "npx prisma generate --schema=./Modules/ORM/ambrosial/prisma/schema.prisma",
     "start": "nodemon index.js",
     "test": "jest"
   },
