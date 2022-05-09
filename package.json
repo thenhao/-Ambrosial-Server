@@ -21,14 +21,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/thenhao/healthcare-software-system.git"
+    "url": "git+https://github.com/thenhao/Ambrosial-Server.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/thenhao/healthcare-software-system/issues"
+    "url": "https://github.com/thenhao/Ambrosial-Server/issues"
   },
-  "homepage": "https://github.com/thenhao/healthcare-software-system#readme",
+  "homepage": "https://github.com/thenhao/Ambrosial-Server#readme",
   "description": "",
   "devDependencies": {
     "babel-cli": "^6.26.0",
