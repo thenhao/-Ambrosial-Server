@@ -16,8 +16,6 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    
-    "worker": "nodemon index.js",
     "prepare": "npx prisma generate --schema=./Modules/ORM/ambrosial/prisma/schema.prisma",
     "start": "nodemon index.js",
     "test": "jest"
