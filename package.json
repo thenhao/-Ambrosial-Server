@@ -17,7 +17,6 @@
   "main": "index.js",
   "scripts": {
     "postinstall":"npx prisma generate --schema=./Modules/ORM/ambrosial/prisma/schema.prisma",
-    "build": "npx prisma generate --schema=./Modules/ORM/ambrosial/prisma/schema.prisma",
     "worker": "nodemon index.js",
     "prepare": "npx prisma generate --schema=./Modules/ORM/ambrosial/prisma/schema.prisma",
     "start": "nodemon index.js",
