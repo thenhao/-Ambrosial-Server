@@ -398,7 +398,13 @@ module.exports = {
         
         //This must be commented for the other to work
         //  (sequelize)
-        const paymentLogs = await PaymentInvoice.findAll({include: Receipt});
+        const paymentLogs = await PaymentInvoice.findAll({
+            include: [
+                {
+                    model: Receipt,
+                    include: DistinctOrderList
+                }
+            ]});
 
         //What we want:
         //1. check all orders exists
@@ -411,7 +417,7 @@ module.exports = {
             result.status = 404;
             return result;
         }
-
+        
         result.data = paymentLogs;
         result.status = 200;
         result.message = `Data retrieval for all payments successful `;
