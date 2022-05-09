@@ -16,6 +16,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
+    "build": "prisma generate",
     "worker": "nodemon index.js",
     "prepare": "npx prisma generate",
     "start": "nodemon index.js",
