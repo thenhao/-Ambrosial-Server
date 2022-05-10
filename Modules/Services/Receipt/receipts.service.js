@@ -181,7 +181,7 @@ module.exports = {
             //Update receipt object (sequelize) 
 
             specificReceipt.orderNoId = newReceipt.orderNoId,
-                specificReceipt.totalItemPrice = newReceipt.totalItemPrice,
+                specificReceipt.totalPrice = newReceipt.totalPrice,
 
 
                 await specificReceipt.save();
