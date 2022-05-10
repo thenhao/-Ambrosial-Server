@@ -3,7 +3,7 @@
 const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
 
-const MenuFoodItem = require("../../ORM/Ambrosial/menu-item.model");
+const MenuFoodItem = require("../../ORM/ambrosial/menu-item.model");
 
 module.exports = {
 

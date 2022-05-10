@@ -5,9 +5,9 @@ const prisma = new PrismaClient();
 
 //This must be commented for the other to work
 //sequelise version: Import models for receipts and order
-const DistinctOrderList = require("../../ORM/Ambrosial/distinct-order-list.model");
-const MenuItem = require("../../ORM/Ambrosial/menu-item.model");
-const ComputedOrders = require("../../ORM/Ambrosial/computed-orders.model");
+const DistinctOrderList = require("../../ORM/ambrosial/distinct-order-list.model");
+const MenuItem = require("../../ORM/ambrosial/menu-item.model");
+const ComputedOrders = require("../../ORM/ambrosial/computed-orders.model");
 
 
 

@@ -5,7 +5,7 @@ const prisma = new PrismaClient();
 
 //This must be commented for the other to work
 //sequelize version:
-const DistinctOrderList = require("../../ORM/Ambrosial/distinct-order-list.model");
+const DistinctOrderList = require("../../ORM/ambrosial/distinct-order-list.model");
 
 
 

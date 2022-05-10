@@ -14,12 +14,12 @@ const app = require("./Modules/Routes/index.js");
 const { config } = require('dotenv');
 config({ path: '.env' })
 
-const User = require("./Modules/ORM/Ambrosial/user.model");
-const DistinctOrderList = require("./Modules/ORM/Ambrosial/distinct-order-list.model");
-const MenuItem = require("./Modules/ORM/Ambrosial/menu-item.model");
-const ComputedOrders = require("./Modules/ORM/Ambrosial/computed-orders.model");
-const Receipt = require("./Modules/ORM/Ambrosial/receipts.model");
-const PaymentInvoice = require("./Modules/ORM/Ambrosial/payment-invoice.model");
+const User = require("./Modules/ORM/ambrosial/user.model");
+const DistinctOrderList = require("./Modules/ORM/ambrosial/distinct-order-list.model");
+const MenuItem = require("./Modules/ORM/ambrosial/menu-item.model");
+const ComputedOrders = require("./Modules/ORM/ambrosial/computed-orders.model");
+const Receipt = require("./Modules/ORM/ambrosial/receipts.model");
+const PaymentInvoice = require("./Modules/ORM/ambrosial/payment-invoice.model");
 
 
 

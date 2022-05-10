@@ -3,7 +3,7 @@
 // const prisma = new PrismaClient();
 
 //Sequelize
-const User = require('../../ORM/Ambrosial/user.model');
+const User = require('../../ORM/ambrosial/user.model');
 
 const { generateJWT } = require('../../Authorization/jwt');
 const { verifyHash } = require('../../Authorization/hash');
