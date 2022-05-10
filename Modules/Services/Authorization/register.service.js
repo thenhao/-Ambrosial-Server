@@ -23,7 +23,7 @@ module.exports = {
     //   where: {
     //     username: request.username
     //   }
-    // });
+    // }); 
 
     if (registerData) {
       result.status = 409;
