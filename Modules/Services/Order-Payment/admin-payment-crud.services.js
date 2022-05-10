@@ -349,9 +349,15 @@ module.exports = {
             }
         });
 
-        if (!orderLogRecords || (orderLogRecords.length < 1)) {
+        if (!orderLogRecords) {
             result.message = `No such order with orderNoId: ${receiptLog.orderNoId} found`;
             result.status = 404;
+            return result;
+        }
+
+        if(orderLogRecords.length < 1) {
+            result.message = `Transaction success.No payment record(s) found`;
+            result.status = 200;
             return result;
         }
 
@@ -413,9 +419,15 @@ module.exports = {
         //3. If no, return error message.
 
         //check if payment exists
-        if (!paymentLogs || (paymentLogs.length < 1)) {
+        if (!paymentLogs) {
             result.message = `No payment records found`;
             result.status = 404;
+            return result;
+        }
+
+        if(paymentLogs.length < 1) {
+            result.message = `Transaction success.No payment record(s) found`;
+            result.status = 200;
             return result;
         }
 

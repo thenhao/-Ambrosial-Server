@@ -241,9 +241,15 @@ module.exports = {
         //(sequelize)
         const distinctOrderList = await DistinctOrderList.findByPk(distinctOrderNoId);
 
-        if (!distinctOrderList || (distinctOrderList.length < 1)) {
+        if (!distinctOrderList) {
             result.message = `Order ID ${distinctOrderNoId} is not found`;
             result.status = 404;
+            return result;
+        }
+
+        if(distinctOrderList.length < 1) {
+            result.message = `Transaction success.No distinct order record(s) found`;
+            result.status = 200;
             return result;
         }
 
@@ -275,9 +281,21 @@ module.exports = {
         //3. If no, return error message.
 
         //check if order exists
-        if (!disitnctOrders || (disitnctOrders.length < 1)) {
+        // if (!disitnctOrders || (disitnctOrders.length < 1)) {
+        //     result.message = `No distinct order records found`;
+        //     result.status = 404;
+        //     return result;
+        // }
+
+        if (!disitnctOrders) {
             result.message = `No distinct order records found`;
             result.status = 404;
+            return result;
+        }
+
+        if(disitnctOrders.length < 1) {
+            result.message = `Transaction success.No distinct order record(s) found`;
+            result.status = 200;
             return result;
         }
 
