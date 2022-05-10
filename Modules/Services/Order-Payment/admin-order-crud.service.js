@@ -343,9 +343,23 @@ module.exports = {
 
         );
 
-        if (!computedOrderRecords || (computedOrderRecords.length < 1)) {
+        console.log(computedOrderRecords);
+
+        if (!computedOrderRecords) {
+            // if(orderList){
+            //     result.message = `Order(s) with ${orderList.orderNoId} is not found`;
+            //     result.status = 200;
+            //     return result;
+            // }
+
             result.message = `Order(s) with ${orderList.orderNoId} is not found`;
             result.status = 404;
+            return result;
+        }
+
+        if(computedOrderRecords.length < 1) {
+            result.message = `Transaction success.No order record(s) found`;
+            result.status = 200;
             return result;
         }
 
@@ -404,9 +418,15 @@ module.exports = {
         //3. If no, return error message.
 
         //check if order exists
-        if (!orders || (orders.length < 1)) {
+        if (!orders) {
             result.message = `No order records found`;
             result.status = 404;
+            return result;
+        }
+
+        if(orders.length < 1) {
+            result.message = `Transaction success.No order record(s) found`;
+            result.status = 200;
             return result;
         }
 
