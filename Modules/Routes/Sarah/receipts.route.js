@@ -6,7 +6,7 @@ const express = require('express');
 const router = express.Router();
 
 // Import controller
-const ReceiptsController = require('../../Controller/Sarah/receipts.controller.js');
+const ReceiptsController = require('../../Controller/Receipts/receipts.controller.js');
 const receiptsController = new ReceiptsController();
 
 // Use CRUD Method for receipts

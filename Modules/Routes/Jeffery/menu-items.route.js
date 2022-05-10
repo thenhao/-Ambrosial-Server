@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 
-const MenuItemsController = require('../../Controller/Jeffery/menu-items.controller');//Ensure same as export in other file
+const MenuItemsController = require('../../Controller/Menu-Items/menu-items.controller');//Ensure same as export in other file
 
 //Instantiate a new instance of the class
 const menuItemsController = new MenuItemsController();
