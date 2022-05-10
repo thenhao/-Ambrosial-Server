@@ -5,7 +5,7 @@ const prisma = new PrismaClient();
 
 //This must be commented for the other to work
 //sequelize version:
-const MenuItem = require("../../ORM/ambrosial/menu-item.model.js");
+const MenuItem = require("../../ORM/ambrosial/menu-item.model");
 
 
 module.exports = {

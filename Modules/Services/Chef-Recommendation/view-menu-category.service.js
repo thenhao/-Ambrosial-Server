@@ -6,7 +6,7 @@ const prisma = new PrismaClient();
 
 //This must be commented for the other to work
 //sequelise version: Import models for receipts and order
-const MenuItem = require("../../ORM/ambrosial/menu-item.model.js");
+const MenuItem = require("../../ORM/ambrosial/menu-item.model");
 
 
 

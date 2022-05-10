@@ -5,7 +5,7 @@
 
 //This must be commented for the other to work
 //sequelise version: Import models for receipts and order
-const Receipt = require("../../ORM/ambrosial/receipts.model.js.js");
+const Receipt = require("../../ORM/ambrosial/receipts.model");
 const DistinctOrderList = require("../../ORM/ambrosial/distinct-order-list.model");
 
 
