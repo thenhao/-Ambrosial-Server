@@ -4,10 +4,10 @@ const express = require("express");
 const app = express();
 app.use(express.json());
 
-const corsOptions ={
+const corsOptions = {
     //origin:'http://localhost:3000', 
-    credentials:true,            //access-control-allow-credentials:true
-    optionSuccessStatus:200
+    credentials: true,            //access-control-allow-credentials:true
+    optionSuccessStatus: 200
 }
 
 app.use(cors(corsOptions));
@@ -22,45 +22,34 @@ app.use(login);
 const changePassword = require('../Routes/Authorization/change-password.route');
 app.use(changePassword);
 
-//Jeffery
-//*******************routes import**********************
-//***place here****
-const menuItemRoute = require('../Routes/Jeffery/menu-items.route');
-
-//*******************routes use**********************
-//***place here****
+//Menu-Item
+//*******************routes import*******************
+const menuItemRoute = require('./Menu-Item/menu-items.route');
+//*******************routes use*******************
 app.use(menuItemRoute);
 
-
-// //Regina
-// //*******************routes import**********************
-// const createCurrentVisit = require("../Routes/Regina/clinicCurrentVisit.route");
-// //*******************routes use**********************
-// app.use(createCurrentVisit);
-
-// Sarah
-// Import route for receipts
-const receipts = require("../Routes/Sarah/receipts.route");
-// Use route for receipts
+// Receipt
+//*******************routes import*******************
+const receipts = require("./Receipt/receipts.route");
+//*******************routes use*******************
 app.use(receipts);
 
 
-//Shaun
-//*******************routes import**********************
-//const employeeWorking = require("../Routes/Shaun/isEmployeeAtWork.route");
-const menuCategory = require("../Routes/Shaun/MenuCategory.route");
-const chefRecommendation = require("../Routes/Shaun/chefsRecommendation.route");
-//*******************routes use**********************
+//Chef-Recommendation
+//*******************routes import*******************
+const menuCategory = require("./Chef-Recommendation/view-menu-category.route");
+const chefRecommendation = require("./Chef-Recommendation/chef-recommendation.route");
+//*******************routes use*******************
 app.use(menuCategory);
 app.use(chefRecommendation);
 
 
-// //Tianhao
-// //*******************routes import**********************
-const orderCrud = require("./Tianhao/admin.order-crud.routes");
-const distinctOrderCrud = require("./Tianhao/admin.distinct-order-list-crud.routes");
-const paymentCrud = require("./Tianhao/admin.payment-crud.routes");
-// //*******************routes use**********************
+//Order-Payment
+//*******************routes import*******************
+const orderCrud = require("./Order-Payment/admin-order-crud.routes");
+const distinctOrderCrud = require("./Order-Payment/admin-distinct-order-list-crud.routes");
+const paymentCrud = require("./Order-Payment/admin-payment-crud.routes");
+//*******************routes use*******************
 app.use(orderCrud);
 app.use(distinctOrderCrud);
 app.use(paymentCrud);

@@ -3,14 +3,14 @@
 // const prisma = new PrismaClient();
 
 //Sequelize
-const User = require('../../ORM/ambrosial/user.model');
+const User = require('../../ORM/Ambrosial/user.model');
 
 //Hashing
-const {generateHash, verifyHash} = require('../../Authorization/hash');
+const { generateHash, verifyHash } = require('../../Authorization/hash');
 
 module.exports = {
-  
-  changePassword: async(request) => {
+
+  changePassword: async (request) => {
 
     let result = {
       status: null,
@@ -18,7 +18,7 @@ module.exports = {
     }
 
     //Sequelize query
-    const changePasswordData = await User.findOne({where: {username: request.username}});
+    const changePasswordData = await User.findOne({ where: { username: request.username } });
 
     //Prisma Query
     // const changePasswordData = await prisma.User.findFirst({
@@ -27,7 +27,7 @@ module.exports = {
     //   }
     // });
 
-    if(!changePasswordData) {
+    if (!changePasswordData) {
       result.status = 404;
       result.message = `User does not exist. Kindly register`;
       return result;
@@ -35,7 +35,7 @@ module.exports = {
 
     let passwordVerification = await verifyHash(request.password, changePasswordData.password);
 
-    if(!passwordVerification) {
+    if (!passwordVerification) {
 
       let newHashedPwd = await generateHash(request.password);
 
@@ -57,7 +57,7 @@ module.exports = {
 
       result.status = 200;
       result.message = `Password has been changed`;
-      
+
       return result;
     }
     else {
